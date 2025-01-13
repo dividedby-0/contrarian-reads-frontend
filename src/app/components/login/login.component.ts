@@ -26,11 +26,9 @@ export class LoginComponent {
   onSubmit() {
     this.authService.login(this.credentials).subscribe({
       next: () => {
-        // Redirect to the main page after successful login
         this.router.navigate(['/main']);
       },
       error: (error) => {
-        // Handle login errors (e.g., display an error message)
         this.errorMessage = 'Invalid email or password.';
         console.error('Login error:', error);
       }

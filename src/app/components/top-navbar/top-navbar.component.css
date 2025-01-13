@@ -1,0 +1,25 @@
+.nav-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  height: 60px;
+  background-color: #333;
+  color: #fff;
+  padding: 0 20px;
+}
+.nav-bar-logo {
+  display: flex;
+  align-items: center;
+}
+.nav-bar-logo img {
+  width: 50px;
+  height: 50px;
+}
+.nav-bar-actions {
+  display: flex;
+  justify-content: flex-end;
+}
+.nav-bar-actions button {
+  margin-left: 10px;
+}
