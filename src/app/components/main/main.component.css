@@ -1,0 +1,10 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  height: calc(100vh - 60px);
+  padding: 20px;
+}
+.book-grid-container {
+  flex-grow: 1;
+  overflow-y: auto;
+}
