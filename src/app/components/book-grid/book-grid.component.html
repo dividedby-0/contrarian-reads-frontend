@@ -1,21 +1,21 @@
 <div class="book-grid">
   <div class="book" *ngFor="let book of books">
     <div class="book-main">
-      <img class="book-cover" [src]="book.cover" alt="{{ book.title }}">
+      <img class="book-cover" [src]="book.coverImageUrl" alt="{{ book.title }}">
       <div class="book-info">
         <div class="book-title">{{ book.title }}</div>
         <div class="book-author">{{ book.author }}</div>
       </div>
     </div>
     <div class="suggested-books">
-      <div class="suggested-book" *ngFor="let suggestedBook of book.suggestedBooks">
-        <img [src]="suggestedBook.cover" alt="{{ suggestedBook.title }}">
+      <div class="suggested-book" *ngFor="let suggestion of book.suggestions">
+        <img [src]="suggestion.suggestedBook.coverImageUrl" alt="{{ suggestion.suggestedBook.title }}">
         <div class="book-label">
-          <div class="book-title">{{ suggestedBook.title }}</div>
-          <div class="book-author">{{ suggestedBook.author }}</div>
-          <div class="suggested-by">Suggested by {{ suggestedBook.suggestedBy }}</div>
-          <div class="reason">{{ suggestedBook.reason }}</div>
-          <div class="upvotes">{{ suggestedBook.upvotes }} upvotes</div>
+          <div class="book-title">{{ suggestion.suggestedBook.title }}</div>
+          <div class="book-author">{{ suggestion.suggestedBook.author }}</div>
+          <div class="suggested-by">Suggested by {{ suggestion.suggestedByUser.username }}</div>
+          <div class="reason">{{ suggestion.reason }}</div>
+          <div class="upvotes">{{ suggestion.upvoteCount }} upvotes</div>
         </div>
       </div>
     </div>

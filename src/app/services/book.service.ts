@@ -11,9 +11,7 @@ export class BookService {
   }
 
   getBooks(): Observable<Book[]> {
-    return this.http.get<Book[]>(this.apiUrl).pipe(
-      delay(2000)
-    );
+    return this.http.get<Book[]>(this.apiUrl);
   }
 
   getBook(id: string): Observable<Book> {

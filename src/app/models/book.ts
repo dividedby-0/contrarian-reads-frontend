@@ -1,3 +1,5 @@
+import {Suggestion} from "./suggestion";
+
 export interface Book {
   id: string;
   title: string;
@@ -6,4 +8,5 @@ export interface Book {
   description?: string;
   coverImageUrl?: string;
   rating?: number;
+  suggestions: Suggestion[];
 }
