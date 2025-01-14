@@ -4,18 +4,21 @@ import {TopNavbarComponent} from "../top-navbar/top-navbar.component";
 import {BookGridComponent} from "../book-grid/book-grid.component";
 import {Book} from "../../models/book";
 import {BookService} from "../../services/book.service";
+import {SpinnerComponent} from "../spinner/spinner.component";
+import {LoadingService} from "../../services/loading.service";
+import {AsyncPipe, NgIf} from "@angular/common";
 
 @Component({
   selector: 'app-main',
   standalone: true,
-  imports: [SearchBarComponent, TopNavbarComponent, BookGridComponent],
+  imports: [SearchBarComponent, TopNavbarComponent, BookGridComponent, SpinnerComponent, AsyncPipe, NgIf],
   templateUrl: './main.component.html',
   styleUrl: './main.component.css'
 })
 export class MainComponent implements OnInit {
   books: Book[] = [];
 
-  constructor(private bookService: BookService) {
+  constructor(public bookService: BookService, public loadingService: LoadingService) {
   }
 
   ngOnInit() {
@@ -23,12 +26,15 @@ export class MainComponent implements OnInit {
   }
 
   getBooks(): void {
+    this.loadingService.showSpinner();
     this.bookService.getBooks().subscribe({
       next: (books) => {
         this.books = books;
+        this.loadingService.hideSpinner();
       },
       error: (error) => {
         console.error('Error fetching books:', error);
+        this.loadingService.hideSpinner();
       }
     });
   }
