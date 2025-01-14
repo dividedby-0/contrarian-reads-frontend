@@ -4,6 +4,11 @@
   height: calc(100vh - 60px);
   padding: 20px;
 }
+
+.search-bar-container {
+  margin-top: 0px;
+}
+
 .book-grid-container {
   flex-grow: 1;
   overflow-y: auto;
