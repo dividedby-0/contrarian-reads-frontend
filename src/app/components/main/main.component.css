@@ -7,4 +7,9 @@
 .book-grid-container {
   flex-grow: 1;
   overflow-y: auto;
+  scrollbar-width: none;
+}
+
+.book-grid-container::-webkit-scrollbar {
+  display: none;
 }

@@ -1,35 +1,99 @@
 .book-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  grid-template-columns: repeat(3, 1fr);
   grid-gap: 20px;
   padding: 20px;
 }
+
 .book {
-  background-color: #fff;
-  border-radius: 5px;
-  padding: 10px;
-  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
+
+.book-main {
+  flex: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 150px;
+  max-height: 150px;
+}
+
 .book-cover {
   width: 100%;
-  height: 200px;
+  height: auto;
   object-fit: cover;
   border-radius: 5px;
+  max-height: 200px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
 }
+
 .book-info {
-  position: absolute;
-  bottom: 0;
-  left: 0;
+  text-align: center;
+  display: block;
   width: 100%;
   padding: 10px;
-  background-color: rgba(0, 0, 0, 0.5);
-  color: #fff;
 }
+
 .book-title {
   font-size: 18px;
   font-weight: bold;
   margin-bottom: 5px;
 }
+
 .book-author {
   font-size: 14px;
+}
+
+.suggested-books {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  margin-left: 20px;
+}
+
+.suggested-book {
+  display: flex;
+  align-items: center;
+  margin: 0.5rem;
+}
+
+.suggested-book img {
+  max-width: 120px;
+  height: 150px;
+  object-fit: cover;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
+}
+
+.book-label {
+  margin-left: 10px;
+  display: flex;
+  flex-direction: column;
+}
+
+.book-title {
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.book-author {
+  font-size: 12px;
+  color: #666;
+}
+
+.suggested-by {
+  font-size: 12px;
+  color: #666;
+}
+
+.reason {
+  font-size: 12px;
+  color: #666;
+}
+
+.upvotes {
+  font-size: 12px;
+  color: #666;
 }
