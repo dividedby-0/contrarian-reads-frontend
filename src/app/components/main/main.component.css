@@ -1,8 +1,29 @@
-.container {
+.main-container {
   display: flex;
   flex-direction: column;
   height: calc(100vh - 60px);
   padding: 20px;
+}
+
+.header-area-fixed-container {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+}
+
+.header-text {
+  font-weight: bold;
+  margin-bottom: 20px;
+  text-align: center;
+  font-size: 3rem;
+}
+
+.header-text i {
+  font-style: italic;
+  color: var(--primary-color);
 }
 
 .search-bar-container {

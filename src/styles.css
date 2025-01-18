@@ -1,3 +1,12 @@
+:root {
+  --primary-color: #964B00;
+  --secondary-color: #786C3B;
+  --accent-color: #FFC107;
+  --background-color: #F7F4E9;
+  --text-color: #333;
+  --highlight-color: #34C759;
+}
+
 * {
   margin: 0;
   padding: 0;
@@ -7,16 +16,24 @@
 }
 
 body {
-  background: linear-gradient(to right, #ffffff 0%, #f7f7f7 100%);
-  color: #333;
+  font-family: 'Georgia', serif;
+  font-size: 16px;
+  line-height: 1.5;
+  color: var(--text-color);
+  background-color: var(--background-color);
+}
+
+h1, h2, h3 {
+  color: var(--primary-color);
 }
 
 a {
-  color: #337ab7;
+  color: var(--accent-color);
+  text-decoration: none;
 }
 
 a:hover {
-  color: #23527c;
+  color: var(--highlight-color);
 }
 
 body::-webkit-scrollbar {

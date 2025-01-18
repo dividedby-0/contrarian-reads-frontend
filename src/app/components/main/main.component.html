@@ -1,8 +1,11 @@
 <app-spinner *ngIf="loadingService.isLoading$ | async"></app-spinner>
 <app-top-navbar></app-top-navbar>
-<div class="container">
-  <div class="search-bar-container">
-    <app-search-bar></app-search-bar>
+<div class="main-container">
+  <div class="header-area-fixed-container">
+    <div class="header-text">What will <i>you</i> read next?</div>
+    <div class="search-bar-container">
+      <app-search-bar></app-search-bar>
+    </div>
   </div>
   <div class="book-grid-container">
     <app-book-grid [books]="books"></app-book-grid>
