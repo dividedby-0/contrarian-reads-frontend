@@ -15,8 +15,13 @@
   vertical-align: baseline;
 }
 
+html, body {
+  height: 100%;
+}
+
 body {
-  font-family: 'Georgia', serif;
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
   font-size: 16px;
   line-height: 1.5;
   color: var(--text-color);
