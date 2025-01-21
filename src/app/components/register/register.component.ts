@@ -5,6 +5,7 @@ import {FormsModule, NgForm} from "@angular/forms";
 import {NgIf} from "@angular/common";
 import {HttpClientModule} from "@angular/common/http";
 import {UserCreate} from "../../models/user-create";
+import {SnackbarService} from "../../services/snackbar.service";
 
 @Component({
   selector: 'app-register',
@@ -32,7 +33,7 @@ export class RegisterComponent {
   };
   errorMessage = '';
 
-  constructor(private authService: AuthService, private router: Router) {
+  constructor(private authService: AuthService, private router: Router, private snackbarService: SnackbarService) {
   }
 
   checkPasswords() {
@@ -44,6 +45,7 @@ export class RegisterComponent {
   }
 
   onSubmit() {
+    this.snackbarService.showMessage('Registering user...');
     if (this.registerForm.valid) {
       this.authService.register(this.credentials).subscribe({
         next: () => {
@@ -52,6 +54,9 @@ export class RegisterComponent {
         error: (error) => {
           this.errorMessage = 'Registration failed. Please try again.';
           console.error('Registration error:', error);
+        },
+        complete: () => {
+          this.snackbarService.hideMessage();
         }
       });
     } else {

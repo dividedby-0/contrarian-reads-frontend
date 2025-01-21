@@ -4,6 +4,7 @@ import {AuthService} from '../../auth/auth.service';
 import {FormsModule} from "@angular/forms";
 import {NgIf} from "@angular/common";
 import {HttpClientModule} from "@angular/common/http";
+import {SnackbarService} from "../../services/snackbar.service";
 
 @Component({
   selector: 'app-login',
@@ -21,10 +22,11 @@ export class LoginComponent {
   credentials = {email: '', password: ''};
   errorMessage = '';
 
-  constructor(private authService: AuthService, private router: Router) {
+  constructor(private authService: AuthService, private router: Router, private snackbarService: SnackbarService) {
   }
 
   onSubmit() {
+    this.snackbarService.showMessage('Logging in...');
     this.authService.login(this.credentials).subscribe({
       next: () => {
         this.router.navigate(['/main']);
@@ -32,6 +34,9 @@ export class LoginComponent {
       error: (error) => {
         this.errorMessage = 'Invalid email or password.';
         console.error('Login error:', error);
+      },
+      complete: () => {
+        this.snackbarService.hideMessage();
       }
     });
   }
