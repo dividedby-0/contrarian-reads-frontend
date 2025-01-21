@@ -4,6 +4,8 @@
 ![Angular Material](https://img.shields.io/badge/Angular%20Material-DD0031?style=for-the-badge&logo=angular&logoColor=white)
 ![RxJS](https://img.shields.io/badge/RxJS-B7178C?style=for-the-badge&logo=reactivex&logoColor=white)
 ![TypeScript](https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white)
+![HTML](https://img.shields.io/badge/HTML-E34F26?style=for-the-badge&logo=html5&logoColor=white)
+![CSS](https://img.shields.io/badge/CSS-1572B6?style=for-the-badge&logo=css3&logoColor=white)
 ![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black)
 ![C#](https://img.shields.io/badge/C%23-239120?style=for-the-badge&logo=sharp&logoColor=white)
 ![ASP.NET Core](https://img.shields.io/badge/ASP.NET%20Core-512BD4?style=for-the-badge&logo=dotnet&logoColor=white)
@@ -35,6 +37,7 @@ Work in progress. Will be soon available online.
 - Built with **Angular** and styled using **Angular Material**
 - Allows logged-in users to search for books, submit, upvote and comment alternative recommendations
 - Secure login and register system implementing **JWT authentication**
+- Route guards to prevent address tampering
 - User profile and user activity dashboard
 - Alternative book recommendations based on user activity
 - Hosted on **Netlify**
