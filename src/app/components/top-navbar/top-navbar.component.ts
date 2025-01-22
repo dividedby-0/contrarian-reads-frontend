@@ -5,11 +5,12 @@ import {Router} from '@angular/router';
 import {MatDialog} from "@angular/material/dialog";
 import {ConfirmationDialogComponent} from "../confirmation-dialog/confirmation-dialog.component";
 import {SnackbarService} from "../../services/snackbar.service";
+import {AddAlternativeModalComponent} from "../add-alternative-modal/add-alternative-modal.component";
 
 @Component({
   selector: 'app-top-navbar',
   standalone: true,
-  imports: [CommonModule, ConfirmationDialogComponent],
+  imports: [CommonModule, ConfirmationDialogComponent, AddAlternativeModalComponent],
   templateUrl: './top-navbar.component.html',
   styleUrl: './top-navbar.component.css'
 })
@@ -31,6 +32,12 @@ export class TopNavbarComponent {
         this.router.navigate(['/login']);
         this.snackbarService.showMessage('You have been logged out.');
       }
+    });
+  }
+
+  openAddAlternativeModal() {
+    this.dialog.open(AddAlternativeModalComponent, {
+      data: {},
     });
   }
 
