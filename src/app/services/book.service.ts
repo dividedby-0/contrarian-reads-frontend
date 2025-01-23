@@ -2,6 +2,7 @@ import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {delay, Observable} from 'rxjs';
 import {Book} from '../models/book';
+import {BookCreate} from "../models/book-create";
 
 @Injectable({providedIn: 'root'})
 export class BookService {
@@ -19,7 +20,7 @@ export class BookService {
     return this.http.get<Book>(url);
   }
 
-  createBook(book: Book): Observable<Book> {
+  createBook(book: BookCreate): Observable<Book> {
     return this.http.post<Book>(this.apiUrl, book);
   }
 

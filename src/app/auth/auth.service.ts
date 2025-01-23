@@ -4,6 +4,7 @@ import {Observable, tap} from 'rxjs';
 
 interface LoginResponse {
   token: string;
+  userId: string;
 }
 
 @Injectable({providedIn: 'root'})
@@ -17,12 +18,14 @@ export class AuthService {
     return this.http.post<LoginResponse>(`${this.apiUrl}/auth/login`, credentials).pipe(
       tap((response) => {
         localStorage.setItem('token', response.token);
+        localStorage.setItem('userId', response.userId);
       })
     );
   }
 
   logout(): void {
     localStorage.removeItem('token');
+    localStorage.removeItem('userId');
   }
 
   register(user: { password: string; email: string; username: string }): Observable<any> {
@@ -31,5 +34,9 @@ export class AuthService {
 
   isLoggedIn(): boolean {
     return !!localStorage.getItem('token');
+  }
+
+  getUserId() {
+    return localStorage.getItem('userId');
   }
 }

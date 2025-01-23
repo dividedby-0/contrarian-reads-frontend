@@ -2,6 +2,7 @@ import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {Suggestion} from '../models/suggestion';
+import {SuggestionCreate} from "../models/suggestion-create";
 
 @Injectable({providedIn: 'root'})
 export class SuggestionsService {
@@ -19,7 +20,7 @@ export class SuggestionsService {
     return this.http.get<Suggestion>(url);
   }
 
-  createSuggestion(suggestion: Suggestion): Observable<Suggestion> {
+  createSuggestion(suggestion: SuggestionCreate): Observable<Suggestion> {
     return this.http.post<Suggestion>(this.apiUrl, suggestion);
   }
 }
