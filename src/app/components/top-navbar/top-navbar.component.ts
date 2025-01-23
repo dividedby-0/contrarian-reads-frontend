@@ -7,6 +7,7 @@ import {ConfirmationDialogComponent} from "../confirmation-dialog/confirmation-d
 import {SnackbarService} from "../../services/snackbar.service";
 import {AddAlternativeModalComponent} from "../add-alternative-modal/add-alternative-modal.component";
 import {MainComponent} from "../main/main.component";
+import {SuggestionsService} from "../../services/suggestions.service";
 
 @Component({
   selector: 'app-top-navbar',
@@ -16,7 +17,16 @@ import {MainComponent} from "../main/main.component";
   styleUrl: './top-navbar.component.css'
 })
 export class TopNavbarComponent {
-  constructor(private authService: AuthService, private router: Router, private dialog: MatDialog, private snackbarService: SnackbarService, private mainComponent: MainComponent) {
+  suggestionCount: number = 0;
+
+  constructor(private authService: AuthService, private router: Router, private dialog: MatDialog, private snackbarService: SnackbarService, private mainComponent: MainComponent, private suggestionsService: SuggestionsService) {
+    this.fetchSuggestionCount();
+  }
+
+  fetchSuggestionCount() {
+    this.suggestionsService.getSuggestionCount().subscribe(count => {
+      this.suggestionCount = count;
+    });
   }
 
   onLogout() {

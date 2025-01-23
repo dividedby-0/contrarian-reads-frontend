@@ -15,6 +15,10 @@ export class SuggestionsService {
     return this.http.get<Suggestion[]>(this.apiUrl);
   }
 
+  getSuggestionCount(): Observable<number> {
+    return this.http.get<number>(`${this.apiUrl}/count`);
+  }
+
   getSuggestionById(id: string): Observable<Suggestion> {
     const url = `${this.apiUrl}/${id}`;
     return this.http.get<Suggestion>(url);

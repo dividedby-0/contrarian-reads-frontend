@@ -14,7 +14,7 @@ export class GoogleBooksService {
   }
 
   searchBooks(query: string): Observable<any> {
-    const url = `${this.apiUrl}?q=${encodeURIComponent(query)}&key=${this.apiKey}`;
+    const url = `${this.apiUrl}?q=${encodeURIComponent(query)}&key=${this.apiKey}&langRestrict=en&printType=books`;
     return this.http.get(url);
   }
 }
