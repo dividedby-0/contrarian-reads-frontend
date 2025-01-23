@@ -2,18 +2,95 @@
   <div class="modal-content">
     <span class="close-button" (click)="onClose()">&times;</span>
     <h2>Add New Alternative Book</h2>
-    <div class="form-group">
-      <label for="mainBook">Main Book:</label>
-      <input type="text" id="mainBook" name="mainBook" [(ngModel)]="mainBook">
+    <div class="form-and-covers-container">
+
+      <div class="form-container">
+
+        <div class="form-group">
+          <label for="mainBook">Main Book:</label>
+          <input
+            type="text"
+            id="mainBook"
+            name="mainBook"
+            placeholder="Search for a book..."
+            [(ngModel)]="mainBook"
+            (input)="onMainBookInput()"
+          />
+          <ul *ngIf="mainBookSuggestions.length > 0" class="suggestions">
+            <li *ngFor="let suggestion of mainBookSuggestions" (click)="selectMainBook(suggestion)">
+              {{ suggestion.volumeInfo.authors?.join(', ') || 'Unknown Author' }} -
+              {{ suggestion.volumeInfo.title }}
+            </li>
+          </ul>
+        </div>
+
+        <div class="form-group">
+          <label for="suggestedAlternative">Suggested Alternative:</label>
+          <input
+            type="text"
+            id="suggestedAlternative"
+            name="suggestedAlternative"
+            placeholder="Search for a book..."
+            [(ngModel)]="suggestedAlternative"
+            (input)="onSuggestedAlternativeInput()"
+          />
+          <ul *ngIf="suggestedAlternativeSuggestions.length > 0" class="suggestions">
+            <li *ngFor="let suggestion of suggestedAlternativeSuggestions"
+                (click)="selectSuggestedAlternative(suggestion)">
+              {{ suggestion.volumeInfo.authors?.join(', ') || 'Unknown Author' }} -
+              {{ suggestion.volumeInfo.title }}
+            </li>
+          </ul>
+        </div>
+
+        <div class="form-group">
+          <label for="reason">Reason:</label>
+          <div class="textarea-container">
+        <textarea
+          id="reason"
+          name="reason"
+          placeholder="Why do you think this book is a good alternative?"
+          [(ngModel)]="reason"
+          (input)="updateRemainingCharacters()"
+          maxlength="150"
+        ></textarea>
+            <small class="character-count">{{ remainingCharacters }}</small>
+          </div>
+        </div>
+      </div>
+      <div class="covers-container">
+        <div class="cover-container">
+          <div class="cover-text-top">Main Book</div>
+          <div class="cover">
+            <img *ngIf="selectedMainBook" [src]="selectedMainBook.volumeInfo.imageLinks?.thumbnail"
+                 [alt]="selectedMainBook.volumeInfo.title">
+          </div>
+          <div class="cover-text-bottom-container">
+            <div class="cover-text-bottom-title">{{ selectedMainBook?.volumeInfo.title || '(Title)' }}</div>
+            <div
+              class="cover-text-bottom-author">{{ selectedMainBook?.volumeInfo.authors?.join(', ') || '(Author)' }}
+            </div>
+          </div>
+        </div>
+        <div class="arrow-between-covers">
+          <img src="assets/images/arrow-right-svgrepo-com.svg" alt="Right Arrow">
+        </div>
+        <div class="cover-container">
+          <div class="cover-text-top">Alternative</div>
+          <div class="cover">
+            <img *ngIf="selectedSuggestedAlternative"
+                 [src]="selectedSuggestedAlternative.volumeInfo.imageLinks?.thumbnail"
+                 [alt]="selectedSuggestedAlternative.volumeInfo.title">
+          </div>
+          <div class="cover-text-bottom-container">
+            <div class="cover-text-bottom-title">{{ selectedSuggestedAlternative?.volumeInfo.title || '(Title)' }}</div>
+            <div
+              class="cover-text-bottom-author">{{ selectedSuggestedAlternative?.volumeInfo.authors?.join(', ') || '(Author)' }}
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
-    <div class="form-group">
-      <label for="suggestedAlternative">Suggested Alternative:</label>
-      <input type="text" id="suggestedAlternative" name="suggestedAlternative" [(ngModel)]="suggestedAlternative">
-    </div>
-    <div class="form-group">
-      <label for="reason">Reason:</label>
-      <textarea id="reason" name="reason" [(ngModel)]="reason"></textarea>
-    </div>
-    <button type="button" class="confirm-button" (click)="onConfirm()">Confirm</button>
+    <button type="button" class="confirm-button" (click)="onConfirm()">Add</button>
   </div>
 </div>
