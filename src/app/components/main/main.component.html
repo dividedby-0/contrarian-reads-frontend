@@ -2,12 +2,16 @@
 <app-top-navbar></app-top-navbar>
 <div class="main-container">
   <div class="header-area-fixed-container">
-    <div class="header-text">Gain a different perspective.</div>
+    <div class="header-text">Gain a different perspective</div>
     <div class="search-bar-container">
-      <app-search-bar></app-search-bar>
+      <app-search-bar (searchTermChange)="onSearchTermChanged($event)"></app-search-bar>
     </div>
   </div>
   <div class="book-grid-container">
-    <app-book-grid [books]="books"></app-book-grid>
+    <div class="nothing-found-message" *ngIf="!booksWithSuggestions.length && noResultsMessage">{{ noResultsMessage }}
+    </div>
+    <app-book-grid [booksWithSuggestions]="booksWithSuggestions"></app-book-grid>
+    <!--    TODO: style this button-->
+    <button *ngIf="!isLoading && hasMoreResults" (click)="loadMore()">Load More</button>
   </div>
 </div>

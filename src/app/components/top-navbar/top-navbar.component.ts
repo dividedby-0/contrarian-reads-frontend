@@ -12,7 +12,7 @@ import {SuggestionsService} from "../../services/suggestions.service";
 @Component({
   selector: 'app-top-navbar',
   standalone: true,
-  imports: [CommonModule, ConfirmationDialogComponent, AddAlternativeModalComponent],
+  imports: [CommonModule],
   templateUrl: './top-navbar.component.html',
   styleUrl: './top-navbar.component.css'
 })
@@ -53,7 +53,7 @@ export class TopNavbarComponent {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        this.mainComponent.fetchData();
+        this.mainComponent.loadBooks();
       }
     });
   }

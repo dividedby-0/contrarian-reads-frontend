@@ -122,7 +122,7 @@ export class AddAlternativeModalComponent {
       coverImageUrl: this.selectedMainBook.volumeInfo.imageLinks?.thumbnail || "",
     }).subscribe({
       next: (createdMainBook) => {
-        console.log('Main Book added:', createdMainBook);
+        console.log('Main BookRetrieve added:', createdMainBook);
 
         this.bookService.createBook({
           title: this.selectedSuggestedAlternative.volumeInfo.title,
@@ -132,7 +132,7 @@ export class AddAlternativeModalComponent {
           coverImageUrl: this.selectedSuggestedAlternative.volumeInfo.imageLinks?.thumbnail || "",
         }).subscribe({
           next: (createdSuggestedBook) => {
-            console.log('Suggested Book added:', createdSuggestedBook);
+            console.log('Suggested BookRetrieve added:', createdSuggestedBook);
 
             this.suggestionsService.createSuggestion({
               bookId: createdMainBook.id,

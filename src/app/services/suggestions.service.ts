@@ -1,8 +1,8 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
-import {Suggestion} from '../models/suggestion';
-import {SuggestionCreate} from "../models/suggestion-create";
+import {SuggestionCreate} from '../models/suggestion-create';
+import {SuggestionRetrieve} from "../models/suggestion-retrieve";
 
 @Injectable({providedIn: 'root'})
 export class SuggestionsService {
@@ -11,20 +11,20 @@ export class SuggestionsService {
   constructor(private http: HttpClient) {
   }
 
-  getSuggestions(): Observable<Suggestion[]> {
-    return this.http.get<Suggestion[]>(this.apiUrl);
+  getSuggestions(): Observable<SuggestionRetrieve[]> {
+    return this.http.get<SuggestionRetrieve[]>(this.apiUrl);
   }
 
   getSuggestionCount(): Observable<number> {
     return this.http.get<number>(`${this.apiUrl}/count`);
   }
 
-  getSuggestionById(id: string): Observable<Suggestion> {
+  getSuggestionById(id: string): Observable<SuggestionRetrieve> {
     const url = `${this.apiUrl}/${id}`;
-    return this.http.get<Suggestion>(url);
+    return this.http.get<SuggestionRetrieve>(url);
   }
 
-  createSuggestion(suggestion: SuggestionCreate): Observable<Suggestion> {
-    return this.http.post<Suggestion>(this.apiUrl, suggestion);
+  createSuggestion(suggestion: SuggestionCreate): Observable<SuggestionCreate> {
+    return this.http.post<SuggestionCreate>(this.apiUrl, suggestion);
   }
 }

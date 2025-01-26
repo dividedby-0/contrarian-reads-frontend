@@ -2,64 +2,93 @@ import {Component, OnInit} from '@angular/core';
 import {SearchBarComponent} from "../search-bar/search-bar.component";
 import {TopNavbarComponent} from "../top-navbar/top-navbar.component";
 import {BookGridComponent} from "../book-grid/book-grid.component";
-import {Book} from "../../models/book";
 import {BookService} from "../../services/book.service";
 import {SpinnerComponent} from "../spinner/spinner.component";
 import {LoadingService} from "../../services/loading.service";
 import {AsyncPipe, NgIf} from "@angular/common";
-import {Suggestion} from "../../models/suggestion";
 import {SuggestionsService} from "../../services/suggestions.service";
-import {forkJoin} from "rxjs";
+import {debounceTime} from "rxjs/operators";
+import {Subject} from "rxjs";
 
 @Component({
   selector: 'app-main',
   standalone: true,
-  imports: [SearchBarComponent, TopNavbarComponent, BookGridComponent, SpinnerComponent, AsyncPipe, NgIf],
+  imports: [SearchBarComponent, TopNavbarComponent, BookGridComponent, SpinnerComponent, AsyncPipe, NgIf,],
   templateUrl: './main.component.html',
   styleUrl: './main.component.css'
 })
+
 export class MainComponent implements OnInit {
-  books: Book[] = [];
-  suggestions: Suggestion[] = [];
+  booksWithSuggestions: [] = [];
+  searchTerm: string = '';
+  pageSize: number = 10;
+  lastEvaluatedKey: string | null = null;
+  isLoading: boolean = false;
+  hasMoreResults: boolean = true;
+  noResultsMessage: string = '';
+  private searchTermSubject = new Subject<string>();
 
   constructor(
     public bookService: BookService,
-    public suggestionsService: SuggestionsService,
     public loadingService: LoadingService
   ) {
   }
 
   ngOnInit() {
-    this.fetchData();
+    this.loadBooks();
+    this.searchTermSubject.next('');
   }
 
-  fetchData(): void {
+  onSearchTermChanged(searchTerm: string) {
+    this.searchTerm = searchTerm;
+    this.resetPagination();
+    this.searchTermSubject.next(searchTerm);
+  }
+
+  loadBooks() {
     this.loadingService.showSpinner();
 
-    forkJoin({
-      books: this.bookService.getBooks(),
-      suggestions: this.suggestionsService.getSuggestions(),
-    }).subscribe({
-      next: ({books, suggestions}) => {
-        this.books = books;
-        this.suggestions = suggestions;
+    if (this.isLoading) {
+      return;
+    }
 
-        console.log("fetching books", books);
-        console.log("fetching suggestions", suggestions);
+    this.isLoading = true;
 
-        this.books.forEach(book => {
-          book.suggestions = this.suggestions.filter(s => s.bookId === book.id);
+    this.searchTermSubject.pipe(debounceTime(300)).subscribe(() => {
+      this.bookService.searchBooks(this.searchTerm, this.pageSize, this.lastEvaluatedKey)
+        .subscribe({
+          next: (data) => {
+            this.booksWithSuggestions = this.lastEvaluatedKey
+              ? [...this.booksWithSuggestions, ...data.booksWithSuggestions]
+              : data.booksWithSuggestions;
+            this.lastEvaluatedKey = data.nextLastEvaluatedKey;
+            this.hasMoreResults = !!this.lastEvaluatedKey;
+          },
+          error: (error) => {
+            if (error.status === 404) {
+              this.booksWithSuggestions = [];
+              this.hasMoreResults = false;
+              this.isLoading = false;
+              this.loadingService.hideSpinner();
+              this.noResultsMessage = "Nothing found :(";
+            } else {
+              console.error('Error loading books:', error);
+            }
+          },
+          complete: () => {
+            this.isLoading = false;
+            this.loadingService.hideSpinner();
+          }
         });
-        this.books = this.books.filter(book => book.suggestions?.length > 0);
-
-        console.log("processed books", this.books);
-      },
-      error: (error) => {
-        console.error("Error fetching data:", error);
-      },
-      complete: () => {
-        this.loadingService.hideSpinner();
-      }
     });
+  }
+
+  resetPagination() {
+    this.lastEvaluatedKey = null;
+    this.hasMoreResults = true;
+  }
+
+  loadMore() {
+    this.loadBooks();
   }
 }

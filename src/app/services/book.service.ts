@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {delay, Observable} from 'rxjs';
-import {Book} from '../models/book';
+import {Observable} from 'rxjs';
+import {BookRetrieve} from '../models/book-retrieve';
 import {BookCreate} from "../models/book-create";
 
 @Injectable({providedIn: 'root'})
@@ -11,20 +11,24 @@ export class BookService {
   constructor(private http: HttpClient) {
   }
 
-  getBooks(): Observable<Book[]> {
-    return this.http.get<Book[]>(this.apiUrl);
+  getBooks(pageSize: number = 10, lastEvaluatedKey: string | null = null): Observable<BookRetrieve[]> {
+    let url = `${this.apiUrl}?pageSize=${pageSize}`;
+    if (lastEvaluatedKey) {
+      url += `&lastEvaluatedKey=${lastEvaluatedKey}`;
+    }
+    return this.http.get<BookRetrieve[]>(url);
   }
 
-  getBook(id: string): Observable<Book> {
+  getBook(id: string): Observable<BookRetrieve> {
     const url = `${this.apiUrl}/${id}`;
-    return this.http.get<Book>(url);
+    return this.http.get<BookRetrieve>(url);
   }
 
-  createBook(book: BookCreate): Observable<Book> {
-    return this.http.post<Book>(this.apiUrl, book);
+  createBook(book: BookCreate): Observable<BookRetrieve> {
+    return this.http.post<BookRetrieve>(this.apiUrl, book);
   }
 
-  updateBook(id: string, book: Book): Observable<any> {
+  updateBook(id: string, book: BookRetrieve): Observable<any> {
     const url = `${this.apiUrl}/${id}`;
     return this.http.put(url, book);
   }
@@ -32,5 +36,13 @@ export class BookService {
   deleteBook(id: string): Observable<any> {
     const url = `${this.apiUrl}/${id}`;
     return this.http.delete(url);
+  }
+
+  searchBooks(searchTerm: string, pageSize: number = 20, lastEvaluatedKey: string | null = null): Observable<any> {
+    let url = `${this.apiUrl}/search?searchTerm=${searchTerm}&pageSize=${pageSize}`;
+    if (lastEvaluatedKey) {
+      url += `&lastEvaluatedKey=${lastEvaluatedKey}`;
+    }
+    return this.http.get<any>(url);
   }
 }

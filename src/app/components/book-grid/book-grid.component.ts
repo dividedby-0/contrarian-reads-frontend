@@ -1,5 +1,7 @@
-import {Component, Input} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {CommonModule} from "@angular/common";
+import {SuggestionCreate} from "../../models/suggestion-create";
+import {BooksWithSuggestions} from "../../models/books-with-suggestions";
 
 @Component({
   selector: 'app-book-grid',
@@ -9,5 +11,5 @@ import {CommonModule} from "@angular/common";
   styleUrl: './book-grid.component.css'
 })
 export class BookGridComponent {
-  @Input() books: any[] | undefined;
+  @Input() booksWithSuggestions: BooksWithSuggestions[] = [];
 }

@@ -1,18 +1,18 @@
 <div class="modal-container">
   <div class="modal-content">
     <span class="close-button" (click)="onClose()">&times;</span>
-    <h2>Add New Alternative Book</h2>
+    <h2>Add New Alternative BookRetrieve</h2>
     <div class="form-and-covers-container">
 
       <div class="form-container">
 
         <div class="form-group">
-          <label for="mainBook">Main Book:</label>
+          <label for="mainBook">Main BookRetrieve:</label>
           <input
             type="text"
             id="mainBook"
             name="mainBook"
-            placeholder="Search for a book..."
+            placeholder="Search for a element..."
             [(ngModel)]="mainBook"
             (input)="onMainBookInput()"
           />
@@ -30,7 +30,7 @@
             type="text"
             id="suggestedAlternative"
             name="suggestedAlternative"
-            placeholder="Search for a book..."
+            placeholder="Search for a element..."
             [(ngModel)]="suggestedAlternative"
             (input)="onSuggestedAlternativeInput()"
           />
@@ -49,7 +49,7 @@
         <textarea
           id="reason"
           name="reason"
-          placeholder="Why do you think this book is a good alternative?"
+          placeholder="Why do you think this element is a good alternative?"
           [(ngModel)]="reason"
           (input)="updateRemainingCharacters()"
           maxlength="150"
@@ -60,7 +60,7 @@
       </div>
       <div class="covers-container">
         <div class="cover-container">
-          <div class="cover-text-top">Main Book</div>
+          <div class="cover-text-top">Main BookRetrieve</div>
           <div class="cover">
             <img *ngIf="selectedMainBook" [src]="selectedMainBook.volumeInfo.imageLinks?.thumbnail"
                  [alt]="selectedMainBook.volumeInfo.title">

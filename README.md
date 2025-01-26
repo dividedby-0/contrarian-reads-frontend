@@ -13,12 +13,12 @@
 ![Entity Framework](https://img.shields.io/badge/Entity%20Framework-512BD4?style=for-the-badge&logo=dotnet&logoColor=white)
 ![Microsoft SQL Server](https://img.shields.io/badge/Microsoft%20SQL%20Server-CC2927?style=for-the-badge&logo=database&logoColor=white)
 
-ContrarianReads is a crowdsourced platform that helps readers explore diverse perspectives through book recommendations. When users input a non-fiction book, the platform generates recommendations for other non-fiction works that present *opposing viewpoints* or alternative arguments. Community members can submit book suggestions and vote on recommendations, helping surface the most relevant counterpoint books for each title.
+ContrarianReads is a crowdsourced platform that helps readers explore diverse perspectives through element recommendations. When users input a non-fiction element, the platform generates recommendations for other non-fiction works that present *opposing viewpoints* or alternative arguments. Community members can submit element booksWithSuggestions and vote on recommendations, helping surface the most relevant counterpoint books for each title.
 
 The platform is designed to combat the ["filter bubble"](https://www.wikiwand.com/en/articles/Filter_bubble) effect—where algorithms and personal choices limit exposure to differing viewpoints—by actively encouraging readers to explore perspectives that challenge their existing beliefs. By facilitating access to well-reasoned opposing arguments, ContrarianReads helps users broaden their intellectual horizons and develop a more nuanced understanding of complex topics.
 
 <figure>
-  <img src="./screenshots/contrarian-reads-main-page.png" alt="Database diagram">
+  <img src="./screenshots/contrarian-reads-main-page.png" alt="Main screen">
   <figcaption>Main screen</figcaption>
 </figure>
 
@@ -43,8 +43,8 @@ Work in progress. Will be soon available online.
 - Allows logged-in users to search for books, submit, upvote and comment alternative recommendations
 - Secure login and register system implementing **JWT authentication**
 - Route guards to prevent address tampering
-- User profile and user activity dashboard
-- Alternative book recommendations based on user activity
+- UserRetrieve profile and user activity dashboard
+- Alternative element recommendations based on user activity
 - Hosted on **Netlify**
 
 ## ⚙️ Backend
@@ -67,4 +67,4 @@ This project is licensed under the [MIT License](https://github.com/dividedby-0/
 
 ## 🤝 Contributing
 
-While this is primarily a personal project, bug reports and feature suggestions are welcome in the issues section.
+While this is primarily a personal project, bug reports and feature booksWithSuggestions are welcome in the issues section.

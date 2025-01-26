@@ -1,33 +1,28 @@
 <div class="book-grid">
-  <div class="book" *ngFor="let book of books">
+  <div class="book" *ngFor="let element of booksWithSuggestions">
+
     <div class="book-main">
-      <img class="book-cover" [src]="book.coverImageUrl" alt="{{ book.title }}">
+      <img class="book-cover" [src]="element.book.coverImageUrl" alt="{{ element.book.title }}">
       <div class="book-info">
-        <div class="book-title">{{ book.title }}</div>
-        <div class="book-author">by {{ book.author }}</div>
+        <div class="book-title">{{ element.book.title }}</div>
+        <div class="book-author">by {{ element.book.author }}</div>
       </div>
     </div>
-    <div class="arrow-container">
-      <svg class="arrow-top" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-        <path d="M2 12h18l-6-6v3h-6v6h6v3l6-6z" fill="currentColor"/>
-      </svg>
-      <svg class="arrow-bottom" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-        <path d="M2 12h18l-6-6v3h-6v6h6v3l6-6z" fill="currentColor"/>
-      </svg>
-    </div>
+
     <div class="suggested-books">
-      <div class="suggested-book" *ngFor="let suggestion of book.suggestions">
+      <div class="suggested-book" *ngFor="let suggestion of element.suggestions">
         <div class="suggested-book-cover">
           <img [src]="suggestion.suggestedBook.coverImageUrl" alt="{{ suggestion.suggestedBook.title }}">
         </div>
         <div class="suggested-book-info">
           <div class="book-title">{{ suggestion.suggestedBook.title }}</div>
           <div class="book-author">by {{ suggestion.suggestedBook.author }}</div>
-          <div class="suggested-by">Suggested by: {{ suggestion.suggestedByUser.username }}</div>
+          <div class="suggested-by">Suggested by {{ suggestion.suggestedByUser.username }}</div>
           <div class="reason">"{{ suggestion.reason }}"</div>
           <div class="upvotes">{{ suggestion.upvoteCount }} upvotes</div>
         </div>
       </div>
     </div>
+
   </div>
 </div>
