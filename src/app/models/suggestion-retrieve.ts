@@ -1,5 +1,6 @@
 import {BookRetrieve} from "./book-retrieve";
 import {UserRetrieve} from "./user-retrieve";
+import {CommentRetrieve} from "./comment-retrieve";
 
 export interface SuggestionRetrieve {
   id: string;
@@ -8,4 +9,5 @@ export interface SuggestionRetrieve {
   suggestedBook: BookRetrieve;
   suggestedByUser: UserRetrieve;
   upvoteCount: number;
+  comments: CommentRetrieve[];
 }
