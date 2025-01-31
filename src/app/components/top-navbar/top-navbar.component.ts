@@ -8,6 +8,7 @@ import {SnackbarService} from "../../services/snackbar.service";
 import {AddAlternativeModalComponent} from "../add-alternative-modal/add-alternative-modal.component";
 import {MainComponent} from "../main/main.component";
 import {SuggestionsService} from "../../services/suggestions.service";
+import {UserProfileModalComponent} from "../user-profile-modal/user-profile-modal.component";
 
 @Component({
   selector: 'app-top-navbar',
@@ -56,5 +57,9 @@ export class TopNavbarComponent {
         this.mainComponent.loadBooks();
       }
     });
+  }
+
+  openUserProfileModal(): void {
+    this.dialog.open(UserProfileModalComponent);
   }
 }

@@ -1,0 +1,88 @@
+.modal-content {
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+  padding: 30px;
+  max-width: 60vw;
+  width: 60vw;
+  max-height: 80vh;
+  height: 80vh;
+  position: relative;
+}
+
+.modal-content-info-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+}
+
+.user-info {
+  display: flex;
+  align-items: center;
+  height: 40%;
+}
+
+.user-interactions {
+  display: flex;
+  justify-content: space-between;
+  flex-direction: row;
+  align-items: center;
+  margin-top: 20px;
+  height: 100%;
+}
+
+.upvotes-container,
+.comments-container,
+.suggestions-container {
+  background-color: whitesmoke;
+  color: black;
+  border-radius: 5px;
+  padding: 5px 10px;
+  width: 30%;
+  height: 100%;
+}
+
+h2 {
+  color: var(--primary-color);
+  margin-bottom: 20px;
+}
+
+.close-button {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  font-size: 20px;
+  cursor: pointer;
+  border: none;
+  background: none;
+  padding: 5px;
+}
+
+.profile-picture {
+  margin-right: 20px;
+}
+
+.profile-picture img {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  object-fit: cover;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
+}
+
+.user-details h3 {
+  margin-top: 0;
+}
+
+.change-button-container {
+}
+
+.change-button {
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  padding: 5px 10px;
+  cursor: pointer;
+}
