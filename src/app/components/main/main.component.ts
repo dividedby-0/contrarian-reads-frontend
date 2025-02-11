@@ -54,7 +54,7 @@ export class MainComponent implements OnInit {
 
     this.isLoading = true;
 
-    this.searchTermSubject.pipe(debounceTime(300)).subscribe(() => {
+    this.searchTermSubject.pipe(debounceTime(800)).subscribe(() => {
       this.bookService.searchBooks(this.searchTerm, this.pageSize, this.lastEvaluatedKey)
         .subscribe({
           next: (data) => {
