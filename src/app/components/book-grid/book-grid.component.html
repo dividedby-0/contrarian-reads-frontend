@@ -16,7 +16,7 @@
 
     <div class="suggested-books">
       <div class="suggested-book" *ngFor="let suggestion of topSuggestions[i]">
-        <div class="suggested-book-cover">
+        <div class="suggested-book-cover" (click)="openSuggestedBookModal(suggestion)">
           <img [src]="suggestion.suggestedBook.coverImageUrl" alt="{{ suggestion.suggestedBook.title }}">
         </div>
         <div class="suggested-book-info">
