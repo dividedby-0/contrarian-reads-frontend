@@ -1,22 +1,28 @@
 <div class="modal-container">
   <div class="modal-content">
-    <span class="close-button" (click)="onClose()">&times;</span>
+    <span class="modal-close-button" (click)="onClose()">&times;</span>
     <h2>Suggested Book Details</h2>
 
-    <div *ngIf="suggestionData" class="book-info">
-      <img [src]="suggestionData.suggestedBook.coverImageUrl" alt="Book Cover" class="book-cover">
+    <div *ngIf="alternativeData" class="book-info-container">
 
-      <h3>{{ suggestionData.suggestedBook.title }}</h3>
-      <p>By: {{ suggestionData.suggestedBook.author }}</p>
+      <div class="left-column-container">
+        <img [src]="alternativeData.suggestedBook.coverImageUrl" alt="Book Cover" class="book-cover">
 
-      <p>Suggested By: {{ suggestionData.suggestedByUser.username }}</p>
-      <p>Reason: {{ suggestionData.reason }}</p>
-      <p>Upvotes: {{ suggestionData.upvoteCount }}</p>
-
-      <h4>Comments:</h4>
-      <div *ngFor="let comment of suggestionData.comments">
-        <p>{{ comment.user.username }}: {{ comment.content }}</p>
+        <h3>{{ alternativeData.suggestedBook.title }}</h3>
+        <p>By: {{ alternativeData.suggestedBook.author }}</p>
       </div>
+
+      <div class="right-column-container">
+        <p>Suggested By: {{ alternativeData.suggestedByUser.username }}</p>
+        <p>Reason: "{{ alternativeData.reason }}"</p>
+        <p>Upvotes: {{ alternativeData.upvoteCount }}</p>
+
+        <h4>Comments:</h4>
+        <div *ngFor="let comment of alternativeData.comments">
+          <p>{{ comment.user.username }}: {{ comment.content }}</p>
+        </div>
+      </div>
+
     </div>
 
   </div>

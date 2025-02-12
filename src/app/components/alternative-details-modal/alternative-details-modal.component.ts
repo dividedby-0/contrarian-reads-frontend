@@ -13,13 +13,13 @@ import {NgForOf, NgIf} from "@angular/common";
   styleUrl: './alternative-details-modal.component.css'
 })
 export class AlternativeDetailsModalComponent {
-  suggestionData: SuggestionRetrieve;
+  alternativeData: SuggestionRetrieve;
 
   constructor(
     public dialogRef: MatDialogRef<AlternativeDetailsModalComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
   ) {
-    this.suggestionData = data.suggestion;
+    this.alternativeData = data.suggestion;
   }
 
   onClose(): void {
