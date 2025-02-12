@@ -6,10 +6,13 @@
     <div *ngIf="alternativeData" class="book-info-container">
 
       <div class="left-column-container">
-        <img [src]="alternativeData.suggestedBook.coverImageUrl" alt="Book Cover" class="book-cover">
-
-        <h3>{{ alternativeData.suggestedBook.title }}</h3>
-        <p>By: {{ alternativeData.suggestedBook.author }}</p>
+        <div class="left-column-content">
+          <img [src]="alternativeData.suggestedBook.coverImageUrl" alt="Book Cover" class="book-cover">
+          <div class="suggestion-info-container">
+            <h3 class="book-title">{{ alternativeData.suggestedBook.title }}</h3>
+            <p class="book-author">By: {{ alternativeData.suggestedBook.author }}</p>
+          </div>
+        </div>
       </div>
 
       <div class="right-column-container">
@@ -18,9 +21,7 @@
         <p>Upvotes: {{ alternativeData.upvoteCount }}</p>
 
         <h4>Comments:</h4>
-        <div *ngFor="let comment of alternativeData.comments">
-          <p>{{ comment.user.username }}: {{ comment.content }}</p>
-        </div>
+        <app-comment-box [comments]="alternativeData.comments"></app-comment-box>
       </div>
 
     </div>

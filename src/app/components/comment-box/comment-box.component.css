@@ -1,0 +1,48 @@
+.comment-box-container {
+  display: flex;
+  flex-direction: column;
+  max-height: 100%;
+}
+
+.add-comment-section {
+  display: flex;
+  flex-direction: row;
+  margin-bottom: 20px;
+}
+
+.comment-input {
+  flex-grow: 1;
+  margin-right: 10px;
+  resize: none;
+}
+
+.character-count {
+  position: absolute;
+  top: 5px;
+  right: 0px;
+  font-size: 0.9rem;
+  color: #888;
+}
+
+.add-comment-button {
+  padding: 12px;
+  background-color: var(--accent-color);
+  color: black;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  font-size: 1rem;
+  border: 1px solid var(--secondary-color);
+  height: 3rem;
+}
+
+.add-comment-button:hover {
+  background-color: var(--highlight-color);
+}
+
+.comment {
+  border: 1px solid #ccc;
+  padding: 10px;
+  margin-bottom: 10px;
+  border-radius: 5px;
+}

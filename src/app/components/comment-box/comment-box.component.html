@@ -1,0 +1,33 @@
+<div class="comment-box-container">
+  <div class="add-comment-section">
+    <mat-form-field appearance="outline" class="comment-input">
+      <mat-label>Add a comment</mat-label>
+      <textarea class="comment-input"
+                matInput
+                placeholder="Enter your comment here..."
+                [(ngModel)]="newCommentText"
+                maxlength="150">
+    </textarea>
+      <small class="character-count">{{ 150 - newCommentText.length }}</small>
+    </mat-form-field>
+    <button class="add-comment-button" (click)="addComment()">Add Comment</button>
+  </div>
+
+  <div *ngFor="let comment of comments">
+    <div class="comment">
+      <p><strong>{{ comment.user.username }}</strong>: {{ comment.content }}</p>
+    </div>
+
+    <mat-expansion-panel *ngIf="getReplies(comment).length > 0" [disabled]="!getReplies(comment).length">
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          View Replies ({{ getReplies(comment).length }})
+        </mat-panel-title>
+      </mat-expansion-panel-header>
+
+      <mat-list role="list">
+        <app-comment-box [comments]="getReplies(comment)"></app-comment-box>
+      </mat-list>
+    </mat-expansion-panel>
+  </div>
+</div>
