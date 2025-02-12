@@ -76,6 +76,7 @@ textarea:focus {
   cursor: pointer;
   transition: background-color 0.3s ease;
   font-size: 1rem;
+  border: 1px solid var(--secondary-color);
 }
 
 .confirm-button:hover {
@@ -96,6 +97,7 @@ textarea:focus {
   background-color: var(--accent-color);
   border-radius: 50px;
   padding: 7px;
+  border: 1px solid var(--secondary-color);
 }
 
 .close-button:hover {

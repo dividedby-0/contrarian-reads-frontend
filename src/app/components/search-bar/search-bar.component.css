@@ -49,3 +49,7 @@
   cursor: pointer;
   margin-left: 10px;
 }
+
+.search-bar button:hover {
+  background-color: var(--highlight-color);
+}

@@ -17,6 +17,7 @@
   margin-left: 20px;
   display: flex;
   align-items: center;
+  text-shadow: 0 0 5px rgba(0, 0, 0, 0.8);
 }
 
 .nav-bar-logo img {
@@ -35,7 +36,7 @@
 }
 
 .nav-bar-text {
-  font-family: Georgia, serif;
+  font-family: serif;
   font-size: 1rem;
   color: var(--accent-color);
   text-align: center;
