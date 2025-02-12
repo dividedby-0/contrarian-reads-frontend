@@ -21,6 +21,16 @@
   max-height: 150px;
 }
 
+.total-suggestions {
+  text-align: center;
+  margin: 5px;
+  text-decoration: underline;
+}
+
+.total-suggestions:hover {
+  cursor: pointer;
+}
+
 .book-cover {
   width: 150px;
   max-width: 150px;
@@ -29,7 +39,7 @@
   object-fit: cover;
   border-radius: 5px;
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
-  margin-top: 2rem;
+  margin: 10px;
 }
 
 .book-cover:hover {

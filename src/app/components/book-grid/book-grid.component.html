@@ -2,10 +2,15 @@
   <div class="book" *ngFor="let element of booksWithSuggestions; let i = index">
 
     <div class="book-main">
+
       <img class="book-cover" [src]="element.book.coverImageUrl" alt="{{ element.book.title }}">
       <div class="book-info">
         <div class="book-title">{{ element.book.title }}</div>
         <div class="book-author">by {{ element.book.author }}</div>
+        <div class="total-suggestions">
+          <span *ngIf="element.suggestions.length === 1">1 alternative</span>
+          <span *ngIf="element.suggestions.length > 1">{{ element.suggestions.length }} alternatives</span>
+        </div>
       </div>
     </div>
 
