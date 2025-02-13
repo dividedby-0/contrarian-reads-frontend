@@ -4,12 +4,14 @@
     <div class="book-main">
 
       <img class="book-cover" [src]="element.book.coverImageUrl" alt="{{ element.book.title }}">
-      <div class="book-info">
-        <div class="book-title">{{ element.book.title }}</div>
-        <div class="book-author">by {{ element.book.author }}</div>
-        <div class="total-suggestions">
-          <span *ngIf="element.suggestions.length === 1">1 alternative</span>
-          <span *ngIf="element.suggestions.length > 1">{{ element.suggestions.length }} alternatives</span>
+      <div class="book-info-container">
+        <div class="book-info">
+          <div class="book-title">{{ element.book.title }}</div>
+          <div class="book-author">by {{ element.book.author }}</div>
+          <div class="total-suggestions">
+            <span *ngIf="element.suggestions.length === 1">1 alternative</span>
+            <span *ngIf="element.suggestions.length > 1">{{ element.suggestions.length }} alternatives</span>
+          </div>
         </div>
       </div>
     </div>
@@ -28,7 +30,10 @@
             <span *ngIf="suggestion.upvoteCount === 1">upvote</span>
             <span *ngIf="suggestion.upvoteCount !== 1">upvotes</span>
           </div>
-          <div class="comments">{{ suggestion.comments.length }} comments</div>
+          <div class="comments">
+            <span *ngIf="suggestion.comments.length === 1">1 comment</span>
+            <span *ngIf="suggestion.comments.length != 1">{{ suggestion.comments.length }} comments</span>
+          </div>
         </div>
       </div>
     </div>
