@@ -8,4 +8,5 @@ export interface CommentRetrieve {
   createdAt: Date;
   updatedAt: Date;
   parentId?: string;
+  replies: CommentRetrieve[];
 }

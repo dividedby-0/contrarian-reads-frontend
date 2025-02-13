@@ -1,42 +1,29 @@
-import {Component, Input} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {CommentRetrieve} from '../../models/comment-retrieve';
-import {MatExpansionPanel, MatExpansionPanelHeader, MatExpansionPanelTitle} from "@angular/material/expansion";
-import {MatList} from "@angular/material/list";
-import {NgForOf, NgIf} from "@angular/common";
-import {MatFormField, MatFormFieldModule} from "@angular/material/form-field";
-import {FormsModule} from "@angular/forms";
-import {MatInputModule} from "@angular/material/input";
+import {DatePipe, NgForOf, NgIf} from '@angular/common';
 
 @Component({
   selector: 'app-comment-box',
-  standalone: true,
-  imports: [
-    MatExpansionPanel,
-    MatExpansionPanelTitle,
-    MatExpansionPanelHeader,
-    MatList,
-    NgForOf,
-    NgIf,
-    MatFormFieldModule,
-    MatInputModule,
-    FormsModule,
-  ],
   templateUrl: './comment-box.component.html',
-  styleUrl: './comment-box.component.css'
+  standalone: true,
+  imports: [NgForOf, NgIf, DatePipe],
+  styleUrls: ['./comment-box.component.css']
 })
-export class CommentBoxComponent {
+export class CommentBoxComponent implements OnInit {
   @Input() comments: CommentRetrieve[] = [];
-  newCommentText: string = '';
+  @Input() nestingLevel: number = 0;
 
-  addComment() {
-    // Implement your logic to add the new comment here.
-    // You'll likely need a service to send the comment to your backend.
-
-    // After adding the comment:
-    this.newCommentText = ''; // Clear the input field
+  constructor() {
   }
 
-  getReplies(comment: CommentRetrieve): CommentRetrieve[] {
-    return this.comments.filter(reply => reply.parentId === comment.id);
+  ngOnInit() {
   }
+
+  getRandomPastelColor(): string {
+    const r = Math.floor(Math.random() * 56) + 190;
+    const g = Math.floor(Math.random() * 56) + 190;
+    const b = Math.floor(Math.random() * 56) + 190;
+    return '#' + ((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1);
+  }
+
 }

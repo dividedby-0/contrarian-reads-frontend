@@ -19,6 +19,17 @@
   align-items: center;
 }
 
+.book-cover {
+  width: 150px;
+  max-width: 150px;
+  height: 250px;
+  max-height: 250px;
+  object-fit: cover;
+  border-radius: 5px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
+  margin: 10px;
+}
+
 .suggestion-info-container {
   display: flex;
   flex-direction: column;
@@ -36,16 +47,44 @@
 
 .right-column-container {
   align-self: flex-start;
-  flex-grow: 2;
+  flex-grow: 1;
 }
 
-.book-cover {
-  width: 150px;
-  max-width: 150px;
-  height: 250px;
-  max-height: 250px;
-  object-fit: cover;
-  border-radius: 5px;
-  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
-  margin: 10px;
+.reason-text {
+  font-style: italic;
+}
+
+.add-comment-section {
+  display: flex;
+  flex-direction: row;
+}
+
+.comment-input {
+  flex-grow: 1;
+  margin-right: 10px;
+  resize: none;
+}
+
+.character-count {
+  position: absolute;
+  top: 5px;
+  right: 0px;
+  font-size: 0.9rem;
+  color: #888;
+}
+
+.add-comment-button {
+  padding: 12px;
+  background-color: var(--accent-color);
+  color: black;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  font-size: 1rem;
+  border: 1px solid var(--secondary-color);
+  height: 3rem;
+}
+
+.add-comment-button:hover {
+  background-color: var(--highlight-color);
 }
