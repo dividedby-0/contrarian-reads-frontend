@@ -1,7 +1,7 @@
 import {Component, Inject, OnInit} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 import {SuggestionRetrieve} from '../../models/suggestion-retrieve';
-import {NgIf} from "@angular/common";
+import {DatePipe, NgIf} from "@angular/common";
 import {CommentBoxComponent} from "../comment-box/comment-box.component";
 import {CommentService} from "../../services/comment.service";
 import {FormsModule} from "@angular/forms";
@@ -18,7 +18,8 @@ import {CommentRetrieve} from "../../models/comment-retrieve";
     FormsModule,
     MatFormField,
     MatInput,
-    MatLabel
+    MatLabel,
+    DatePipe
   ],
   templateUrl: './alternative-details-modal.component.html',
   styleUrl: './alternative-details-modal.component.css'
@@ -58,8 +59,11 @@ export class AlternativeDetailsModalComponent implements OnInit {
           console.error('Error adding comment:', error);
         }
       });
-
     this.newCommentText = '';
+  }
+
+  addUpvote() {
+    //TODO: upvote logic
   }
 
   onClose(): void {

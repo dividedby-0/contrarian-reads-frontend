@@ -10,15 +10,17 @@
           <img [src]="alternativeData.suggestedBook.coverImageUrl" alt="Book Cover" class="book-cover">
           <div class="suggestion-info-container">
             <h3 class="book-title">{{ alternativeData.suggestedBook.title }}</h3>
-            <p class="book-author">By: {{ alternativeData.suggestedBook.author }}</p>
+            <p class="book-author">{{ alternativeData.suggestedBook.author }}</p>
           </div>
+          <button class="upvote-button" (click)="addUpvote()">Upvote book</button>
         </div>
       </div>
 
       <div class="right-column-container">
-        <p>Suggested By: {{ alternativeData.suggestedByUser.username }}</p>
-        <p>Reason: "<span class="reason-text">{{ alternativeData.reason }}</span>"</p>
-        <p>Upvotes: {{ alternativeData.upvoteCount }}</p>
+        <p>Suggested by {{ alternativeData.suggestedByUser.username }}
+          on {{ alternativeData.createdAt | date:"MMM dd, yyyy '@' hh:mm a" }}</p>
+        <p>Reason for suggestion: "<span class="reason-text">{{ alternativeData.reason }}</span>"</p>
+        <p>Total upvotes: {{ alternativeData.upvoteCount }}</p>
 
         <div class="add-comment-section">
           <mat-form-field appearance="outline" class="comment-input">

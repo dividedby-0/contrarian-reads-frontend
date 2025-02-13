@@ -39,10 +39,34 @@
 
 .book-title {
   margin: 0;
+  max-width: 15rem;
+  text-align: center;
+  color: var(--primary-color);
 }
 
 .book-author {
   margin: 0;
+  max-width: 15rem;
+  text-align: center;
+  font-style: italic;
+  font-weight: lighter;
+  font-size: 0.9rem;
+}
+
+.upvote-button {
+  padding: 12px;
+  background-color: var(--accent-color);
+  color: black;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  font-size: 1rem;
+  border: 1px solid var(--secondary-color);
+  margin-top: 1rem;
+}
+
+.upvote-button:hover {
+  background-color: var(--highlight-color);
 }
 
 .right-column-container {
