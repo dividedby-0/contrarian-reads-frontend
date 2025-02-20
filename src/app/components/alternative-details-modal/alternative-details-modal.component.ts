@@ -8,6 +8,7 @@ import {FormsModule} from "@angular/forms";
 import {MatFormField, MatLabel} from "@angular/material/form-field";
 import {MatInput} from "@angular/material/input";
 import {CommentRetrieve} from "../../models/comment-retrieve";
+import {SuggestionsService} from "../../services/suggestions.service";
 
 @Component({
   selector: 'app-suggested-book-modal',
@@ -32,7 +33,8 @@ export class AlternativeDetailsModalComponent implements OnInit {
   constructor(
     public dialogRef: MatDialogRef<AlternativeDetailsModalComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
-    private commentService: CommentService
+    private commentService: CommentService,
+    private suggestionsService: SuggestionsService
   ) {
     this.alternativeData = data.suggestion;
   }
@@ -62,10 +64,26 @@ export class AlternativeDetailsModalComponent implements OnInit {
     this.newCommentText = '';
   }
 
-  addUpvote() {
-    //TODO: upvote logic
-  }
+  addUpvote(suggestionId: string) {
+    const userId = localStorage.getItem("userId");
 
+    if (typeof userId === 'string') {
+      this.suggestionsService.upvoteSuggestion(suggestionId, userId).subscribe({
+        next: (response) => {
+          console.log('Upvote successful:', response);
+        },
+        error: (error) => {
+          console.error('Error upvoting suggestion:', error);
+        },
+        complete: () => {
+          console.log('Upvote operation complete.');
+        }
+      });
+    } else {
+      console.error('Error upvoting suggestion: userId is not a string');
+    }
+  }
+  
   onClose(): void {
     this.dialogRef.close();
   }

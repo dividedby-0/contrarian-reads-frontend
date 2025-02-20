@@ -27,4 +27,9 @@ export class SuggestionsService {
   createSuggestion(suggestion: SuggestionCreate): Observable<SuggestionCreate> {
     return this.http.post<SuggestionCreate>(this.apiUrl, suggestion);
   }
+
+  upvoteSuggestion(suggestionId: string, userId: string | null): Observable<any> {
+    const url = `${this.apiUrl}/${suggestionId}/upvote?userId=${userId}`;
+    return this.http.post(url, {});
+  }
 }

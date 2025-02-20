@@ -12,7 +12,7 @@
             <h3 class="book-title">{{ alternativeData.suggestedBook.title }}</h3>
             <p class="book-author">{{ alternativeData.suggestedBook.author }}</p>
           </div>
-          <button class="upvote-button" (click)="addUpvote()">Upvote book</button>
+          <button class="upvote-button" (click)="addUpvote(alternativeData.id)">Upvote book</button>
         </div>
       </div>
 
