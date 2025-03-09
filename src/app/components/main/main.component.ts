@@ -37,8 +37,8 @@ export class MainComponent implements OnInit {
 
   ngOnInit() {
     this.refreshMainPageContent();
-    
-    this.eventService.event$.subscribe(() => {
+
+    this.eventService.refreshMainPage$.subscribe(() => {
       this.refreshMainPageContent();
     });
   }

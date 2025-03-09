@@ -5,10 +5,10 @@ import {Subject} from 'rxjs';
   providedIn: 'root'
 })
 export class EventService {
-  private eventSubject = new Subject<void>();
-  event$ = this.eventSubject.asObservable();
+  private refreshMainPageSubject = new Subject<void>();
+  refreshMainPage$ = this.refreshMainPageSubject.asObservable();
 
   refreshMainPage() {
-    this.eventSubject.next();
+    this.refreshMainPageSubject.next();
   }
 }
