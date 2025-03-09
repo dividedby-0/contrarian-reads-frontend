@@ -1,10 +1,10 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input} from '@angular/core';
 import {CommonModule} from "@angular/common";
 import {MatDialog} from "@angular/material/dialog";
-import {SuggestionCreate} from "../../models/suggestion-create";
 import {BooksWithSuggestions} from "../../models/books-with-suggestions";
 import {SuggestionRetrieve} from "../../models/suggestion-retrieve";
 import {AlternativeDetailsModalComponent} from "../alternative-details-modal/alternative-details-modal.component";
+import {SuggestionsService} from "../../services/suggestions.service";
 
 @Component({
   selector: 'app-book-grid',
@@ -15,7 +15,7 @@ import {AlternativeDetailsModalComponent} from "../alternative-details-modal/alt
 })
 export class BookGridComponent {
 
-  constructor(private dialog: MatDialog) {
+  constructor(private dialog: MatDialog, private suggestionsService: SuggestionsService) {
   }
 
   @Input() booksWithSuggestions: BooksWithSuggestions[] = [];
@@ -32,8 +32,15 @@ export class BookGridComponent {
   }
 
   openSuggestedBookModal(suggestion: SuggestionRetrieve) {
-    this.dialog.open(AlternativeDetailsModalComponent, {
-      data: {suggestion: suggestion}
-    });
+    this.suggestionsService.getSuggestionById(suggestion.id).subscribe({
+      next: (suggestion) => {
+        this.dialog.open(AlternativeDetailsModalComponent, {
+          data: {suggestion: suggestion}
+        });
+      },
+      error: (error) => {
+        console.error('Error retrieving suggestion data:', error);
+      }
+    })
   }
 }

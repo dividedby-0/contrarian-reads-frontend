@@ -37,6 +37,13 @@
   justify-content: center;
 }
 
+.suggested-by {
+  margin: 0;
+  max-width: 15rem;
+  text-align: center;
+  font-weight: bold;
+}
+
 .book-title {
   margin: 0;
   max-width: 15rem;

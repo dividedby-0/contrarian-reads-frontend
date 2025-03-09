@@ -3,24 +3,26 @@
     <span class="modal-close-button" (click)="onClose()">&times;</span>
     <h2>Suggested Book Details</h2>
 
-    <div *ngIf="alternativeData" class="book-info-container">
+    <div *ngIf="this.data.suggestion" class="book-info-container">
 
       <div class="left-column-container">
         <div class="left-column-content">
-          <img [src]="alternativeData.suggestedBook.coverImageUrl" alt="Book Cover" class="book-cover">
-          <div class="suggestion-info-container">
-            <h3 class="book-title">{{ alternativeData.suggestedBook.title }}</h3>
-            <p class="book-author">{{ alternativeData.suggestedBook.author }}</p>
+          <div class="upvotescount-container">
+            <p>Total upvotes: {{ this.data.suggestion.upvotesCount }}</p>
           </div>
-          <button class="upvote-button" (click)="addUpvote(alternativeData.id)">Upvote book</button>
+          <img [src]="this.data.suggestion.suggestedBook.coverImageUrl" alt="Book Cover" class="book-cover">
+          <div class="suggestion-info-container">
+            <h3 class="book-title">{{ this.data.suggestion.suggestedBook.title }}</h3>
+            <p class="book-author">{{ this.data.suggestion.suggestedBook.author }}</p>
+          </div>
+          <button class="upvote-button" (click)="addUpvote(this.data.suggestion.id)">Upvote book</button>
         </div>
       </div>
 
       <div class="right-column-container">
-        <p>Suggested by {{ alternativeData.suggestedByUser.username }}
-          on {{ alternativeData.createdAt | date:"MMM dd, yyyy '@' hh:mm a" }}</p>
-        <p>Reason for suggestion: "<span class="reason-text">{{ alternativeData.reason }}</span>"</p>
-        <p>Total upvotes: {{ alternativeData.upvoteCount }}</p>
+        <p>Suggested by <span class="suggested-by"> {{ this.data.suggestion.suggestedByUser.username }} </span>
+          on {{ this.data.suggestion.createdAt | date:"MMM dd, yyyy" }}</p>
+        <p>Reason for suggestion: "<span class="reason-text">{{ this.data.suggestion.reason }}</span>"</p>
 
         <div class="add-comment-section">
           <mat-form-field appearance="outline" class="comment-input">
@@ -35,12 +37,12 @@
           </mat-form-field>
           <button class="add-comment-button" (click)="addComment(newCommentText)">Add Comment</button>
         </div>
-        <div *ngIf="alternativeData.comments.length > 0; else noComments">
-          <h4>Comments (Total: {{ alternativeData.comments.length }})</h4>
+        <div *ngIf="this.comments.length > 0; else noCommentsSection">
+          <h4>Comments (Total: {{ this.comments.length }})</h4>
           <app-comment-box [comments]="comments"></app-comment-box>
         </div>
 
-        <ng-template #noComments>
+        <ng-template #noCommentsSection>
           <p>No comments yet...</p>
         </ng-template>
       </div>

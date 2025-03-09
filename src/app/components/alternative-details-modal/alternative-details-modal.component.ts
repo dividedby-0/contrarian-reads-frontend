@@ -1,6 +1,5 @@
 import {Component, Inject, OnInit} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
-import {SuggestionRetrieve} from '../../models/suggestion-retrieve';
 import {DatePipe, NgIf} from "@angular/common";
 import {CommentBoxComponent} from "../comment-box/comment-box.component";
 import {CommentService} from "../../services/comment.service";
@@ -26,7 +25,7 @@ import {SuggestionsService} from "../../services/suggestions.service";
   styleUrl: './alternative-details-modal.component.css'
 })
 export class AlternativeDetailsModalComponent implements OnInit {
-  alternativeData: SuggestionRetrieve;
+
   newCommentText: string = '';
   comments: CommentRetrieve[] = [];
 
@@ -36,18 +35,43 @@ export class AlternativeDetailsModalComponent implements OnInit {
     private commentService: CommentService,
     private suggestionsService: SuggestionsService
   ) {
-    this.alternativeData = data.suggestion;
   }
 
   ngOnInit() {
-    this.commentService.getCommentsBySuggestionId(this.alternativeData.id).subscribe(comments => {
-      this.comments = comments;
+    this.refreshUpvotesCount();
+    this.refreshComments();
+  }
+
+  ngOnChanges() {
+    this.refreshUpvotesCount();
+    this.refreshComments();
+  }
+
+  refreshUpvotesCount() {
+    this.suggestionsService.getUpvotesCount(this.data.suggestion.id).subscribe({
+      next: (upvotesCount) => {
+        this.data.suggestion.upvotesCount = upvotesCount;
+      },
+      error: (error) => {
+        console.error('Error retrieving upvotes count:', error);
+      }
+    })
+  }
+
+  refreshComments() {
+    this.commentService.getCommentsBySuggestionId(this.data.suggestion.id).subscribe({
+      next: (comments) => {
+        this.comments = comments;
+      },
+      error: (error) => {
+        console.error('Error retrieving comments:', error);
+      }
     });
   }
 
   addComment(commentContent: string) {
     const newComment = {
-      suggestionId: this.alternativeData.id,
+      suggestionId: this.data.suggestion.id,
       commentedByUserId: localStorage.getItem("userId"),
       content: commentContent
     };
@@ -83,7 +107,7 @@ export class AlternativeDetailsModalComponent implements OnInit {
       console.error('Error upvoting suggestion: userId is not a string');
     }
   }
-  
+
   onClose(): void {
     this.dialogRef.close();
   }
