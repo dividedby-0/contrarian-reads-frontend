@@ -88,7 +88,7 @@ export class AlternativeDetailsModalComponent implements OnInit {
     this.newCommentText = '';
   }
 
-  addUpvote(suggestionId: string) {
+  toggleUpvote(suggestionId: string) {
     const userId = localStorage.getItem("userId");
 
     if (typeof userId === 'string') {
@@ -101,6 +101,7 @@ export class AlternativeDetailsModalComponent implements OnInit {
         },
         complete: () => {
           console.log('Upvote operation complete.');
+          this.refreshUpvotesCount();
         }
       });
     } else {

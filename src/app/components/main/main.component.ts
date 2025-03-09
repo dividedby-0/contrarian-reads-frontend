@@ -6,9 +6,9 @@ import {BookService} from "../../services/book.service";
 import {SpinnerComponent} from "../spinner/spinner.component";
 import {LoadingService} from "../../services/loading.service";
 import {AsyncPipe, NgIf} from "@angular/common";
-import {SuggestionsService} from "../../services/suggestions.service";
 import {debounceTime} from "rxjs/operators";
 import {Subject} from "rxjs";
+import {EventService} from "../../services/event.service";
 
 @Component({
   selector: 'app-main',
@@ -30,11 +30,20 @@ export class MainComponent implements OnInit {
 
   constructor(
     public bookService: BookService,
-    public loadingService: LoadingService
+    public loadingService: LoadingService,
+    public eventService: EventService
   ) {
   }
 
   ngOnInit() {
+    this.refreshMainPageContent();
+    
+    this.eventService.event$.subscribe(() => {
+      this.refreshMainPageContent();
+    });
+  }
+
+  refreshMainPageContent() {
     this.loadBooks();
     this.searchTermSubject.next('');
   }

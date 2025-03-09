@@ -5,6 +5,7 @@ import {BooksWithSuggestions} from "../../models/books-with-suggestions";
 import {SuggestionRetrieve} from "../../models/suggestion-retrieve";
 import {AlternativeDetailsModalComponent} from "../alternative-details-modal/alternative-details-modal.component";
 import {SuggestionsService} from "../../services/suggestions.service";
+import {EventService} from "../../services/event.service";
 
 @Component({
   selector: 'app-book-grid',
@@ -15,7 +16,7 @@ import {SuggestionsService} from "../../services/suggestions.service";
 })
 export class BookGridComponent {
 
-  constructor(private dialog: MatDialog, private suggestionsService: SuggestionsService) {
+  constructor(private dialog: MatDialog, private suggestionsService: SuggestionsService, private eventService: EventService) {
   }
 
   @Input() booksWithSuggestions: BooksWithSuggestions[] = [];
@@ -34,8 +35,12 @@ export class BookGridComponent {
   openSuggestedBookModal(suggestion: SuggestionRetrieve) {
     this.suggestionsService.getSuggestionById(suggestion.id).subscribe({
       next: (suggestion) => {
-        this.dialog.open(AlternativeDetailsModalComponent, {
+        const dialogRef = this.dialog.open(AlternativeDetailsModalComponent, {
           data: {suggestion: suggestion}
+        });
+
+        dialogRef.afterClosed().subscribe(result => {
+          this.eventService.refreshMainPage();
         });
       },
       error: (error) => {

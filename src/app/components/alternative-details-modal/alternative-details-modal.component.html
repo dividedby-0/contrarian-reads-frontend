@@ -15,7 +15,7 @@
             <h3 class="book-title">{{ this.data.suggestion.suggestedBook.title }}</h3>
             <p class="book-author">{{ this.data.suggestion.suggestedBook.author }}</p>
           </div>
-          <button class="upvote-button" (click)="addUpvote(this.data.suggestion.id)">Upvote book</button>
+          <button class="upvote-button" (click)="toggleUpvote(this.data.suggestion.id)">Upvote book</button>
         </div>
       </div>
 
