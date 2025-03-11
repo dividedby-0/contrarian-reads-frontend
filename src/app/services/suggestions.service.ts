@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {HttpClient} from '@angular/common/http';
+import {HttpClient, HttpParams} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {SuggestionCreate} from '../models/suggestion-create';
 import {SuggestionRetrieve} from "../models/suggestion-retrieve";
@@ -12,7 +12,7 @@ export class SuggestionsService {
   }
 
   getSuggestions(): Observable<SuggestionRetrieve[]> {
-    return this.http.get<SuggestionRetrieve[]>(this.apiUrl);
+    return this.http.get<SuggestionRetrieve[]>(`${this.apiUrl}/all`);
   }
 
   getSuggestionCount(): Observable<number> {
@@ -23,9 +23,13 @@ export class SuggestionsService {
     return this.http.get<number>(`${this.apiUrl}/${suggestionId}/upvotes`);
   }
 
-  getSuggestionById(id: string): Observable<SuggestionRetrieve> {
-    const url = `${this.apiUrl}/${id}`;
-    return this.http.get<SuggestionRetrieve>(url);
+  getSuggestionById(suggestionId: string, userId: string | null): Observable<SuggestionRetrieve> {
+    let params = new HttpParams().set('suggestionId', suggestionId);
+    if (userId) {
+      params = params.set('userId', userId);
+    }
+
+    return this.http.get<SuggestionRetrieve>(`${this.apiUrl}`, {params});
   }
 
   createSuggestion(suggestion: SuggestionCreate): Observable<SuggestionCreate> {

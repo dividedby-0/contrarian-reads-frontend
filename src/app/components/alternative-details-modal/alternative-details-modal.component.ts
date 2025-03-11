@@ -28,6 +28,7 @@ export class AlternativeDetailsModalComponent implements OnInit {
 
   newCommentText: string = '';
   comments: CommentRetrieve[] = [];
+  upvoteAlreadyExists = false;
 
   constructor(
     public dialogRef: MatDialogRef<AlternativeDetailsModalComponent>,
@@ -38,6 +39,7 @@ export class AlternativeDetailsModalComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.upvoteAlreadyExists = this.data.suggestion.upvoteAlreadyExists;
     this.refreshUpvotesCount();
     this.refreshComments();
   }
@@ -95,6 +97,7 @@ export class AlternativeDetailsModalComponent implements OnInit {
       this.suggestionsService.upvoteSuggestion(suggestionId, userId).subscribe({
         next: (response) => {
           console.log('Upvote successful:', response);
+          this.upvoteAlreadyExists = response.upvoteAlreadyExists;
         },
         error: (error) => {
           console.error('Error upvoting suggestion:', error);

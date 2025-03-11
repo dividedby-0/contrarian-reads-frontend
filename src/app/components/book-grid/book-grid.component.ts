@@ -33,7 +33,8 @@ export class BookGridComponent {
   }
 
   openSuggestedBookModal(suggestion: SuggestionRetrieve) {
-    this.suggestionsService.getSuggestionById(suggestion.id).subscribe({
+    const userId = localStorage.getItem("userId");
+    this.suggestionsService.getSuggestionById(suggestion.id, userId).subscribe({
       next: (suggestion) => {
         const dialogRef = this.dialog.open(AlternativeDetailsModalComponent, {
           data: {suggestion: suggestion}
