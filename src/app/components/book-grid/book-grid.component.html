@@ -8,7 +8,7 @@
         <div class="book-info">
           <div class="book-title">{{ element.book.title }}</div>
           <div class="book-author">by {{ element.book.author }}</div>
-          <div class="total-suggestions">
+          <div class="total-suggestions" (click)="openShowSuggestionsForBookModal(element.suggestions)">
             <span *ngIf="element.suggestions.length === 1">1 alternative</span>
             <span *ngIf="element.suggestions.length > 1">{{ element.suggestions.length }} alternatives</span>
           </div>

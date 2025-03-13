@@ -6,11 +6,14 @@ import {SuggestionRetrieve} from "../../models/suggestion-retrieve";
 import {AlternativeDetailsModalComponent} from "../alternative-details-modal/alternative-details-modal.component";
 import {SuggestionsService} from "../../services/suggestions.service";
 import {EventService} from "../../services/event.service";
+import {
+  ShowSuggestionsForBookModalComponent
+} from "../show-suggestions-for-book-modal/show-suggestions-for-book-modal.component";
 
 @Component({
   selector: 'app-book-grid',
   standalone: true,
-  imports: [CommonModule, AlternativeDetailsModalComponent],
+  imports: [CommonModule],
   templateUrl: './book-grid.component.html',
   styleUrl: './book-grid.component.css'
 })
@@ -48,5 +51,11 @@ export class BookGridComponent {
         console.error('Error retrieving suggestion data:', error);
       }
     })
+  }
+
+  openShowSuggestionsForBookModal(suggestions: any[]) {
+    this.dialog.open(ShowSuggestionsForBookModalComponent, {
+      data: {suggestions: suggestions},
+    });
   }
 }

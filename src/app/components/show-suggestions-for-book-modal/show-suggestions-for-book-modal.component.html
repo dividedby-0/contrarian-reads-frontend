@@ -1,0 +1,25 @@
+<div class="modal-container">
+  <div class="modal-content">
+    <span class="modal-close-button" (click)="onClose()">&times;</span>
+    <h2>All Suggestions For The Book</h2>
+
+    <div class="search-bar-container">
+      <input type="text" placeholder="Search suggestions..." [(ngModel)]="searchTerm"
+             (ngModelChange)="filterSuggestions()"/>
+    </div>
+
+    <div class="suggestions-container">
+      <div class="suggestion-row" *ngFor="let suggestion of filteredSuggestions">
+        <img [src]="suggestion.suggestedBook.coverImageUrl" alt="Cover" class="cover">
+        <div class="suggestion-info">
+          <h3>{{ suggestion.suggestedBook.title }}</h3>
+          <p>by {{ suggestion.suggestedBook.author }}</p>
+          <p>Suggested by: {{ suggestion.suggestedByUser.username }}</p>
+          <p>Reason: {{ suggestion.reason }}</p>
+          <p>Upvotes: {{ suggestion.upvoteCount }}</p>
+          <p>Comments: {{ suggestion.comments.length }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
