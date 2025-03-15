@@ -13,13 +13,15 @@
         <select [(ngModel)]="orderBy" (ngModelChange)="sortSuggestions()">
           <option value="upvoteCount">Sort by: Upvotes</option>
           <option value="comments.length">Sort by: Comments</option>
+          <option value="createdAt">Sort by: Creation Date</option>
         </select>
       </div>
     </div>
 
     <div class="suggestions-container" *ngIf="filteredSuggestions.length > 0; else noResults">
       <div class="suggestion-row" *ngFor="let suggestion of filteredSuggestions">
-        <img [src]="suggestion.suggestedBook.coverImageUrl" alt="Cover" class="cover">
+        <img [src]="suggestion.suggestedBook.coverImageUrl" alt="Cover" class="cover"
+             (click)="openAlternativeDetailsModal(suggestion)">
         <div class="suggestion-info">
           <h3>{{ suggestion.suggestedBook.title }}</h3>
           <p>by {{ suggestion.suggestedBook.author }}</p>

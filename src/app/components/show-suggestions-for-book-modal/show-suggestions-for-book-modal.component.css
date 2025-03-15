@@ -64,6 +64,12 @@
   margin: 1rem;
 }
 
+.cover:hover {
+  transform: rotate(5deg);
+  transition: transform 0.3s ease-in-out;
+  cursor: pointer;
+}
+
 .suggestion-info {
   display: flex;
   flex-direction: column;

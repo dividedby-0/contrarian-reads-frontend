@@ -1,7 +1,8 @@
 import {Component, Inject} from '@angular/core';
-import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
+import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from '@angular/material/dialog';
 import {DatePipe, NgForOf, NgIf} from "@angular/common";
 import {FormsModule} from "@angular/forms";
+import {AlternativeDetailsModalComponent} from "../alternative-details-modal/alternative-details-modal.component";
 
 @Component({
   selector: 'app-show-suggestions-for-book-modal',
@@ -22,7 +23,8 @@ export class ShowSuggestionsForBookModalComponent {
 
   constructor(
     public dialogRef: MatDialogRef<ShowSuggestionsForBookModalComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: { suggestions: any[] }
+    @Inject(MAT_DIALOG_DATA) public data: { suggestions: any[] },
+    private dialog: MatDialog
   ) {
     this.filteredSuggestions = this.data.suggestions;
   }
@@ -48,10 +50,21 @@ export class ShowSuggestionsForBookModalComponent {
     this.filteredSuggestions.sort((a, b) => {
       if (this.orderBy === 'upvoteCount') {
         return b.upvoteCount - a.upvoteCount;
-      } else {
+      } else if (this.orderBy === 'comments.length') {
         return b.comments.length - a.comments.length;
+      } else if (this.orderBy === 'createdAt') {
+        return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
+      } else {
+        return 0;
       }
     });
   }
 
+  openAlternativeDetailsModal(suggestion: any) {
+    this.dialogRef.close();
+
+    this.dialog.open(AlternativeDetailsModalComponent, {
+      data: {suggestion: suggestion}
+    });
+  }
 }
