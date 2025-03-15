@@ -3,6 +3,8 @@ import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from '@angular/material/dialog
 import {DatePipe, NgForOf, NgIf} from "@angular/common";
 import {FormsModule} from "@angular/forms";
 import {AlternativeDetailsModalComponent} from "../alternative-details-modal/alternative-details-modal.component";
+import {SuggestionsService} from "../../services/suggestions.service";
+import {EventService} from "../../services/event.service";
 
 @Component({
   selector: 'app-show-suggestions-for-book-modal',
@@ -24,7 +26,9 @@ export class ShowSuggestionsForBookModalComponent {
   constructor(
     public dialogRef: MatDialogRef<ShowSuggestionsForBookModalComponent>,
     @Inject(MAT_DIALOG_DATA) public data: { suggestions: any[] },
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private suggestionsService: SuggestionsService,
+    private eventService: EventService
   ) {
     this.filteredSuggestions = this.data.suggestions;
   }
@@ -63,8 +67,20 @@ export class ShowSuggestionsForBookModalComponent {
   openAlternativeDetailsModal(suggestion: any) {
     this.dialogRef.close();
 
-    this.dialog.open(AlternativeDetailsModalComponent, {
-      data: {suggestion: suggestion}
-    });
+    const userId = localStorage.getItem("userId");
+    this.suggestionsService.getSuggestionById(suggestion.id, userId).subscribe({
+      next: (suggestion) => {
+        const dialogRef = this.dialog.open(AlternativeDetailsModalComponent, {
+          data: {suggestion: suggestion}
+        });
+
+        dialogRef.afterClosed().subscribe(result => {
+          this.eventService.refreshMainPage();
+        });
+      },
+      error: (error) => {
+        console.error('Error retrieving suggestion data:', error);
+      }
+    })
   }
 }

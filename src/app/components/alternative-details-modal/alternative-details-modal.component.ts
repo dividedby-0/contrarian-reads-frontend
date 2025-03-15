@@ -39,6 +39,7 @@ export class AlternativeDetailsModalComponent implements OnInit {
   }
 
   ngOnInit() {
+    console.log(this.data);
     this.upvoteAlreadyExists = this.data.suggestion.upvoteAlreadyExists;
     this.refreshUpvotesCount();
     this.refreshComments();
