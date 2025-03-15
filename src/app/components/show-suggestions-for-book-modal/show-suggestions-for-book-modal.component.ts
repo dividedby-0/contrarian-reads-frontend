@@ -1,6 +1,6 @@
 import {Component, Inject} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
-import {NgForOf} from "@angular/common";
+import {DatePipe, NgForOf, NgIf} from "@angular/common";
 import {FormsModule} from "@angular/forms";
 
 @Component({
@@ -8,7 +8,9 @@ import {FormsModule} from "@angular/forms";
   standalone: true,
   imports: [
     NgForOf,
-    FormsModule
+    FormsModule,
+    DatePipe,
+    NgIf
   ],
   templateUrl: './show-suggestions-for-book-modal.component.html',
   styleUrl: './show-suggestions-for-book-modal.component.css'
@@ -16,6 +18,7 @@ import {FormsModule} from "@angular/forms";
 export class ShowSuggestionsForBookModalComponent {
   searchTerm: string = '';
   filteredSuggestions: any[] = [];
+  orderBy: string = 'upvoteCount';
 
   constructor(
     public dialogRef: MatDialogRef<ShowSuggestionsForBookModalComponent>,
@@ -38,5 +41,17 @@ export class ShowSuggestionsForBookModalComponent {
 
       return titleMatch || authorMatch;
     });
+    this.sortSuggestions();
   }
+
+  sortSuggestions() {
+    this.filteredSuggestions.sort((a, b) => {
+      if (this.orderBy === 'upvoteCount') {
+        return b.upvoteCount - a.upvoteCount;
+      } else {
+        return b.comments.length - a.comments.length;
+      }
+    });
+  }
+
 }
