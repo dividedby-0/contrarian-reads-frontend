@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {HttpClient, HttpParams} from '@angular/common/http';
+import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {SuggestionCreate} from '../models/suggestion-create';
 import {SuggestionRetrieve} from "../models/suggestion-retrieve";
@@ -12,7 +12,12 @@ export class SuggestionsService {
   }
 
   getSuggestions(): Observable<SuggestionRetrieve[]> {
-    return this.http.get<SuggestionRetrieve[]>(`${this.apiUrl}/all`);
+    const token = localStorage.getItem('token');
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`
+    });
+
+    return this.http.get<SuggestionRetrieve[]>(`${this.apiUrl}/all`, {headers: headers});
   }
 
   getSuggestionCount(): Observable<number> {
@@ -33,11 +38,21 @@ export class SuggestionsService {
   }
 
   createSuggestion(suggestion: SuggestionCreate): Observable<SuggestionCreate> {
-    return this.http.post<SuggestionCreate>(this.apiUrl, suggestion);
+    const token = localStorage.getItem('token');
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`
+    });
+
+    return this.http.post<SuggestionCreate>(this.apiUrl, suggestion, {headers: headers});
   }
 
   upvoteSuggestion(suggestionId: string, userId: string | null): Observable<any> {
+    const token = localStorage.getItem('token');
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`
+    });
+
     const url = `${this.apiUrl}/${suggestionId}/upvote?userId=${userId}`;
-    return this.http.post(url, {});
+    return this.http.post(url, {}, {headers: headers});
   }
 }

@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {HttpClient} from '@angular/common/http';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {UserRetrieve} from '../models/user-retrieve';
 
@@ -14,6 +14,11 @@ export class UserService {
 
   getUser(id: string): Observable<UserRetrieve> {
     const url = `${this.apiUrl}/${id}`;
-    return this.http.get<UserRetrieve>(url);
+    const token = localStorage.getItem('token');
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`
+    });
+
+    return this.http.get<UserRetrieve>(url, {headers: headers});
   }
 }

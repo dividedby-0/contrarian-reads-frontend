@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {HttpClient} from '@angular/common/http';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {BookRetrieve} from '../models/book-retrieve';
 import {BookCreate} from "../models/book-create";
@@ -25,7 +25,12 @@ export class BookService {
   }
 
   createBook(book: BookCreate): Observable<BookRetrieve> {
-    return this.http.post<BookRetrieve>(this.apiUrl, book);
+    const token = localStorage.getItem('token');
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`
+    });
+
+    return this.http.post<BookRetrieve>(this.apiUrl, book, {headers: headers});
   }
 
   updateBook(id: string, book: BookRetrieve): Observable<any> {

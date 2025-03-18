@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {HttpClient} from '@angular/common/http';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {CommentRetrieve} from '../models/comment-retrieve';
 
@@ -11,7 +11,12 @@ export class CommentService {
   }
 
   addComment(comment: any): Observable<CommentRetrieve> {
-    return this.http.post<CommentRetrieve>(this.apiUrl, comment);
+    const token = localStorage.getItem('token');
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`
+    });
+
+    return this.http.post<CommentRetrieve>(this.apiUrl, comment, {headers: headers});
   }
 
   getCommentsBySuggestionId(suggestionId: string) {
