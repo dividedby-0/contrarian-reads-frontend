@@ -64,7 +64,7 @@ export class AlternativeDetailsModalComponent implements OnInit {
   refreshComments() {
     this.commentService.getCommentsBySuggestionId(this.data.suggestion.id).subscribe({
       next: (comments) => {
-        this.comments = comments;
+        this.comments = comments.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
       },
       error: (error) => {
         console.error('Error retrieving comments:', error);
