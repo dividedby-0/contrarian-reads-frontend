@@ -54,8 +54,12 @@ export class BookGridComponent {
   }
 
   openShowSuggestionsForBookModal(suggestions: any[]) {
-    this.dialog.open(ShowSuggestionsForBookModalComponent, {
+    const dialogRef = this.dialog.open(ShowSuggestionsForBookModalComponent, {
       data: {suggestions: suggestions},
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      this.eventService.refreshMainPage();
     });
   }
 }

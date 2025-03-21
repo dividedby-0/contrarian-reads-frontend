@@ -82,6 +82,7 @@ export class AlternativeDetailsModalComponent implements OnInit {
     this.commentService.addComment(newComment)
       .subscribe({
         next: (createdComment) => {
+          this.refreshComments();
           console.log('Comment added:', createdComment);
         },
         error: (error) => {

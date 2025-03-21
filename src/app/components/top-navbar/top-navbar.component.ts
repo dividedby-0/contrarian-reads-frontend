@@ -9,6 +9,7 @@ import {AddAlternativeModalComponent} from "../add-alternative-modal/add-alterna
 import {MainComponent} from "../main/main.component";
 import {SuggestionsService} from "../../services/suggestions.service";
 import {UserProfileModalComponent} from "../user-profile-modal/user-profile-modal.component";
+import {EventService} from "../../services/event.service";
 
 @Component({
   selector: 'app-top-navbar',
@@ -20,7 +21,7 @@ import {UserProfileModalComponent} from "../user-profile-modal/user-profile-moda
 export class TopNavbarComponent {
   suggestionCount: number = 0;
 
-  constructor(private authService: AuthService, private router: Router, private dialog: MatDialog, private snackbarService: SnackbarService, private mainComponent: MainComponent, private suggestionsService: SuggestionsService) {
+  constructor(private authService: AuthService, private router: Router, private dialog: MatDialog, private snackbarService: SnackbarService, private mainComponent: MainComponent, private suggestionsService: SuggestionsService, private eventService: EventService) {
     this.fetchSuggestionCount();
   }
 
@@ -53,9 +54,7 @@ export class TopNavbarComponent {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      if (result) {
-        this.mainComponent.loadBooks();
-      }
+      this.eventService.refreshMainPage();
     });
   }
 

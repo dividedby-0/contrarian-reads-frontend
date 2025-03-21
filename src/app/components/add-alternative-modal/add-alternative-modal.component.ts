@@ -105,7 +105,6 @@ export class AddAlternativeModalComponent {
     this.remainingCharacters = 150 - this.reason.length;
   }
 
-
   onClose(): void {
     this.dialogRef.close();
   }
