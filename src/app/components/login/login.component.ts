@@ -28,7 +28,8 @@ export class LoginComponent {
   onSubmit() {
     this.snackbarService.showMessage('Logging in...');
     this.authService.login(this.credentials).subscribe({
-      next: () => {
+      next: (response) => {
+        localStorage.setItem('userId', response.userId);
         this.router.navigate(['/main']);
       },
       error: (error) => {

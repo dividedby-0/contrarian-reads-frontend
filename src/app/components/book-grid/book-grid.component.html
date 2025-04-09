@@ -20,6 +20,9 @@
       <div class="suggested-book" *ngFor="let suggestion of topSuggestions[i]">
         <div class="suggested-book-cover" (click)="openSuggestedBookModal(suggestion)">
           <img [src]="suggestion.suggestedBook.coverImageUrl" alt="{{ suggestion.suggestedBook.title }}">
+          <div *ngIf="suggestion.userHasUpvoted" class="upvoted-mark-container">
+            <div class="upvoted-mark"><i class="fa-solid fa-angle-up"></i></div>
+          </div>
         </div>
         <div class="suggested-book-info">
           <div class="book-title">{{ suggestion.suggestedBook.title }}</div>

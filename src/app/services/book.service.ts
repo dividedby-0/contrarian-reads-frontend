@@ -43,8 +43,8 @@ export class BookService {
     return this.http.delete(url);
   }
 
-  searchBooks(searchTerm: string, pageSize: number = 20, lastEvaluatedKey: string | null = null): Observable<any> {
-    let url = `${this.apiUrl}/search?searchTerm=${searchTerm}&pageSize=${pageSize}`;
+  searchBooks(searchTerm: string, userId: string | null, pageSize: number = 20, lastEvaluatedKey: string | null = null): Observable<any> {
+    let url = `${this.apiUrl}/search?searchTerm=${searchTerm}&userId=${userId}&pageSize=${pageSize}`;
     if (lastEvaluatedKey) {
       url += `&lastEvaluatedKey=${lastEvaluatedKey}`;
     }

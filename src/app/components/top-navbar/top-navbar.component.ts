@@ -43,6 +43,7 @@ export class TopNavbarComponent {
       if (result) {
         this.authService.logout();
         this.router.navigate(['/login']);
+        localStorage.clear();
         this.snackbarService.showMessage('You have been logged out.');
       }
     });

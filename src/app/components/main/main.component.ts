@@ -19,6 +19,7 @@ import {EventService} from "../../services/event.service";
 })
 
 export class MainComponent implements OnInit {
+  userId: string = '';
   booksWithSuggestions: [] = [];
   searchTerm: string = '';
   pageSize: number = 10;
@@ -36,6 +37,8 @@ export class MainComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.userId = localStorage.getItem('userId') || '';
+
     this.refreshMainPageContent();
 
     this.eventService.refreshMainPage$.subscribe(() => {
@@ -64,7 +67,7 @@ export class MainComponent implements OnInit {
     this.isLoading = true;
 
     this.searchTermSubject.pipe(debounceTime(800)).subscribe(() => {
-      this.bookService.searchBooks(this.searchTerm, this.pageSize, this.lastEvaluatedKey)
+      this.bookService.searchBooks(this.searchTerm, this.userId, this.pageSize, this.lastEvaluatedKey)
         .subscribe({
           next: (data) => {
             this.booksWithSuggestions = this.lastEvaluatedKey

@@ -9,5 +9,6 @@ export interface SuggestionRetrieve {
   suggestedBook: BookRetrieve;
   suggestedByUser: UserRetrieve;
   upvoteCount: number;
+  userHasUpvoted: boolean;
   comments: CommentRetrieve[];
 }
