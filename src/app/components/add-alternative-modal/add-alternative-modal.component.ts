@@ -29,6 +29,7 @@ export class AddAlternativeModalComponent {
   mainBookSuggestions: any[] = [];
   suggestedAlternativeSuggestions: any[] = [];
   remainingCharacters: number = 150;
+  isMainBookEditable: boolean = true;
 
   private mainBookSearch$ = new Subject<string>();
   private suggestedAlternativeSearch$ = new Subject<string>();
@@ -49,6 +50,25 @@ export class AddAlternativeModalComponent {
     this.suggestedAlternativeSearch$.pipe(debounceTime(300)).subscribe((query) => {
       this.searchSuggestedAlternative(query);
     });
+  }
+
+  ngOnInit(): void {
+    if (this.data.mainBookData) {
+      this.selectedMainBook = {
+        volumeInfo: {
+          title: this.data.mainBookData.title,
+          authors: [this.data.mainBookData.author],
+          description: this.data.mainBookData.description,
+          imageLinks: {
+            thumbnail: this.data.mainBookData.coverImageUrl
+          },
+        }
+      }
+
+      this.mainBook = `${this.selectedMainBook.volumeInfo.authors?.join(', ') || 'Unknown Author'} - ${this.selectedMainBook.volumeInfo.title}`;
+      this.mainBookSuggestions = [];
+      this.isMainBookEditable = false;
+    }
   }
 
   onMainBookInput(): void {

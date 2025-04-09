@@ -3,7 +3,8 @@
 
     <div class="book-main">
 
-      <img class="book-cover" [src]="element.book.coverImageUrl" alt="{{ element.book.title }}">
+      <img class="book-cover" [src]="element.book.coverImageUrl" alt="{{ element.book.title }}"
+           (click)="openAddAlternativeModal(element.book)">
       <div class="book-info-container">
         <div class="book-info">
           <div class="book-title">{{ element.book.title }}</div>

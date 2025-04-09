@@ -15,6 +15,7 @@
             placeholder="Search for a title or author..."
             [(ngModel)]="mainBook"
             (input)="onMainBookInput()"
+            [disabled]="!isMainBookEditable"
           />
           <ul *ngIf="mainBookSuggestions.length > 0" class="suggestions">
             <li *ngFor="let suggestion of mainBookSuggestions" (click)="selectMainBook(suggestion)">

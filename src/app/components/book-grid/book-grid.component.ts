@@ -9,6 +9,7 @@ import {EventService} from "../../services/event.service";
 import {
   ShowSuggestionsForBookModalComponent
 } from "../show-suggestions-for-book-modal/show-suggestions-for-book-modal.component";
+import {AddAlternativeModalComponent} from "../add-alternative-modal/add-alternative-modal.component";
 
 @Component({
   selector: 'app-book-grid',
@@ -56,6 +57,16 @@ export class BookGridComponent {
   openShowSuggestionsForBookModal(suggestions: any[]) {
     const dialogRef = this.dialog.open(ShowSuggestionsForBookModalComponent, {
       data: {suggestions: suggestions},
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      this.eventService.refreshMainPage();
+    });
+  }
+
+  openAddAlternativeModal(mainBookData: any) {
+    const dialogRef = this.dialog.open(AddAlternativeModalComponent, {
+      data: {mainBookData: mainBookData},
     });
 
     dialogRef.afterClosed().subscribe(result => {
