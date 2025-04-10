@@ -1,3 +1,7 @@
+.modal-content {
+  max-height: 90vh; /* to accomodate more comments */
+}
+
 .book-info-container {
   display: flex;
   flex-direction: row;

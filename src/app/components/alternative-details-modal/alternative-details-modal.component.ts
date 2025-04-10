@@ -8,6 +8,7 @@ import {MatFormField, MatLabel} from "@angular/material/form-field";
 import {MatInput} from "@angular/material/input";
 import {CommentRetrieve} from "../../models/comment-retrieve";
 import {SuggestionsService} from "../../services/suggestions.service";
+import {CommentCreate} from "../../models/comment-create";
 
 @Component({
   selector: 'app-suggested-book-modal',
@@ -73,10 +74,10 @@ export class AlternativeDetailsModalComponent implements OnInit {
   }
 
   addComment(commentContent: string) {
-    const newComment = {
+    const newComment: CommentCreate = {
       suggestionId: this.data.suggestion.id,
-      commentedByUserId: localStorage.getItem("userId"),
-      content: commentContent
+      content: commentContent,
+      commentedByUserId: localStorage.getItem("userId") || '',
     };
 
     this.commentService.addComment(newComment)

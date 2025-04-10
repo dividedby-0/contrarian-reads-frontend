@@ -2,6 +2,7 @@ import {Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {CommentRetrieve} from '../models/comment-retrieve';
+import {CommentCreate} from "../models/comment-create";
 
 @Injectable({providedIn: 'root'})
 export class CommentService {
@@ -10,7 +11,7 @@ export class CommentService {
   constructor(private http: HttpClient) {
   }
 
-  addComment(comment: any): Observable<CommentRetrieve> {
+  addComment(comment: CommentCreate): Observable<CommentRetrieve> {
     const token = localStorage.getItem('token');
     const headers = new HttpHeaders({
       'Authorization': `Bearer ${token}`
