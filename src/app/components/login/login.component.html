@@ -4,21 +4,27 @@
       <img src="assets/images/book-open-svgrepo-com.svg" alt="Logo Icon" class="logo-icon">
       <span class="logo-text">ContrarianReads</span>
     </div>
-    <form (ngSubmit)="onSubmit()">
-      <div class="input-fields">
-        <div class="username-field">
-          <label for="email">Email:</label>
-          <input type="email" id="email" name="email" [(ngModel)]="credentials.email" placeholder="Enter your email"
-                 required>
-        </div>
-        <div class="password-field">
-          <label for="password">Password:</label>
-          <input type="password" id="password" name="password" [(ngModel)]="credentials.password"
-                 placeholder="Enter your password" required>
-        </div>
-      </div>
-      <button type="submit">Login</button>
+
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Email</mat-label>
+        <input matInput type="email" formControlName="email" required/>
+        <mat-error *ngIf="email?.hasError('required')">Email is required</mat-error>
+        <mat-error *ngIf="email?.hasError('email')">Invalid email</mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Password</mat-label>
+        <input matInput type="password" formControlName="password" required/>
+        <mat-error *ngIf="password?.hasError('required')">Password is required</mat-error>
+      </mat-form-field>
+
+      <button mat-raised-button color="primary" type="submit" [disabled]="loginForm.invalid">
+        Login
+      </button>
+
       <div *ngIf="errorMessage" class="error">{{ errorMessage }}</div>
+
       <p>Don't have an account? <a routerLink="/register">Register here</a></p>
     </form>
   </div>
