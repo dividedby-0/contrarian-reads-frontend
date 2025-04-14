@@ -7,7 +7,7 @@ import {SpinnerComponent} from "../spinner/spinner.component";
 import {LoadingService} from "../../services/loading.service";
 import {AsyncPipe, NgIf} from "@angular/common";
 import {debounceTime} from "rxjs/operators";
-import {Subject} from "rxjs";
+import {Subject, Subscription} from "rxjs";
 import {EventService} from "../../services/event.service";
 
 @Component({
@@ -28,6 +28,8 @@ export class MainComponent implements OnInit {
   hasMoreResults: boolean = true;
   noResultsMessage: string = '';
   private searchTermSubject = new Subject<string>();
+  private searchSubscription: Subscription = new Subscription();
+  private refreshSubscription: Subscription = new Subscription();
 
   constructor(
     public bookService: BookService,
@@ -39,15 +41,26 @@ export class MainComponent implements OnInit {
   ngOnInit() {
     this.userId = localStorage.getItem('userId') || '';
 
-    this.refreshMainPageContent();
+    this.searchSubscription = this.searchTermSubject.pipe(
+      debounceTime(800)
+    ).subscribe(() => {
+      this.fetchBooks();
+    });
 
-    this.eventService.refreshMainPage$.subscribe(() => {
+    this.refreshSubscription = this.eventService.refreshMainPage$.subscribe(() => {
       this.refreshMainPageContent();
     });
+
+    this.refreshMainPageContent();
+  }
+
+  ngOnDestroy() {
+    this.searchSubscription.unsubscribe();
+    this.refreshSubscription.unsubscribe();
   }
 
   refreshMainPageContent() {
-    this.loadBooks();
+    this.resetPagination();
     this.searchTermSubject.next('');
   }
 
@@ -58,6 +71,12 @@ export class MainComponent implements OnInit {
   }
 
   loadBooks() {
+    if (!this.isLoading) {
+      this.searchTermSubject.next(this.searchTerm);
+    }
+  }
+
+  fetchBooks() {
     this.loadingService.showSpinner();
 
     if (this.isLoading) {
@@ -66,33 +85,31 @@ export class MainComponent implements OnInit {
 
     this.isLoading = true;
 
-    this.searchTermSubject.pipe(debounceTime(800)).subscribe(() => {
-      this.bookService.searchBooks(this.searchTerm, this.userId, this.pageSize, this.lastEvaluatedKey)
-        .subscribe({
-          next: (data) => {
-            this.booksWithSuggestions = this.lastEvaluatedKey
-              ? [...this.booksWithSuggestions, ...data.booksWithSuggestions]
-              : data.booksWithSuggestions;
-            this.lastEvaluatedKey = data.nextLastEvaluatedKey;
-            this.hasMoreResults = !!this.lastEvaluatedKey;
-          },
-          error: (error) => {
-            if (error.status === 404) {
-              this.booksWithSuggestions = [];
-              this.hasMoreResults = false;
-              this.isLoading = false;
-              this.loadingService.hideSpinner();
-              this.noResultsMessage = "Nothing found :(";
-            } else {
-              console.error('Error loading books:', error);
-            }
-          },
-          complete: () => {
+    this.bookService.searchBooks(this.searchTerm, this.userId, this.pageSize, this.lastEvaluatedKey)
+      .subscribe({
+        next: (data) => {
+          this.booksWithSuggestions = this.lastEvaluatedKey
+            ? [...this.booksWithSuggestions, ...data.booksWithSuggestions]
+            : data.booksWithSuggestions;
+          this.lastEvaluatedKey = data.nextLastEvaluatedKey;
+          this.hasMoreResults = !!this.lastEvaluatedKey;
+        },
+        error: (error) => {
+          if (error.status === 404) {
+            this.booksWithSuggestions = [];
+            this.hasMoreResults = false;
             this.isLoading = false;
             this.loadingService.hideSpinner();
+            this.noResultsMessage = "Nothing found :(";
+          } else {
+            console.error('Error loading books:', error);
           }
-        });
-    });
+        },
+        complete: () => {
+          this.isLoading = false;
+          this.loadingService.hideSpinner();
+        }
+      });
   }
 
   resetPagination() {
@@ -101,6 +118,7 @@ export class MainComponent implements OnInit {
   }
 
   loadMore() {
+    // TODO reimplement pagination
     this.loadBooks();
   }
 }
