@@ -4,62 +4,61 @@
       <img src="assets/images/book-open-svgrepo-com.svg" alt="Logo Icon" class="logo-icon">
       <span class="logo-text">ContrarianReads</span>
     </div>
-    <form #registerForm="ngForm" (ngSubmit)="onSubmit()">
-      <div class="input-fields">
-        <div class="username-field">
-          <label for="username">Username:</label>
-          <input type="text" id="username" name="username" [(ngModel)]="credentials.username"
-                 placeholder="Enter your username" required minlength="3" #username="ngModel">
-          <div *ngIf="username.invalid && (username.dirty || username.touched)" class="error">
-            <div *ngIf="username.errors?.['required']">Username is required.</div>
-            <div *ngIf="username.errors?.['minlength']">Username must be at least 3 characters.</div>
-          </div>
-        </div>
-        <div class="email-field">
-          <label for="email">Email:</label>
-          <input type="email" id="email" name="email" [(ngModel)]="credentials.email" placeholder="Enter your email"
-                 required email #email="ngModel">
-          <div *ngIf="email.invalid && (email.dirty || email.touched)" class="error">
-            <div *ngIf="email.errors?.['required']">Email is required.</div>
-            <div *ngIf="email.errors?.['email']">Please enter a valid email address.</div>
-          </div>
-        </div>
-        <div class="password-field">
-          <label for="password">Password:</label>
-          <input type="password" id="password" name="password" [(ngModel)]="credentials.password"
-                 placeholder="Enter your password" required minlength="6" #password="ngModel">
-          <div *ngIf="password.invalid && (password.dirty || password.touched)" class="error">
-            <div *ngIf="password.errors?.['required']">Password is required.</div>
-            <div *ngIf="password.errors?.['minlength']">Password must be at least 6 characters.</div>
-          </div>
-        </div>
-        <div class="confirm-password-field">
-          <label for="confirmPassword">Confirm Password:</label>
-          <input type="password" id="confirmPassword" name="confirmPassword"
-                 [(ngModel)]="credentials.confirmPassword"
-                 #confirmPassword="ngModel"
-                 (ngModelChange)="checkPasswords()">
-          <div *ngIf="confirmPassword.invalid && (confirmPassword.dirty || confirmPassword.touched)" class="error">
-            <div *ngIf="confirmPassword.errors?.['required']">Confirm Password is required.</div>
-            <div *ngIf="confirmPassword.errors?.['equalTo']">Passwords do not match.</div>
-          </div>
-        </div>
-        <div class="profilePictureUrl-field">
-          <label for="profilePictureUrl">Profile Picture URL:</label>
-          <input type="text" id="profilePictureUrl" name="profilePictureUrl" [(ngModel)]="credentials.profilePictureUrl"
-                 placeholder="Enter your profile picture URL">
-        </div>
-        <div class="bio-field">
-          <label for="bio">Bio:</label>
-          <textarea id="bio" name="bio" [(ngModel)]="credentials.bio" placeholder="Enter your bio" maxlength="150"
-                    #bio="ngModel"></textarea>
-          <div *ngIf="bio.invalid && (bio.dirty || bio.touched)" class="error">
-            <div *ngIf="bio.errors?.['maxlength']">Bio should not exceed 150 characters.</div>
-          </div>
-        </div>
-      </div>
-      <button type="submit">Register</button>
-      <div *ngIf="errorMessage" class="error">{{ errorMessage }}</div>
+
+    <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Username</mat-label>
+        <input matInput formControlName="username"/>
+        <mat-error *ngIf="f['username'].hasError('required')">Username is required</mat-error>
+        <mat-error *ngIf="f['username'].hasError('minlength')">Username must be at least 3 characters</mat-error>
+        <mat-error *ngIf="f['username'].hasError('maxlength')">Username cannot exceed 30 characters</mat-error>
+        <mat-error *ngIf="f['username'].hasError('invalidUsername')">Username can only contain letters, numbers, and
+          underscores
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Email</mat-label>
+        <input matInput type="email" formControlName="email" placeholder="Enter your email"/>
+        <mat-error *ngIf="f['email'].hasError('required')">Email is required</mat-error>
+        <mat-error *ngIf="f['email'].hasError('email')">Please enter a valid email address</mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Password</mat-label>
+        <input matInput type="password" formControlName="password"/>
+        <mat-error *ngIf="f['password'].hasError('required')">Password is required</mat-error>
+        <mat-error *ngIf="f['password'].hasError('minlength')">Password must be at least 8 characters</mat-error>
+        <mat-error *ngIf="f['password'].hasError('maxlength')">Password cannot exceed 128 characters</mat-error>
+        <mat-error *ngIf="f['password'].hasError('passwordStrength')">
+          Password must contain at least one uppercase letter, one lowercase letter, one number, and one special
+          character
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Confirm Password</mat-label>
+        <input matInput type="password" formControlName="confirmPassword" placeholder="Confirm your password"/>
+        <mat-error *ngIf="f['confirmPassword'].hasError('required')">Confirm password is required</mat-error>
+        <mat-error *ngIf="f['confirmPassword'].hasError('passwordMismatch')">Passwords do not match</mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Profile Picture URL</mat-label>
+        <input matInput type="text" formControlName="profilePictureUrl" placeholder="Enter your profile picture URL"/>
+        <mat-error *ngIf="f['profilePictureUrl'].hasError('pattern')">Please enter a valid URL</mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Bio</mat-label>
+        <textarea matInput formControlName="bio" placeholder="Enter your bio" maxlength="150"></textarea>
+        <mat-error *ngIf="f['bio'].hasError('maxlength')">Bio should not exceed 150 characters</mat-error>
+      </mat-form-field>
+
+      <button mat-raised-button color="primary" type="submit" [disabled]="registerForm.invalid">
+        Register
+      </button>
+
       <p>Already have an account? <a routerLink="/login">Login here</a></p>
     </form>
   </div>
