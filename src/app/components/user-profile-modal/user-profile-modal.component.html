@@ -5,34 +5,115 @@
     <div class="modal-content-info-container">
       <div *ngIf="userData" class="user-info">
         <div class="profile-picture">
-          <img [src]="userData.profilePictureUrl || 'assets/images/default-profile-picture.png'" alt="Profile Picture">
+          <img [src]="userData.user.profilePictureUrl || 'assets/images/default-profile-picture.png'"
+               alt="Profile Picture">
         </div>
         <div class="user-details">
           <div class="username">
-            <div>Username: {{ userData.username }} <span class="change-button-container"><button class="change-button">Change</button></span>
+            <div>Username: {{ userData.user.username }} <span class="change-button-container"><button
+              class="change-button">Change</button></span>
             </div>
           </div>
           <div class="email">
-            <div>Email: {{ userData.email }} <span class="change-button-container"><button
+            <div>Email: {{ userData.user.email }} <span class="change-button-container"><button
               class="change-button">Change</button></span></div>
           </div>
           <div class="joined">
-            <div>Joined: {{ userData.createdAt | date }} <span class="change-button-container"><button
+            <div>Joined: {{ userData.user.createdAt | date }} <span class="change-button-container"><button
               class="change-button">Change</button></span></div>
           </div>
           <div class="bio">
             <div>Bio:</div>
-            <div>{{ userData.bio || 'This user has not added a bio yet.' }} <span class="change-button-container"><button
+            <div>{{ userData.user.bio || 'This user has not added a bio yet.' }} <span class="change-button-container"><button
               class="change-button">Change</button></span></div>
           </div>
         </div>
       </div>
 
-      <div class="user-interactions">
-        <div class="upvotes-container">Upvotes</div>
-        <div class="comments-container">Comments</div>
-        <div class="suggestions-container">Suggestions</div>
-      </div>
+      <mat-tab-group class="user-interactions">
+
+        <mat-tab label="Upvoted Suggestions">
+          <table mat-table [dataSource]="userData ? userData.upvotedSuggestions : []" class="mat-elevation-z2">
+
+            <ng-container matColumnDef="author">
+              <th mat-header-cell *matHeaderCellDef> Author</th>
+              <td mat-cell *matCellDef="let suggestion"> {{ suggestion.suggestedBook.author }}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="title">
+              <th mat-header-cell *matHeaderCellDef> Title</th>
+              <td mat-cell *matCellDef="let suggestion"> "{{ suggestion.suggestedBook.title }}"</td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="['author', 'title']"></tr>
+            <tr mat-row *matRowDef="let row; columns: ['author', 'title'];"></tr>
+          </table>
+        </mat-tab>
+
+
+        <mat-tab label="Comments">
+          <table mat-table [dataSource]="userData ? userData.comments : []" class="mat-elevation-z2">
+
+            <ng-container matColumnDef="timestamp">
+              <th mat-header-cell *matHeaderCellDef> Date</th>
+              <td mat-cell *matCellDef="let comment"> {{ comment.createdAt | date:"MMM dd, yyyy '@' hh:mm a" }}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="commentedSuggestion">
+              <th mat-header-cell *matHeaderCellDef> Commenting on...</th>
+              <td mat-cell *matCellDef="let comment">{{ comment.suggestion.suggestedbookAuthor }}
+                - {{ comment.suggestion.suggestedbookTitle }}
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="mainBook">
+              <th mat-header-cell *matHeaderCellDef> ...as an alternative to</th>
+              <td mat-cell *matCellDef="let comment">{{ comment.suggestion.mainbookAuthor }}
+                - {{ comment.suggestion.mainbookTitle }}
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="content">
+              <th mat-header-cell *matHeaderCellDef> Comment</th>
+              <td class="comment-content" mat-cell *matCellDef="let comment"> {{ comment.content }}</td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="['timestamp','commentedSuggestion', 'mainBook', 'content']"></tr>
+            <tr mat-row *matRowDef="let row; columns: ['timestamp','commentedSuggestion','mainBook', 'content'];"></tr>
+          </table>
+        </mat-tab>
+
+        <mat-tab label="Added Suggestions">
+          <table mat-table [dataSource]="userData ? userData.addedSuggestions : []" class="mat-elevation-z2">
+
+            <ng-container matColumnDef="timestamp">
+              <th mat-header-cell *matHeaderCellDef> Date</th>
+              <td mat-cell
+                  *matCellDef="let suggestion"> {{ suggestion.createdAt | date:"MMM dd, yyyy" }}
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="author">
+              <th mat-header-cell *matHeaderCellDef> Author</th>
+              <td mat-cell *matCellDef="let suggestion"> {{ suggestion.suggestedBook.author }}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="title">
+              <th mat-header-cell *matHeaderCellDef> Title</th>
+              <td mat-cell *matCellDef="let suggestion"> "{{ suggestion.suggestedBook.title }}"</td>
+            </ng-container>
+
+            <ng-container matColumnDef="reason">
+              <th mat-header-cell *matHeaderCellDef> Reason</th>
+              <td class="reason-content" mat-cell *matCellDef="let suggestion"> "{{ suggestion.reason }}"</td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="['timestamp','author', 'title','reason']"></tr>
+            <tr mat-row *matRowDef="let row; columns: ['timestamp','author', 'title','reason'];"></tr>
+          </table>
+        </mat-tab>
+
+      </mat-tab-group>
 
     </div>
   </div>

@@ -1,10 +1,21 @@
 import {Component, OnInit} from '@angular/core';
 import {AuthService} from "../../auth/auth.service";
-import {UserRetrieve} from "../../models/user-retrieve";
 import {UserService} from "../../services/user.service";
 import {DatePipe, NgIf} from "@angular/common";
 import {MatDialogRef} from "@angular/material/dialog";
 import {SnackbarService} from "../../services/snackbar.service";
+import {EventService} from "../../services/event.service";
+import {UserProfileRetrieve} from "../../models/user-profile-retrieve";
+import {MatTab, MatTabGroup} from "@angular/material/tabs";
+import {
+  MatCell,
+  MatCellDef,
+  MatColumnDef, MatHeaderCell,
+  MatHeaderCellDef, MatHeaderRow,
+  MatHeaderRowDef, MatRow,
+  MatRowDef,
+  MatTable
+} from "@angular/material/table";
 
 @Component({
   selector: 'app-user-profile-modal',
@@ -12,13 +23,25 @@ import {SnackbarService} from "../../services/snackbar.service";
   imports: [
     DatePipe,
     NgIf,
+    MatTab,
+    MatTabGroup,
+    MatTable,
+    MatCellDef,
+    MatHeaderCellDef,
+    MatHeaderRowDef,
+    MatRowDef,
+    MatColumnDef,
+    MatHeaderCell,
+    MatCell,
+    MatHeaderRow,
+    MatRow,
   ],
   templateUrl: './user-profile-modal.component.html',
   styleUrl: './user-profile-modal.component.css'
 })
 
 export class UserProfileModalComponent implements OnInit {
-  userData: UserRetrieve | undefined;
+  userData: UserProfileRetrieve | undefined;
   userId: string | null = null;
 
   constructor(
@@ -26,6 +49,7 @@ export class UserProfileModalComponent implements OnInit {
     private userService: UserService,
     public dialogRef: MatDialogRef<UserProfileModalComponent>,
     private snackbarService: SnackbarService,
+    private eventService: EventService
   ) {
   }
 
@@ -33,14 +57,14 @@ export class UserProfileModalComponent implements OnInit {
     this.userId = this.authService.getUserId();
 
     if (this.userId) {
-      this.userService.getUser(this.userId).subscribe({
+      this.userService.getUserProfile(this.userId).subscribe({
         next: (data) => {
           this.userData = data;
         },
         error: (error) => {
           this.dialogRef.close();
-          console.error('Error fetching user data:', error);
-          this.snackbarService.showMessage('Failed to load user data.', 5000);
+          console.error('Error fetching user profile:', error);
+          this.snackbarService.showMessage('Error fetching user profile', 5000);
         },
         complete: () => {
         }
@@ -50,5 +74,6 @@ export class UserProfileModalComponent implements OnInit {
 
   onClose(): void {
     this.dialogRef.close();
+    this.eventService.refreshMainPage();
   }
 }

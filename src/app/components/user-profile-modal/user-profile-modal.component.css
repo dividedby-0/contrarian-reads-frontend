@@ -1,46 +1,8 @@
 .modal-content {
-  background-color: #fff;
-  border-radius: 8px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
-  padding: 30px;
-  max-width: 60vw;
-  width: 60vw;
   max-height: 80vh;
   height: 80vh;
-  position: relative;
-}
-
-.modal-content-info-container {
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  height: 100%;
-}
-
-.user-info {
-  display: flex;
-  align-items: center;
-  height: 40%;
-}
-
-.user-interactions {
-  display: flex;
-  justify-content: space-between;
-  flex-direction: row;
-  align-items: center;
-  margin-top: 20px;
-  height: 100%;
-}
-
-.upvotes-container,
-.comments-container,
-.suggestions-container {
-  background-color: whitesmoke;
-  color: black;
-  border-radius: 5px;
-  padding: 5px 10px;
-  width: 30%;
-  height: 100%;
 }
 
 h2 {
@@ -48,19 +10,16 @@ h2 {
   margin-bottom: 20px;
 }
 
-.modal-close-button {
-  position: absolute;
-  top: 15px;
-  right: 15px;
-  font-size: 20px;
-  cursor: pointer;
-  border: none;
-  background: none;
-  padding: 5px;
+.modal-content-info-container {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
 }
 
-.profile-picture {
-  margin-right: 20px;
+.user-info {
+  display: flex;
+  align-items: center;
 }
 
 .profile-picture img {
@@ -69,20 +28,46 @@ h2 {
   border-radius: 50%;
   object-fit: cover;
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
+  margin-left: 0.5rem;
+}
+
+.user-details {
+  margin-left: 1rem;
 }
 
 .user-details h3 {
   margin-top: 0;
 }
 
-.change-button-container {
-}
-
 .change-button {
-  background-color: #007bff;
-  color: #fff;
-  border: none;
+  background-color: var(--accent-color);
+  color: var(--text-color);
+  border: var(--text-color) 1px solid;
   border-radius: 5px;
   padding: 5px 10px;
   cursor: pointer;
+}
+
+.user-interactions {
+  flex: 1;
+  overflow-y: auto;
+  margin-top: 20px;
+}
+
+.comment-content, .reason-content {
+  font-style: italic;
+}
+
+table {
+  width: 100%;
+}
+
+th {
+  text-align: center;
+  vertical-align: middle;
+}
+
+td {
+  text-align: left;
+  vertical-align: middle;
 }
