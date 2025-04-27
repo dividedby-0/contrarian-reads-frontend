@@ -3,6 +3,7 @@ import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {BookRetrieve} from '../models/book-retrieve';
 import {BookCreate} from "../models/book-create";
+import {PaginatedBooksRetrieve} from "../models/paginated-books-retrieve";
 
 @Injectable({providedIn: 'root'})
 export class BookService {
@@ -43,11 +44,13 @@ export class BookService {
     return this.http.delete(url);
   }
 
-  searchBooks(searchTerm: string, userId: string | null, pageSize: number = 20, lastEvaluatedKey: string | null = null): Observable<any> {
+  searchBooks(searchTerm: string, userId: string | null, pageSize: number, lastCreatedAt: string | null): Observable<PaginatedBooksRetrieve> {
     let url = `${this.apiUrl}/search?searchTerm=${searchTerm}&userId=${userId}&pageSize=${pageSize}`;
-    if (lastEvaluatedKey) {
-      url += `&lastEvaluatedKey=${lastEvaluatedKey}`;
+
+    if (lastCreatedAt) {
+      url += `&lastCreatedAt=${lastCreatedAt}`;
     }
-    return this.http.get<any>(url);
+
+    return this.http.get<PaginatedBooksRetrieve>(url);
   }
 }

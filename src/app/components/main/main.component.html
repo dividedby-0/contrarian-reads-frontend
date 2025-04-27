@@ -8,10 +8,18 @@
     </div>
   </div>
   <div class="book-grid-container">
+
+    <app-book-grid [booksWithSuggestions]="booksWithSuggestions"></app-book-grid>
+
+
     <div class="nothing-found-message" *ngIf="!booksWithSuggestions.length && noResultsMessage">{{ noResultsMessage }}
     </div>
-    <app-book-grid [booksWithSuggestions]="booksWithSuggestions"></app-book-grid>
-    <!--    TODO: style this button-->
-    <button *ngIf="!isLoading && hasMoreResults" (click)="loadMore()">Load More</button>
+
+  </div>
+
+  <div *ngIf="hasMoreResults && !isLoading" class="load-more-container">
+    <button (click)="loadMore()" class="load-more-button">
+      Load More ({{ remainingBooksCount }} remaining)
+    </button>
   </div>
 </div>

@@ -9,6 +9,7 @@ import {AsyncPipe, NgIf} from "@angular/common";
 import {debounceTime} from "rxjs/operators";
 import {Subject, Subscription} from "rxjs";
 import {EventService} from "../../services/event.service";
+import {PaginatedBooksRetrieve} from "../../models/paginated-books-retrieve";
 
 @Component({
   selector: 'app-main',
@@ -20,12 +21,13 @@ import {EventService} from "../../services/event.service";
 
 export class MainComponent implements OnInit {
   userId: string = '';
-  booksWithSuggestions: [] = [];
+  booksWithSuggestions: any[] = [];
   searchTerm: string = '';
   pageSize: number = 10;
-  lastEvaluatedKey: string | null = null;
+  lastCreatedAt: string | null = null;
   isLoading: boolean = false;
   hasMoreResults: boolean = true;
+  remainingBooksCount: number = 0;
   noResultsMessage: string = '';
   private searchTermSubject = new Subject<string>();
   private searchSubscription: Subscription = new Subscription();
@@ -85,19 +87,22 @@ export class MainComponent implements OnInit {
 
     this.isLoading = true;
 
-    this.bookService.searchBooks(this.searchTerm, this.userId, this.pageSize, this.lastEvaluatedKey)
+    this.bookService.searchBooks(this.searchTerm, this.userId, this.pageSize, this.lastCreatedAt)
       .subscribe({
-        next: (data) => {
-          this.booksWithSuggestions = this.lastEvaluatedKey
-            ? [...this.booksWithSuggestions, ...data.booksWithSuggestions]
-            : data.booksWithSuggestions;
-          this.lastEvaluatedKey = data.nextLastEvaluatedKey;
-          this.hasMoreResults = !!this.lastEvaluatedKey;
+        next: (response: PaginatedBooksRetrieve) => {
+          this.booksWithSuggestions = this.lastCreatedAt
+            ? [...this.booksWithSuggestions, ...response.booksWithSuggestions]
+            : response.booksWithSuggestions;
+
+          this.lastCreatedAt = response.nextCursor;
+          this.hasMoreResults = response.hasMoreBooks;
+          this.remainingBooksCount = response.remainingBooksCount;
         },
         error: (error) => {
           if (error.status === 404) {
             this.booksWithSuggestions = [];
             this.hasMoreResults = false;
+            this.remainingBooksCount = 0;
             this.isLoading = false;
             this.loadingService.hideSpinner();
             this.noResultsMessage = "Nothing found :(";
@@ -113,12 +118,13 @@ export class MainComponent implements OnInit {
   }
 
   resetPagination() {
-    this.lastEvaluatedKey = null;
+    this.lastCreatedAt = null;
     this.hasMoreResults = true;
   }
 
   loadMore() {
-    // TODO reimplement pagination
-    this.loadBooks();
+    if (this.hasMoreResults && !this.isLoading) {
+      this.loadBooks();
+    }
   }
 }
