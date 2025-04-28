@@ -39,12 +39,14 @@ Work in progress. Will be soon available online.
 
 ## 🎨 Frontend
 
-- Built with **Angular** and styled using **Angular Material**
+- Built with **Angular** using **Angular Material** for UI components
+- Standard Angular component-based architecture
+- Uses RxJS for reactive programming
 - Allows logged-in users to search for books, submit, upvote and comment alternative recommendations
 - Secure login and register system implementing **JWT authentication**
-- Route guards to prevent address tampering
-- UserRetrieve profile and user activity dashboard
-- Alternative element recommendations based on user activity
+- Route guards to prevent address tampering using AuthGuard
+- User profile and user activity dashboard
+- Alternative book recommendations based on user activity
 - Hosted on **Netlify**
 
 ## ⚙️ Backend
