@@ -6,8 +6,9 @@
 }
 
 h2 {
-  color: var(--primary-color);
+  color: var(--text);
   margin-bottom: 20px;
+  font-size: 1.5rem;
 }
 
 .modal-content-info-container {
@@ -20,15 +21,18 @@ h2 {
 .user-info {
   display: flex;
   align-items: center;
+  padding: 16px;
+  background: var(--bg);
+  border-radius: var(--radius-sm);
+  margin-bottom: 20px;
 }
 
 .profile-picture img {
-  width: 150px;
-  height: 150px;
+  width: 80px;
+  height: 80px;
   border-radius: 50%;
   object-fit: cover;
-  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
-  margin-left: 0.5rem;
+  box-shadow: var(--shadow);
 }
 
 .user-details {
@@ -37,15 +41,29 @@ h2 {
 
 .user-details h3 {
   margin-top: 0;
+  margin-bottom: 4px;
+}
+
+.user-details p {
+  color: var(--text-muted);
+  font-size: 14px;
 }
 
 .change-button {
-  background-color: var(--accent-color);
-  color: var(--text-color);
-  border: var(--text-color) 1px solid;
-  border-radius: 5px;
-  padding: 5px 10px;
+  background: var(--primary);
+  color: white;
+  border: none;
+  border-radius: var(--radius-sm);
+  padding: 6px 14px;
   cursor: pointer;
+  font-size: 13px;
+  font-weight: 500;
+  font-family: inherit;
+  transition: all var(--transition);
+}
+
+.change-button:hover {
+  background: var(--primary-hover);
 }
 
 .user-interactions {
@@ -65,6 +83,9 @@ table {
 th {
   text-align: center;
   vertical-align: middle;
+  color: var(--text-muted);
+  font-weight: 500;
+  font-size: 13px;
 }
 
 td {

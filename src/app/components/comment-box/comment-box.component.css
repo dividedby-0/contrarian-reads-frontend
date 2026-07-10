@@ -5,7 +5,6 @@
   max-height: 600px;
 }
 
-/* prevents showing overflow scrollbar in nestingLevel > 1 comment boxes */
 .isScrollable {
   overflow-y: scroll;
 }
@@ -13,24 +12,15 @@
 .comment {
   display: flex;
   flex-direction: column;
-  padding: 10px;
+  padding: 12px;
   margin-bottom: 10px;
-  border-radius: 5px;
+  border-radius: var(--radius-sm);
   width: fit-content;
-  max-width: 60%;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  background-color: #f5f5f5;
-  color: #333;
+  max-width: 70%;
+  box-shadow: var(--shadow-sm);
+  background: var(--bg);
+  color: var(--text);
   position: relative;
-}
-
-.comment::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: -15px;
-  width: 2px;
 }
 
 .first-line {
@@ -39,17 +29,20 @@
   align-items: center;
   justify-content: flex-start;
   width: 100%;
+  gap: 8px;
 }
 
 .avatar {
-  width: 20px;
-  height: 20px;
+  width: 24px;
+  height: 24px;
   border-radius: 50%;
   vertical-align: middle;
+  object-fit: cover;
 }
 
 .user-and-comment {
-  margin-left: 0.5rem;
+  font-size: 14px;
+  line-height: 1.4;
 }
 
 .comment-details {
@@ -61,7 +54,7 @@
 
 .comment-timestamp {
   font-size: 0.8rem;
-  color: #888;
+  color: var(--text-muted);
   text-align: right;
   margin-top: 5px;
 }
@@ -80,12 +73,13 @@
 
 .reply-button-container:hover {
   cursor: pointer;
-  text-decoration: underline;
 }
 
 .reply-text {
-  color: var(--text-color);
+  color: var(--primary);
   text-align: center;
+  font-size: 13px;
+  font-weight: 500;
 }
 
 .reply-icon-container {
@@ -103,36 +97,54 @@
   display: flex;
   flex-direction: row;
   padding: 10px;
-  border-radius: 5px;
+  border-radius: var(--radius-sm);
   width: 400px;
+  gap: 8px;
 }
 
 .reply-box textarea {
   width: 100%;
   resize: none;
-  padding: 8px;
-  border-radius: 5px;
-  border: var(--text-color) 1px solid;
+  padding: 8px 12px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--text);
+  font-family: inherit;
+  font-size: 14px;
+}
+
+.reply-box textarea:focus {
+  outline: none;
+  border-color: var(--primary);
 }
 
 .char-counter {
   font-size: 12px;
-  color: #666;
+  color: var(--text-muted);
   margin-bottom: 5px;
   transition: color 0.2s ease;
   text-align: center;
 }
 
 .char-counter.near-limit {
-  color: #ff4444;
+  color: #EF4444;
 }
 
 .reply-send-button {
   margin-left: 5px;
-  border-radius: 5px;
-  background-color: var(--accent-color);
+  border-radius: var(--radius-sm);
+  background: var(--primary);
   cursor: pointer;
-  color: black;
-  border: var(--text-color) 1px solid;
-  padding: 5px 10px;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  font-size: 13px;
+  font-weight: 500;
+  font-family: inherit;
+  transition: all var(--transition);
+}
+
+.reply-send-button:hover {
+  background: var(--primary-hover);
 }

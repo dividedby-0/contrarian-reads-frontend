@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, HostBinding} from '@angular/core';
 import {CommonModule} from "@angular/common";
 import {AuthService} from '../../auth/auth.service';
 import {Router} from '@angular/router';
@@ -19,12 +19,21 @@ import {EventService} from "../../services/event.service";
 export class TopNavbarComponent {
 
   menuOpen = false;
+  isDarkMode = false;
 
   constructor(private authService: AuthService, private router: Router, private dialog: MatDialog, private snackbarService: SnackbarService, private eventService: EventService) {
+    this.isDarkMode = document.documentElement.getAttribute('data-theme') === 'dark';
   }
 
   toggleMenu() {
     this.menuOpen = !this.menuOpen;
+  }
+
+  toggleDarkMode() {
+    this.isDarkMode = !this.isDarkMode;
+    const theme = this.isDarkMode ? 'dark' : 'light';
+    document.documentElement.setAttribute('data-theme', theme);
+    localStorage.setItem('theme', theme);
   }
 
   onLogout() {

@@ -1,7 +1,7 @@
 .book-grid {
   display: grid;
   grid-template-columns: 1fr;
-  grid-gap: 3rem;
+  gap: 1.5rem;
   padding: 20px;
   max-width: 1400px;
   margin: 0 auto;
@@ -21,11 +21,22 @@
 
 .book {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: space-between;
   min-width: 0;
   margin-left: auto;
   margin-right: auto;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 24px;
+  box-shadow: var(--shadow-sm);
+  transition: box-shadow var(--transition), transform var(--transition);
+  width: 100%;
+}
+
+.book:hover {
+  box-shadow: var(--shadow-md);
 }
 
 .book-main {
@@ -35,17 +46,20 @@
   align-items: center;
   justify-content: center;
   max-width: 150px;
-  max-height: 150px;
 }
 
 .total-suggestions {
   text-align: center;
   margin: 5px;
-  text-decoration: underline;
+  color: var(--primary);
+  font-weight: 500;
+  font-size: 13px;
+  cursor: pointer;
+  transition: color var(--transition);
 }
 
 .total-suggestions:hover {
-  cursor: pointer;
+  color: var(--primary-hover);
 }
 
 .book-cover {
@@ -54,17 +68,16 @@
   height: 250px;
   max-height: 250px;
   object-fit: cover;
-  border-radius: 5px;
-  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
+  border-radius: var(--radius-sm);
+  box-shadow: var(--shadow);
   margin: 10px;
-  transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out, filter 0.3s ease-in-out;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
   cursor: pointer;
 }
 
 .book-cover:hover {
-  box-shadow: 0 0 15px rgba(0, 0, 0, 0.4);
-  filter: brightness(0.8);
-  transform: scale(1.03);
+  box-shadow: var(--shadow-md);
+  transform: scale(1.04);
 }
 
 .book-info-container {
@@ -78,12 +91,14 @@
 
 .book-title {
   font-size: 18px;
-  font-weight: bold;
+  font-weight: 600;
+  letter-spacing: -0.01em;
 }
 
 .book-author {
   font-style: italic;
   font-size: 14px;
+  color: var(--text-muted);
 }
 
 .suggested-books {
@@ -101,6 +116,13 @@
   align-items: flex-start;
   justify-content: flex-start;
   margin: 0.5rem;
+  padding: 12px;
+  border-radius: var(--radius-sm);
+  transition: background-color var(--transition);
+}
+
+.suggested-book:hover {
+  background: var(--primary-light);
 }
 
 .suggested-book-cover {
@@ -113,15 +135,15 @@
   height: 150px;
   max-height: 150px;
   object-fit: cover;
-  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
-  transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out, filter 0.3s ease-in-out;
+  border-radius: 4px;
+  box-shadow: var(--shadow);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
   cursor: pointer;
 }
 
 .suggested-book img:hover {
-  box-shadow: 0 0 15px rgba(0, 0, 0, 0.4);
-  filter: brightness(0.8);
-  transform: scale(1.03);
+  box-shadow: var(--shadow-md);
+  transform: scale(1.04);
 }
 
 .upvoted-mark-container {
@@ -131,23 +153,24 @@
 }
 
 .upvoted-mark {
-  font-size: 1rem;
+  font-size: 0.9rem;
   border-radius: 50%;
-  padding: 5px;
-  background-color: var(--accent-color);
-  color: var(--primary-color);
+  padding: 4px 6px;
+  background-color: var(--primary);
+  color: white;
   cursor: pointer;
   line-height: 1;
+  box-shadow: var(--shadow-sm);
 }
 
 .upvoted-mark:hover {
-  background-color: var(--highlight-color);
+  background-color: var(--primary-hover);
 }
 
 .suggested-book-info {
   display: flex;
   flex-direction: column;
-  margin-left: 10px;
+  margin-left: 12px;
   align-items: flex-start;
   justify-content: center;
   max-height: 200px;
@@ -169,33 +192,34 @@
 
 .book-title {
   font-size: 14px;
-  font-weight: bold;
+  font-weight: 600;
+  letter-spacing: -0.01em;
 }
 
 .book-author {
   font-size: 12px;
-  color: #666;
+  color: var(--text-muted);
 }
 
 .suggested-by {
   font-size: 12px;
-  color: #666;
+  color: var(--text-muted);
 }
 
 .reason {
   font-style: italic;
   font-size: 12px;
-  color: #666;
+  color: var(--text-muted);
 }
 
 .upvotes {
   font-size: 12px;
-  color: #666;
+  color: var(--text-muted);
 }
 
 .comments {
   font-size: 12px;
-  color: #666;
+  color: var(--text-muted);
 }
 
 @media (max-width: 1280px) {
