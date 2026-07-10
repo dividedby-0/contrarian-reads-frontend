@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, HostListener, OnInit} from '@angular/core';
 import {SearchBarComponent} from "../search-bar/search-bar.component";
 import {TopNavbarComponent} from "../top-navbar/top-navbar.component";
 import {BookGridComponent} from "../book-grid/book-grid.component";
@@ -10,6 +10,7 @@ import {debounceTime} from "rxjs/operators";
 import {Subject, Subscription} from "rxjs";
 import {EventService} from "../../services/event.service";
 import {PaginatedBooksRetrieve} from "../../models/paginated-books-retrieve";
+import {SuggestionsService} from "../../services/suggestions.service";
 
 @Component({
   selector: 'app-main',
@@ -29,6 +30,9 @@ export class MainComponent implements OnInit {
   hasMoreResults: boolean = true;
   remainingBooksCount: number = 0;
   noResultsMessage: string = '';
+  suggestionCount: number = 0;
+  showScrollButton: boolean = false;
+  scrollY: number = 0;
   private searchTermSubject = new Subject<string>();
   private searchSubscription: Subscription = new Subscription();
   private refreshSubscription: Subscription = new Subscription();
@@ -36,7 +40,8 @@ export class MainComponent implements OnInit {
   constructor(
     public bookService: BookService,
     public loadingService: LoadingService,
-    public eventService: EventService
+    public eventService: EventService,
+    private suggestionsService: SuggestionsService
   ) {
   }
 
@@ -53,7 +58,14 @@ export class MainComponent implements OnInit {
       this.refreshMainPageContent();
     });
 
+    this.fetchSuggestionCount();
     this.refreshMainPageContent();
+  }
+
+  fetchSuggestionCount() {
+    this.suggestionsService.getSuggestionCount().subscribe(count => {
+      this.suggestionCount = count;
+    });
   }
 
   ngOnDestroy() {
@@ -63,6 +75,7 @@ export class MainComponent implements OnInit {
 
   refreshMainPageContent() {
     this.resetPagination();
+    this.fetchSuggestionCount();
     this.searchTermSubject.next('');
   }
 
@@ -126,5 +139,19 @@ export class MainComponent implements OnInit {
     if (this.hasMoreResults && !this.isLoading) {
       this.loadBooks();
     }
+  }
+
+  @HostListener('window:scroll')
+  onWindowScroll() {
+    this.scrollY = window.scrollY;
+    this.showScrollButton = this.scrollY > 300;
+  }
+
+  get headerOpacity(): number {
+    return Math.max(0, 1 - this.scrollY / 200);
+  }
+
+  scrollToTop() {
+    document.documentElement.scrollTo({ top: 0, behavior: 'smooth' });
   }
 }

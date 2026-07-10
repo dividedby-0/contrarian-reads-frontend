@@ -1,14 +1,31 @@
 .book-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: 1fr;
   grid-gap: 3rem;
   padding: 20px;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+@media (min-width: 768px) {
+  .book-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1400px) {
+  .book-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
 }
 
 .book {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  min-width: 0;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .book-main {
@@ -75,12 +92,13 @@
   flex-direction: column;
   justify-content: space-around;
   margin-left: 2rem;
+  min-width: 0;
 }
 
 .suggested-book {
   display: flex;
   flex-direction: row;
-  align-items: center;
+  align-items: flex-start;
   justify-content: flex-start;
   margin: 0.5rem;
 }
@@ -132,6 +150,21 @@
   margin-left: 10px;
   align-items: flex-start;
   justify-content: center;
+  max-height: 200px;
+  overflow: hidden;
+  min-width: 0;
+}
+
+.suggested-book-info .book-title,
+.suggested-book-info .book-author,
+.suggested-book-info .suggested-by,
+.suggested-book-info .reason,
+.suggested-book-info .upvotes,
+.suggested-book-info .comments {
+  white-space: normal;
+  overflow-wrap: break-word;
+  word-break: break-word;
+  max-width: 200px;
 }
 
 .book-title {
@@ -163,4 +196,35 @@
 .comments {
   font-size: 12px;
   color: #666;
+}
+
+@media (max-width: 1280px) {
+  .suggested-book {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .suggested-book-cover {
+    margin-bottom: 8px;
+  }
+
+  .suggested-book-info {
+    margin-left: 0;
+    align-items: center;
+    text-align: center;
+    max-height: none;
+  }
+
+  .suggested-book-info .book-title {
+    font-size: 14px;
+  }
+
+  .suggested-book-info .book-author {
+    font-size: 12px;
+  }
+
+  .suggested-book-info .suggested-by,
+  .suggested-book-info .reason {
+    display: none;
+  }
 }

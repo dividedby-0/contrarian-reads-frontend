@@ -1,11 +1,12 @@
 <app-spinner *ngIf="loadingService.isLoading$ | async"></app-spinner>
 <app-top-navbar></app-top-navbar>
 <div class="main-container">
-  <div class="header-area-fixed-container">
+  <div class="header-area" [style.opacity]="headerOpacity">
     <div class="header-text">Gain a different perspective</div>
-    <div class="search-bar-container">
-      <app-search-bar (searchTermChange)="onSearchTermChanged($event)"></app-search-bar>
-    </div>
+    <div class="header-suggestion-text"><span class="suggestion-count">{{ suggestionCount }}</span> opposing views and counting</div>
+  </div>
+  <div class="search-bar-sticky">
+    <app-search-bar (searchTermChange)="onSearchTermChanged($event)"></app-search-bar>
   </div>
   <div class="book-grid-container">
 
@@ -23,3 +24,7 @@
     </button>
   </div>
 </div>
+
+<button *ngIf="showScrollButton" class="scroll-to-top" (click)="scrollToTop()">
+  <i class="fas fa-arrow-up"></i>
+</button>

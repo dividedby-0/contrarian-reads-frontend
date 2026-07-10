@@ -29,7 +29,7 @@
           <div class="book-title">{{ suggestion.suggestedBook.title }}</div>
           <div class="book-author">by {{ suggestion.suggestedBook.author }}</div>
           <div class="suggested-by">Suggested by {{ suggestion.suggestedByUser.username }}</div>
-          <div class="reason">"{{ suggestion.reason }}"</div>
+           <div class="reason">"{{ truncateReason(suggestion.reason) }}"</div>
           <div class="upvotes">{{ suggestion.upvoteCount }}
             <span *ngIf="suggestion.upvoteCount === 1">upvote</span>
             <span *ngIf="suggestion.upvoteCount !== 1">upvotes</span>

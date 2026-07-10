@@ -36,6 +36,11 @@ export class BookGridComponent {
     );
   }
 
+  truncateReason(text: string, maxChars: number = 40): string {
+    if (text.length <= maxChars) return text;
+    return text.substring(0, maxChars) + '...';
+  }
+
   openSuggestedBookModal(suggestion: SuggestionRetrieve) {
     const userId = localStorage.getItem("userId");
     this.suggestionsService.getSuggestionById(suggestion.id, userId).subscribe({

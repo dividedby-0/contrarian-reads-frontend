@@ -6,8 +6,6 @@ import {MatDialog} from "@angular/material/dialog";
 import {ConfirmationDialogComponent} from "../confirmation-dialog/confirmation-dialog.component";
 import {SnackbarService} from "../../services/snackbar.service";
 import {AddAlternativeModalComponent} from "../add-alternative-modal/add-alternative-modal.component";
-import {MainComponent} from "../main/main.component";
-import {SuggestionsService} from "../../services/suggestions.service";
 import {UserProfileModalComponent} from "../user-profile-modal/user-profile-modal.component";
 import {EventService} from "../../services/event.service";
 
@@ -19,16 +17,14 @@ import {EventService} from "../../services/event.service";
   styleUrl: './top-navbar.component.css'
 })
 export class TopNavbarComponent {
-  suggestionCount: number = 0;
 
-  constructor(private authService: AuthService, private router: Router, private dialog: MatDialog, private snackbarService: SnackbarService, private mainComponent: MainComponent, private suggestionsService: SuggestionsService, private eventService: EventService) {
-    this.fetchSuggestionCount();
+  menuOpen = false;
+
+  constructor(private authService: AuthService, private router: Router, private dialog: MatDialog, private snackbarService: SnackbarService, private eventService: EventService) {
   }
 
-  fetchSuggestionCount() {
-    this.suggestionsService.getSuggestionCount().subscribe(count => {
-      this.suggestionCount = count;
-    });
+  toggleMenu() {
+    this.menuOpen = !this.menuOpen;
   }
 
   onLogout() {
