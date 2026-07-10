@@ -70,6 +70,10 @@ textarea:focus {
   background-color: var(--highlight-color);
 }
 
+:host ::ng-deep .spinner-overlay {
+  z-index: 2000;
+}
+
 @media (max-width: 400px) {
   .modal-content {
     padding: 20px;

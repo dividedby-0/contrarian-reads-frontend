@@ -1,4 +1,5 @@
 <div class="modal-container">
+  <app-spinner *ngIf="isLoading"></app-spinner>
   <div class="modal-content">
     <span class="modal-close-button" (click)="onClose()">&times;</span>
     <h2>Add New Alternative Book</h2>

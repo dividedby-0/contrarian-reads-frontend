@@ -4,6 +4,7 @@ import {FormsModule} from "@angular/forms";
 import {GoogleBooksService} from "../../services/google-books.service";
 import {debounceTime, Subject} from 'rxjs';
 import {NgForOf, NgIf} from "@angular/common";
+import {SpinnerComponent} from "../spinner/spinner.component";
 import {BookService} from "../../services/book.service";
 import {SuggestionsService} from "../../services/suggestions.service";
 import {SnackbarService} from "../../services/snackbar.service";
@@ -15,7 +16,8 @@ import {AuthService} from "../../auth/auth.service";
   imports: [
     FormsModule,
     NgIf,
-    NgForOf
+    NgForOf,
+    SpinnerComponent
   ],
   templateUrl: './add-alternative-modal.component.html',
   styleUrls: ['./add-alternative-modal.component.css']
@@ -30,6 +32,7 @@ export class AddAlternativeModalComponent {
   suggestedAlternativeSuggestions: any[] = [];
   remainingCharacters: number = 150;
   isMainBookEditable: boolean = true;
+  isLoading: boolean = false;
 
   private mainBookSearch$ = new Subject<string>();
   private suggestedAlternativeSearch$ = new Subject<string>();
@@ -125,11 +128,34 @@ export class AddAlternativeModalComponent {
     this.remainingCharacters = 150 - this.reason.length;
   }
 
+  private getValidationMessage(httpError: any): string {
+    if (httpError.error?.errors) {
+      const messages = Object.entries(httpError.error.errors)
+        .map(([field, msgs]) => `${field}: ${(msgs as string[]).join(', ')}`);
+      return messages.join(' | ');
+    }
+    return 'An unexpected error occurred. Please try again.';
+  }
+
   onClose(): void {
     this.dialogRef.close();
   }
 
   onConfirm(): void {
+    if (!this.selectedMainBook) {
+      this.snackbarService.showMessage('Please select a main book.', 5000);
+      return;
+    }
+    if (!this.selectedSuggestedAlternative) {
+      this.snackbarService.showMessage('Please select a suggested alternative.', 5000);
+      return;
+    }
+    if (!this.reason.trim()) {
+      this.snackbarService.showMessage('Please provide a reason for your suggestion.', 5000);
+      return;
+    }
+
+    this.isLoading = true;
     this.snackbarService.showMessage('Adding your suggestion...');
     const userId = this.authService.getUserId();
 
@@ -162,24 +188,28 @@ export class AddAlternativeModalComponent {
             }).subscribe({
               next: (createdSuggestion) => {
                 console.log('Suggestion added:', createdSuggestion);
+                this.isLoading = false;
                 this.snackbarService.showMessage('Suggestion added successfully!', 3000);
                 this.dialogRef.close();
               },
               error: (error) => {
+                this.isLoading = false;
                 console.error('Error adding suggestion:', error);
-                this.snackbarService.showMessage('Error adding suggestion. Please try again.', 5000);
+                this.snackbarService.showMessage('Error adding suggestion. ' + this.getValidationMessage(error), 5000);
               }
             });
           },
           error: (error) => {
+            this.isLoading = false;
             console.error('Error adding suggested book:', error);
-            this.snackbarService.showMessage('Error adding suggested book. Please try again.', 5000);
+            this.snackbarService.showMessage('Error adding suggested book. ' + this.getValidationMessage(error), 5000);
           }
         });
       },
       error: (error) => {
+        this.isLoading = false;
         console.error('Error adding main book:', error);
-        this.snackbarService.showMessage('Error adding main book. Please try again.', 5000);
+        this.snackbarService.showMessage('Error adding main book. ' + this.getValidationMessage(error), 5000);
       }
     });
   }
