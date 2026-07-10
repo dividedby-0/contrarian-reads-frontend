@@ -1,12 +1,15 @@
 .modal-content {
-  max-height: 90vh; /* to accomodate more comments */
+  max-height: 90vh;
+  max-width: 750px;
 }
+
+
 
 .book-info-container {
   display: flex;
   flex-direction: row;
   align-items: center;
-  justify-content: space-evenly;
+  justify-content: center;
 }
 
 .left-column-container {

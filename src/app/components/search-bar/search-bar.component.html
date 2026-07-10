@@ -1,8 +1,9 @@
 <div class="search-bar">
-  <input type="search"
-         placeholder="Search for a title or author..."
-         [(ngModel)]="searchTerm"
-         (ngModelChange)="onSearchTermChanged()">
-  <i class="search-icon fas fa-search"></i>
-  <button type="submit">Search</button>
+  <div class="input-wrapper">
+    <i class="search-icon fas fa-search"></i>
+    <input type="search"
+           placeholder="Search for a title or author..."
+           [(ngModel)]="searchTerm"
+           (ngModelChange)="onSearchTermChanged()">
+  </div>
 </div>
