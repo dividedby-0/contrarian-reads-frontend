@@ -6,6 +6,7 @@ export interface SuggestionRetrieve {
   id: string;
   createdAt: Date;
   reason: string;
+  book: BookRetrieve;
   suggestedBook: BookRetrieve;
   suggestedByUser: UserRetrieve;
   upvoteCount: number;

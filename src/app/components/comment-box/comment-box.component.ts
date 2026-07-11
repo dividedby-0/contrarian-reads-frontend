@@ -15,6 +15,7 @@ export class CommentBoxComponent implements OnInit {
   @Input() comments: CommentRetrieve[] = [];
   @Input() nestingLevel: number = 0;
   @Input() currentUserId: string | null = null;
+  @Input() parentAuthorName: string | null = null;
   replyingToCommentId: string | null = null;
   charCount: number = 0;
 

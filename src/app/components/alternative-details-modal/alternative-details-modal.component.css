@@ -6,6 +6,66 @@
   overflow: hidden;
 }
 
+.original-book {
+  background: var(--primary-light);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 10px 14px;
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+}
+
+.original-book-label {
+  font-size: 0.7rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--text-muted);
+  white-space: nowrap;
+}
+
+.original-book-details {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+}
+
+.original-book-cover {
+  width: 30px;
+  height: 45px;
+  object-fit: cover;
+  border-radius: 3px;
+  flex-shrink: 0;
+}
+
+.original-book-details div {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.original-book-title {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.original-book-author {
+  font-size: 0.75rem;
+  font-style: italic;
+  color: var(--text-muted);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
 .book-info-container {
   flex: 1;
   min-height: 0;
@@ -114,7 +174,37 @@
   flex-direction: column;
 }
 
+.details-section {
+  margin-bottom: 24px;
+}
+
+.details-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+  user-select: none;
+  padding: 4px 0;
+}
+
+.details-header h4 {
+  margin: 0;
+}
+
+.details-header .chevron {
+  width: 16px;
+  height: 16px;
+  transition: transform 0.2s ease;
+  color: var(--text-muted);
+  flex-shrink: 0;
+}
+
+.details-header .chevron.rotated {
+  transform: rotate(180deg);
+}
+
 .reason-section {
+  margin-top: 12px;
   margin-bottom: 20px;
 }
 
@@ -139,11 +229,33 @@
   white-space: nowrap;
 }
 
+.add-comment-wrapper {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+
+.add-comment-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+  user-select: none;
+  padding: 4px 0;
+}
+
+.add-comment-header h4 {
+  margin: 0;
+}
+
+.add-comment-body {
+  padding-top: 8px;
+}
+
 .add-comment-section {
   display: flex;
   flex-direction: column;
   gap: 10px;
-  margin-bottom: 24px;
 }
 
 .comment-input {

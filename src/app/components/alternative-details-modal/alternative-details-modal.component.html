@@ -3,7 +3,20 @@
     <span class="modal-close-button" (click)="onClose()" title="Close">&times;</span>
     <h2>Suggested Book Details</h2>
 
-    <div *ngIf="this.data.suggestion" class="book-info-container">
+    <ng-container *ngIf="this.data.suggestion">
+
+      <div class="original-book" *ngIf="this.data.suggestion.book">
+        <span class="original-book-label">As an alternative to</span>
+        <div class="original-book-details">
+          <img *ngIf="this.data.suggestion.book.coverImageUrl" [src]="this.data.suggestion.book.coverImageUrl" alt="" class="original-book-cover">
+          <div>
+            <span class="original-book-title">{{ this.data.suggestion.book.title }}</span>
+            <span class="original-book-author">{{ this.data.suggestion.book.author }}</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="book-info-container">
 
       <div class="left-column">
         <img [src]="this.data.suggestion.suggestedBook.coverImageUrl" alt="Book Cover" class="book-cover">
@@ -26,27 +39,49 @@
       </div>
 
       <div class="right-column">
-        <div class="reason-section">
-          <p class="reason-label">Reason for suggesting this counterpoint</p>
-          <p class="reason-text">&ldquo;{{ this.data.suggestion.reason }}&rdquo; <span class="reason-signature">&mdash; {{ this.data.suggestion.suggestedByUser.username }}</span></p>
+        <div class="details-section">
+          <div class="details-header" (click)="detailsExpanded = !detailsExpanded">
+            <h4>Details</h4>
+            <svg class="chevron" [class.rotated]="!detailsExpanded" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polyline points="6 9 12 15 18 9"/>
+            </svg>
+          </div>
+          <div *ngIf="detailsExpanded">
+            <div class="reason-section">
+              <p class="reason-label">Reason for suggesting this counterpoint</p>
+              <p class="reason-text">&ldquo;{{ this.data.suggestion.reason }}&rdquo; <span class="reason-signature">&mdash; {{ this.data.suggestion.suggestedByUser.username }}</span></p>
+            </div>
+
+          </div>
         </div>
 
-        <div class="add-comment-section">
-          <mat-form-field appearance="outline" class="comment-input">
-            <mat-label>Add a comment</mat-label>
-            <textarea class="comment-input"
-                      matInput
-                      placeholder="Write your thoughts..."
-                      [(ngModel)]="newCommentText"
-                      maxlength="150">
-            </textarea>
-            <small class="character-count">{{ 150 - newCommentText.length }}</small>
-          </mat-form-field>
-          <button class="add-comment-button" (click)="addComment(newCommentText)"
-                  [disabled]="!newCommentText.trim()"
-                  title="Submit your comment">
-            Add Comment
-          </button>
+        <div class="add-comment-wrapper">
+          <hr class="comments-divider">
+          <div class="add-comment-header" (click)="addCommentExpanded = !addCommentExpanded">
+            <h4>Add a Comment</h4>
+            <svg class="chevron" [class.rotated]="addCommentExpanded" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polyline points="6 9 12 15 18 9"/>
+            </svg>
+          </div>
+          <div class="add-comment-body" *ngIf="addCommentExpanded">
+            <div class="add-comment-section">
+              <mat-form-field appearance="outline" class="comment-input">
+                <mat-label>Add a comment</mat-label>
+                <textarea class="comment-input"
+                          matInput
+                          placeholder="Write your thoughts..."
+                          [(ngModel)]="newCommentText"
+                          maxlength="150">
+                </textarea>
+                <small class="character-count">{{ 150 - newCommentText.length }}</small>
+              </mat-form-field>
+              <button class="add-comment-button" (click)="addComment(newCommentText)"
+                      [disabled]="!newCommentText.trim()"
+                      title="Submit your comment">
+                Add Comment
+              </button>
+            </div>
+          </div>
         </div>
 
         <div class="comments-section" [class.expanded]="commentsExpanded">
@@ -76,6 +111,8 @@
       </div>
 
     </div>
+
+    </ng-container>
 
   </div>
 </div>

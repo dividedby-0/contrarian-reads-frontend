@@ -13,6 +13,11 @@
   border: 1px solid var(--border);
 }
 
+.is-root {
+  border-left: 4px solid var(--primary);
+  background: var(--surface);
+}
+
 .is-reply {
   border-left: 3px solid var(--primary);
   background: var(--surface);
@@ -20,7 +25,32 @@
 
 .is-current-user {
   background: var(--primary-light);
-  border-color: var(--primary);
+}
+
+.root-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 0.7rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--primary);
+  margin-bottom: 8px;
+}
+
+.reply-indicator {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  margin-bottom: 6px;
+}
+
+.reply-indicator strong {
+  color: var(--text);
+  font-weight: 600;
 }
 
 .comment-header {
@@ -40,8 +70,19 @@
 
 .comment-meta {
   display: flex;
-  flex-direction: column;
-  gap: 1px;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.replying-to {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+.replying-to strong {
+  color: var(--text);
+  font-weight: 600;
 }
 
 .username {

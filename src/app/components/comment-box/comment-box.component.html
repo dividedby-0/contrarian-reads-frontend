@@ -1,14 +1,25 @@
 <div class="comment-box-container">
   <div *ngFor="let comment of comments">
     <div class="comment" [class.is-reply]="nestingLevel > 0"
+         [class.is-root]="nestingLevel === 0"
          [class.is-current-user]="isCurrentUser(comment)"
          [style.marginLeft.px]="nestingLevel * 24">
+
+      <div class="root-badge" *ngIf="nestingLevel === 0">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+        </svg>
+        Thread
+      </div>
 
       <div class="comment-header">
         <img [src]="comment.user.profilePictureUrl || '../../assets/images/default-avatar.png'"
              alt="Avatar" class="avatar">
         <div class="comment-meta">
           <span class="username">{{ comment.user.username }}</span>
+          <span class="replying-to" *ngIf="parentAuthorName">
+            replying to <strong>{{ parentAuthorName }}</strong>
+          </span>
           <span class="timestamp">{{ comment.createdAt | date:"MMM dd, yyyy '@' hh:mm a" }}</span>
         </div>
       </div>
@@ -42,7 +53,8 @@
     <div class="reply-container" *ngIf="comment.replies && comment.replies.length > 0">
       <app-comment-box [comments]="comment.replies"
                        [nestingLevel]="nestingLevel + 1"
-                       [currentUserId]="currentUserId">
+                       [currentUserId]="currentUserId"
+                       [parentAuthorName]="comment.user.username">
       </app-comment-box>
     </div>
   </div>

@@ -31,6 +31,8 @@ export class AlternativeDetailsModalComponent implements OnInit {
   comments: CommentRetrieve[] = [];
   upvoteAlreadyExists = false;
   commentsExpanded = true;
+  detailsExpanded = true;
+  addCommentExpanded = true;
   currentUserId: string | null = localStorage.getItem("userId");
 
   constructor(
