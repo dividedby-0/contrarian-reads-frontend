@@ -29,6 +29,13 @@ export class CommentBoxComponent implements OnInit {
     return comment.user.id === this.currentUserId;
   }
 
+  onAvatarError(event: Event) {
+    const img = event.target as HTMLImageElement;
+    if (!img.src.includes('default-avatar.png')) {
+      img.src = '/assets/images/default-avatar.png';
+    }
+  }
+
   toggleReply(commentId: string) {
     this.replyingToCommentId = this.replyingToCommentId === commentId ? null : commentId;
   }

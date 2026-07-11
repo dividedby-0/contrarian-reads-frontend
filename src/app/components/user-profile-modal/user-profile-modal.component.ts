@@ -127,6 +127,13 @@ export class UserProfileModalComponent implements OnInit {
     });
   }
 
+  onAvatarError(event: Event) {
+    const img = event.target as HTMLImageElement;
+    if (!img.src.includes('default-avatar.png')) {
+      img.src = '/assets/images/default-avatar.png';
+    }
+  }
+
   onClose(): void {
     this.dialogRef.close();
     this.eventService.refreshMainPage();

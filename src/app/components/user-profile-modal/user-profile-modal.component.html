@@ -11,8 +11,8 @@
     <div class="modal-content-info-container" *ngIf="!isLoading">
       <div *ngIf="userData" class="user-info">
         <div class="profile-picture">
-          <img [src]="userData.user.profilePictureUrl || 'assets/images/default-profile-picture.png'"
-               alt="Profile Picture">
+          <img [src]="userData.user.profilePictureUrl || '/assets/images/default-avatar.png'"
+               alt="Profile Picture" (error)="onAvatarError($event)">
         </div>
         <div class="user-details">
           <div class="username">{{ userData.user.username }}</div>
