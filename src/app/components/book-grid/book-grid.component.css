@@ -155,6 +155,10 @@
   flex-direction: column;
   justify-content: space-around;
   min-width: 0;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 16px;
 }
 
 .suggestions-header {
@@ -165,7 +169,7 @@
   color: var(--primary);
   padding-bottom: 8px;
   margin-bottom: 4px;
-  border-bottom: 1px solid var(--border);
+  border-bottom: 2px solid var(--primary);
   text-align: center;
 }
 
