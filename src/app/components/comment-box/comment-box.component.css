@@ -11,6 +11,7 @@
   border-radius: var(--radius-sm);
   background: var(--bg);
   border: 1px solid var(--border);
+  position: relative;
 }
 
 .is-root {
@@ -27,6 +28,35 @@
   background: var(--primary-light);
 }
 
+.reply-container {
+  overflow: hidden;
+  margin-top: 4px;
+}
+
+.comment.is-reply::before {
+  content: '';
+  position: absolute;
+  left: -24px;
+  top: -9999px;
+  bottom: calc(100% - 28px);
+  width: 2px;
+  background: var(--text-muted);
+  border-radius: 1px;
+  pointer-events: none;
+}
+
+.comment.is-reply::after {
+  content: '';
+  position: absolute;
+  left: -24px;
+  top: 28px;
+  width: 21px;
+  height: 2px;
+  background: var(--text-muted);
+  border-radius: 1px;
+  pointer-events: none;
+}
+
 .root-badge {
   display: inline-flex;
   align-items: center;
@@ -37,20 +67,6 @@
   letter-spacing: 0.06em;
   color: var(--primary);
   margin-bottom: 8px;
-}
-
-.reply-indicator {
-  display: flex;
-  align-items: center;
-  gap: 4px;
-  font-size: 0.75rem;
-  color: var(--text-muted);
-  margin-bottom: 6px;
-}
-
-.reply-indicator strong {
-  color: var(--text);
-  font-weight: 600;
 }
 
 .comment-header {

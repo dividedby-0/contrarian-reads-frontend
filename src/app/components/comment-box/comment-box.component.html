@@ -2,8 +2,7 @@
   <div *ngFor="let comment of comments">
     <div class="comment" [class.is-reply]="nestingLevel > 0"
          [class.is-root]="nestingLevel === 0"
-         [class.is-current-user]="isCurrentUser(comment)"
-         [style.marginLeft.px]="nestingLevel * 24">
+         [class.is-current-user]="isCurrentUser(comment)">
 
       <div class="root-badge" *ngIf="nestingLevel === 0">
         <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -50,7 +49,8 @@
 
     </div>
 
-    <div class="reply-container" *ngIf="comment.replies && comment.replies.length > 0">
+    <div class="reply-container" *ngIf="comment.replies && comment.replies.length > 0"
+         [style.paddingLeft.px]="24">
       <app-comment-box [comments]="comment.replies"
                        [nestingLevel]="nestingLevel + 1"
                        [currentUserId]="currentUserId"
