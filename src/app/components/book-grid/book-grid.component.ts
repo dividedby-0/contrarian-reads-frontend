@@ -59,9 +59,9 @@ export class BookGridComponent {
     })
   }
 
-  openShowSuggestionsForBookModal(suggestions: any[]) {
+  openShowSuggestionsForBookModal(suggestions: any[], mainBook: any) {
     const dialogRef = this.dialog.open(ShowSuggestionsForBookModalComponent, {
-      data: {suggestions: suggestions},
+      data: {suggestions: suggestions, book: mainBook},
     });
 
     dialogRef.afterClosed().subscribe(result => {

@@ -22,15 +22,17 @@ export class ShowSuggestionsForBookModalComponent {
   searchTerm: string = '';
   filteredSuggestions: any[] = [];
   orderBy: string = 'upvoteCount';
+  mainBook: any;
 
   constructor(
     public dialogRef: MatDialogRef<ShowSuggestionsForBookModalComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: { suggestions: any[] },
+    @Inject(MAT_DIALOG_DATA) public data: { suggestions: any[], book: any },
     private dialog: MatDialog,
     private suggestionsService: SuggestionsService,
     private eventService: EventService
   ) {
     this.filteredSuggestions = this.data.suggestions;
+    this.mainBook = this.data.book;
   }
 
   ngOnInit() {

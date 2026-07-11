@@ -43,6 +43,7 @@ import {
 export class UserProfileModalComponent implements OnInit {
   userData: UserProfileRetrieve | undefined;
   userId: string | null = null;
+  isLoading = true;
 
   constructor(
     private authService: AuthService,
@@ -60,6 +61,7 @@ export class UserProfileModalComponent implements OnInit {
       this.userService.getUserProfile(this.userId).subscribe({
         next: (data) => {
           this.userData = data;
+          this.isLoading = false;
         },
         error: (error) => {
           this.dialogRef.close();

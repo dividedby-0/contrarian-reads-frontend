@@ -14,6 +14,7 @@ import {SnackbarService} from '../../services/snackbar.service';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatButton} from "@angular/material/button";
 import {MatInput} from "@angular/material/input";
+import {BackgroundCanvasComponent} from "../../background-canvas/background-canvas.component";
 
 @Component({
   selector: 'app-register',
@@ -24,7 +25,8 @@ import {MatInput} from "@angular/material/input";
     RouterLink,
     MatFormFieldModule,
     MatButton,
-    MatInput
+    MatInput,
+    BackgroundCanvasComponent
   ],
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.css']

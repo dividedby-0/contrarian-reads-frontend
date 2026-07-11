@@ -1,30 +1,36 @@
-<div class="comment-box-container" [ngClass]="{ 'isScrollable': nestingLevel === 0 }">
+<div class="comment-box-container">
   <div *ngFor="let comment of comments">
-    <div class="comment"
-         [style.marginLeft.px]="nestingLevel * 30"
-         [style.borderLeft]=" '4px solid' + getRandomPastelColor()">
+    <div class="comment" [class.is-reply]="nestingLevel > 0"
+         [class.is-current-user]="isCurrentUser(comment)"
+         [style.marginLeft.px]="nestingLevel * 24">
 
-      <div class="first-line">
+      <div class="comment-header">
         <img [src]="comment.user.profilePictureUrl || '../../assets/images/default-avatar.png'"
              alt="Avatar" class="avatar">
-        <div class="user-and-comment"><strong>{{ comment.user.username }}</strong>: {{ comment.content }}</div>
-      </div>
-
-      <div class="comment-details">
-        <div class="comment-timestamp">{{ comment.createdAt | date:"MMM dd, yyyy '@' hh:mm a" }}</div>
-
-      </div>
-
-      <div class="reply-button-container">
-        <div class="reply-text"
-             (click)="toggleReply(comment.id)">{{ replyingToCommentId === comment.id ? 'Cancel' : 'Reply' }}
+        <div class="comment-meta">
+          <span class="username">{{ comment.user.username }}</span>
+          <span class="timestamp">{{ comment.createdAt | date:"MMM dd, yyyy '@' hh:mm a" }}</span>
         </div>
+      </div>
+
+      <div class="comment-body">
+        <p class="content">{{ comment.content }}</p>
+      </div>
+
+      <div class="comment-actions">
+        <button class="reply-button" (click)="toggleReply(comment.id)">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+          </svg>
+          {{ replyingToCommentId === comment.id ? 'Cancel' : 'Reply' }}
+        </button>
       </div>
 
       <div *ngIf="replyingToCommentId === comment.id" class="reply-box">
         <textarea #replyContent placeholder="Write your reply..." maxlength="150"
                   (input)="updateCharCount(replyContent.value)"></textarea>
-        <button class="reply-send-button" (click)="addReply(comment, replyContent.value)">Send</button>
+        <button class="reply-send-button" (click)="addReply(comment, replyContent.value)"
+                [disabled]="!replyContent.value.trim()">Send</button>
       </div>
 
       <div *ngIf="replyingToCommentId === comment.id" class="char-counter" [class.near-limit]="charCount > 130">
@@ -35,7 +41,8 @@
 
     <div class="reply-container" *ngIf="comment.replies && comment.replies.length > 0">
       <app-comment-box [comments]="comment.replies"
-                       [nestingLevel]="nestingLevel + 1">
+                       [nestingLevel]="nestingLevel + 1"
+                       [currentUserId]="currentUserId">
       </app-comment-box>
     </div>
   </div>

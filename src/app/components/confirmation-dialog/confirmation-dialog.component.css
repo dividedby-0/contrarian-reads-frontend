@@ -2,11 +2,13 @@
   display: block;
   padding: 24px;
   min-width: 320px;
+  color: var(--text);
 }
 
 h2 {
   margin-bottom: 12px;
   font-size: 1.25rem;
+  color: var(--text);
 }
 
 p {

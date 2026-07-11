@@ -33,9 +33,22 @@ export class MainComponent implements OnInit {
   suggestionCount: number = 0;
   showScrollButton: boolean = false;
   scrollY: number = 0;
+  currentText = '';
   private searchTermSubject = new Subject<string>();
   private searchSubscription: Subscription = new Subscription();
   private refreshSubscription: Subscription = new Subscription();
+  private phrases = [
+    "Gain a different perspective",
+    "Find the counterpoint",
+    "Challenge your assumptions",
+    "Explore opposing views",
+    "See the other side",
+    "Break your filter bubble"
+  ];
+  private phraseIndex = 0;
+  private charIndex = 0;
+  private isDeleting = false;
+  private typewriterTimer: any;
 
   constructor(
     public bookService: BookService,
@@ -60,6 +73,40 @@ export class MainComponent implements OnInit {
 
     this.fetchSuggestionCount();
     this.refreshMainPageContent();
+    this.startTypewriter();
+  }
+
+  private startTypewriter() {
+    this.typeWriter();
+  }
+
+  private typeWriter() {
+    const currentPhrase = this.phrases[this.phraseIndex];
+
+    if (this.isDeleting) {
+      this.currentText = currentPhrase.substring(0, this.charIndex - 1);
+      this.charIndex--;
+    } else {
+      this.currentText = currentPhrase.substring(0, this.charIndex + 1);
+      this.charIndex++;
+    }
+
+    let speed = 80;
+
+    if (this.isDeleting) {
+      speed = 40;
+    }
+
+    if (!this.isDeleting && this.charIndex === currentPhrase.length) {
+      speed = 2000;
+      this.isDeleting = true;
+    } else if (this.isDeleting && this.charIndex === 0) {
+      this.isDeleting = false;
+      this.phraseIndex = (this.phraseIndex + 1) % this.phrases.length;
+      speed = 500;
+    }
+
+    this.typewriterTimer = setTimeout(() => this.typeWriter(), speed);
   }
 
   fetchSuggestionCount() {
@@ -69,6 +116,7 @@ export class MainComponent implements OnInit {
   }
 
   ngOnDestroy() {
+    clearTimeout(this.typewriterTimer);
     this.searchSubscription.unsubscribe();
     this.refreshSubscription.unsubscribe();
   }

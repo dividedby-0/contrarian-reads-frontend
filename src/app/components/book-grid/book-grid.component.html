@@ -1,15 +1,22 @@
 <div class="book-grid">
-  <div class="book" *ngFor="let element of booksWithSuggestions; let i = index">
+  <div class="book" *ngFor="let element of booksWithSuggestions; let i = index" [style.animation-delay]="i * 0.08 + 's'">
 
     <div class="book-main">
 
-      <img class="book-cover" [src]="element.book.coverImageUrl" alt="{{ element.book.title }}"
-           (click)="openAddAlternativeModal(element.book)">
+      <div class="main-book-label">Original</div>
+      <div class="book-cover-wrapper">
+        <img class="book-cover" [src]="element.book.coverImageUrl" alt="{{ element.book.title }}"
+             (click)="openAddAlternativeModal(element.book)" title="Suggest an alternative to this book">
+        <div class="book-cover-overlay">
+          <span class="overlay-icon">+</span>
+          <span class="overlay-text">Add counterpoint</span>
+        </div>
+      </div>
       <div class="book-info-container">
         <div class="book-info">
           <div class="book-title">{{ element.book.title }}</div>
           <div class="book-author">by {{ element.book.author }}</div>
-          <div class="total-suggestions" (click)="openShowSuggestionsForBookModal(element.suggestions)">
+          <div class="total-suggestions" (click)="openShowSuggestionsForBookModal(element.suggestions, element.book)" title="View all alternative suggestions">
             <span *ngIf="element.suggestions.length === 1">1 alternative</span>
             <span *ngIf="element.suggestions.length > 1">{{ element.suggestions.length }} alternatives</span>
           </div>
@@ -18,8 +25,9 @@
     </div>
 
     <div class="suggested-books">
+      <div class="suggestions-header">Most upvoted Counterpoints</div>
       <div class="suggested-book" *ngFor="let suggestion of topSuggestions[i]">
-        <div class="suggested-book-cover" (click)="openSuggestedBookModal(suggestion)">
+        <div class="suggested-book-cover" (click)="openSuggestedBookModal(suggestion)" title="View details of this suggestion">
           <img [src]="suggestion.suggestedBook.coverImageUrl" alt="{{ suggestion.suggestedBook.title }}">
           <div *ngIf="suggestion.userHasUpvoted" class="upvoted-mark-container">
             <div class="upvoted-mark"><i class="fa-solid fa-angle-up"></i></div>
@@ -29,14 +37,20 @@
           <div class="book-title">{{ suggestion.suggestedBook.title }}</div>
           <div class="book-author">by {{ suggestion.suggestedBook.author }}</div>
           <div class="suggested-by">Suggested by {{ suggestion.suggestedByUser.username }}</div>
-           <div class="reason">"{{ truncateReason(suggestion.reason) }}"</div>
-          <div class="upvotes">{{ suggestion.upvoteCount }}
-            <span *ngIf="suggestion.upvoteCount === 1">upvote</span>
-            <span *ngIf="suggestion.upvoteCount !== 1">upvotes</span>
-          </div>
-          <div class="comments">
-            <span *ngIf="suggestion.comments.length === 1">1 comment</span>
-            <span *ngIf="suggestion.comments.length != 1">{{ suggestion.comments.length }} comments</span>
+           <div class="reason">{{ truncateReason(suggestion.reason) }}</div>
+          <div class="stats-row">
+            <span class="stat-badge upvote-badge">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="18 15 12 9 6 15"/>
+              </svg>
+              {{ suggestion.upvoteCount }}
+            </span>
+            <span class="stat-badge comment-badge">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+              </svg>
+              {{ suggestion.comments.length }}
+            </span>
           </div>
         </div>
       </div>

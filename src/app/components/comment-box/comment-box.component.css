@@ -1,117 +1,114 @@
 .comment-box-container {
   display: flex;
   flex-direction: column;
-  overflow-y: hidden;
-  max-height: 600px;
-}
-
-.isScrollable {
-  overflow-y: scroll;
 }
 
 .comment {
   display: flex;
   flex-direction: column;
-  padding: 12px;
+  padding: 14px;
   margin-bottom: 10px;
   border-radius: var(--radius-sm);
-  width: fit-content;
-  max-width: 70%;
-  box-shadow: var(--shadow-sm);
   background: var(--bg);
-  color: var(--text);
-  position: relative;
+  border: 1px solid var(--border);
 }
 
-.first-line {
+.is-reply {
+  border-left: 3px solid var(--primary);
+  background: var(--surface);
+}
+
+.is-current-user {
+  background: var(--primary-light);
+  border-color: var(--primary);
+}
+
+.comment-header {
   display: flex;
-  flex-direction: row;
   align-items: center;
-  justify-content: flex-start;
-  width: 100%;
-  gap: 8px;
+  gap: 10px;
+  margin-bottom: 8px;
 }
 
 .avatar {
-  width: 24px;
-  height: 24px;
+  width: 32px;
+  height: 32px;
   border-radius: 50%;
-  vertical-align: middle;
   object-fit: cover;
+  flex-shrink: 0;
 }
 
-.user-and-comment {
-  font-size: 14px;
-  line-height: 1.4;
-}
-
-.comment-details {
+.comment-meta {
   display: flex;
-  align-items: center;
-  justify-content: flex-end;
-  width: 100%;
+  flex-direction: column;
+  gap: 1px;
 }
 
-.comment-timestamp {
-  font-size: 0.8rem;
+.username {
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: var(--text);
+}
+
+.timestamp {
+  font-size: 0.75rem;
   color: var(--text-muted);
-  text-align: right;
-  margin-top: 5px;
 }
 
-.reply {
-  margin-left: 30px;
-  padding-left: 10px;
+.comment-body {
+  margin-bottom: 8px;
 }
 
-.reply-button-container {
+.content {
+  font-size: 0.9rem;
+  line-height: 1.5;
+  color: var(--text);
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+}
+
+.comment-actions {
   display: flex;
-  flex-direction: row;
-  justify-content: flex-end;
-  margin-top: 5px;
 }
 
-.reply-button-container:hover {
-  cursor: pointer;
-}
-
-.reply-text {
-  color: var(--primary);
-  text-align: center;
-  font-size: 13px;
-  font-weight: 500;
-}
-
-.reply-icon-container {
-  display: flex;
+.reply-button {
+  display: inline-flex;
   align-items: center;
-  justify-content: center;
-  width: 1rem;
-  height: 1rem;
-  margin-left: 5px;
-  margin-top: 3px;
+  gap: 4px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--primary);
+  font-size: 0.8rem;
+  font-weight: 500;
+  font-family: inherit;
+  padding: 4px 0;
+  transition: color var(--transition);
+}
+
+.reply-button:hover {
+  color: var(--primary-hover);
 }
 
 .reply-box {
-  position: relative;
   display: flex;
-  flex-direction: row;
-  padding: 10px;
-  border-radius: var(--radius-sm);
-  width: 400px;
+  flex-direction: column;
   gap: 8px;
+  padding: 10px 0;
+  width: 100%;
 }
 
 .reply-box textarea {
   width: 100%;
   resize: none;
-  padding: 8px 12px;
+  padding: 10px 12px;
   border-radius: var(--radius-sm);
   border: 1px solid var(--border);
   background: var(--surface);
   color: var(--text);
   font-family: inherit;
-  font-size: 14px;
+  font-size: 0.85rem;
+  box-sizing: border-box;
 }
 
 .reply-box textarea:focus {
@@ -119,32 +116,37 @@
   border-color: var(--primary);
 }
 
-.char-counter {
-  font-size: 12px;
-  color: var(--text-muted);
-  margin-bottom: 5px;
-  transition: color 0.2s ease;
-  text-align: center;
-}
-
-.char-counter.near-limit {
-  color: #EF4444;
-}
-
 .reply-send-button {
-  margin-left: 5px;
+  align-self: flex-end;
   border-radius: var(--radius-sm);
   background: var(--primary);
   cursor: pointer;
   color: white;
   border: none;
-  padding: 8px 16px;
-  font-size: 13px;
+  padding: 8px 20px;
+  font-size: 0.85rem;
   font-weight: 500;
   font-family: inherit;
   transition: all var(--transition);
 }
 
-.reply-send-button:hover {
+.reply-send-button:hover:not(:disabled) {
   background: var(--primary-hover);
+}
+
+.reply-send-button:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.char-counter {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  margin-top: 4px;
+  text-align: right;
+  transition: color 0.2s ease;
+}
+
+.char-counter.near-limit {
+  color: #EF4444;
 }

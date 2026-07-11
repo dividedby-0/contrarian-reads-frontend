@@ -1,4 +1,4 @@
-import {Component, HostBinding} from '@angular/core';
+import {Component, HostListener, ElementRef} from '@angular/core';
 import {CommonModule} from "@angular/common";
 import {AuthService} from '../../auth/auth.service';
 import {Router} from '@angular/router';
@@ -21,8 +21,15 @@ export class TopNavbarComponent {
   menuOpen = false;
   isDarkMode = false;
 
-  constructor(private authService: AuthService, private router: Router, private dialog: MatDialog, private snackbarService: SnackbarService, private eventService: EventService) {
+  constructor(private authService: AuthService, private router: Router, private dialog: MatDialog, private snackbarService: SnackbarService, private eventService: EventService, private elementRef: ElementRef) {
     this.isDarkMode = document.documentElement.getAttribute('data-theme') === 'dark';
+  }
+
+  @HostListener('document:mousedown', ['$event'])
+  onClickOutside(event: MouseEvent) {
+    if (this.menuOpen && !this.elementRef.nativeElement.contains(event.target)) {
+      this.menuOpen = false;
+    }
   }
 
   toggleMenu() {

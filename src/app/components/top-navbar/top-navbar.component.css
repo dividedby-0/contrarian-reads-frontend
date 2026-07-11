@@ -70,17 +70,18 @@
   justify-content: center;
   width: 36px;
   height: 36px;
-  border-radius: var(--radius-full);
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  background: rgba(255, 255, 255, 0.08);
-  color: white;
+  background: none;
+  border: none;
+  color: rgba(255, 255, 255, 0.7);
   cursor: pointer;
   transition: all var(--transition);
-  font-size: 16px;
+  font-size: 18px;
+  border-radius: var(--radius-sm);
 }
 
 .theme-toggle:hover {
-  background: rgba(255, 255, 255, 0.15);
+  color: white;
+  background: rgba(255, 255, 255, 0.1);
 }
 
 .nav-bar-actions button {
@@ -167,12 +168,12 @@
   .nav-actions {
     display: none;
     position: absolute;
-    top: 100%;
+    top: calc(100% + 10px);
     right: 16px;
-    min-width: 200px;
+    min-width: 220px;
     height: auto;
     margin-left: 0;
-    padding: 8px 0;
+    padding: 8px;
     background: var(--surface);
     border: 1px solid var(--border);
     border-radius: var(--radius);
@@ -180,8 +181,22 @@
     z-index: 999;
   }
 
+  .nav-actions::before {
+    content: '';
+    position: absolute;
+    top: -6px;
+    right: 24px;
+    width: 12px;
+    height: 12px;
+    background: var(--surface);
+    border-left: 1px solid var(--border);
+    border-top: 1px solid var(--border);
+    transform: rotate(45deg);
+  }
+
   .nav-actions.show {
     display: flex;
+    animation: menuSlideDown 0.2s ease;
   }
 
   .nav-bar-actions {
@@ -194,26 +209,90 @@
   .nav-bar-actions button {
     background: transparent;
     color: var(--text);
-    padding: 12px 20px;
-    margin: 0;
+    padding: 10px 14px;
+    margin: 2px 0;
     border: none;
-    border-radius: 0;
+    border-radius: var(--radius-sm);
     cursor: pointer;
     white-space: nowrap;
-    text-align: left;
+    text-align: center;
     display: flex;
     align-items: center;
+    justify-content: center;
     gap: 10px;
     font-size: 14px;
+    transition: all var(--transition);
   }
 
   .nav-bar-actions button:hover {
     background: var(--primary-light);
+    color: var(--primary);
   }
 
-  .btn-icon {
-    width: 18px;
-    height: 18px;
-    flex-shrink: 0;
+  .nav-bar-actions button:hover .btn-icon {
+    color: var(--primary);
   }
+
+  .menu-divider {
+    border: none;
+    border-top: 1px solid var(--border);
+    margin: 4px 8px;
+  }
+
+  .nav-bar-actions .theme-toggle {
+    width: auto;
+    height: auto;
+    border-radius: var(--radius-sm);
+    border: none;
+    background: transparent;
+    color: var(--text);
+    padding: 10px 14px;
+    margin: 2px 0;
+    font-size: 14px;
+    font-family: inherit;
+    font-weight: 400;
+    cursor: pointer;
+    white-space: nowrap;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    transition: all var(--transition);
+  }
+
+  .nav-bar-actions .theme-toggle:hover {
+    background: var(--primary-light);
+    color: var(--primary);
+  }
+
+  .nav-bar-actions .theme-label {
+    display: inline;
+  }
+}
+
+@keyframes menuSlideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.theme-label {
+  display: none;
+}
+
+.btn-icon {
+  display: flex;
+  align-items: center;
+}
+
+.btn-icon svg {
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
 }

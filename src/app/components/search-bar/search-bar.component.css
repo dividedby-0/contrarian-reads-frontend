@@ -3,9 +3,9 @@
   justify-content: center;
   align-items: center;
   padding: 4px;
-  border: 1px solid var(--border);
+  border: 1px solid rgba(99, 102, 241, 0.35);
   border-radius: var(--radius-full);
-  box-shadow: var(--shadow-sm);
+  box-shadow: 0 0 0 1px rgba(99, 102, 241, 0.15), 0 0 20px rgba(99, 102, 241, 0.1), var(--shadow-sm);
   background-color: var(--surface);
   width: 50%;
   margin: 20px auto;
@@ -13,7 +13,7 @@
 }
 
 .search-bar:focus-within {
-  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.15), var(--shadow);
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.25), 0 0 30px rgba(99, 102, 241, 0.15), var(--shadow);
   border-color: var(--primary);
 }
 

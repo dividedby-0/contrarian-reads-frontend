@@ -14,6 +14,7 @@ import {CommentService} from "../../services/comment.service";
 export class CommentBoxComponent implements OnInit {
   @Input() comments: CommentRetrieve[] = [];
   @Input() nestingLevel: number = 0;
+  @Input() currentUserId: string | null = null;
   replyingToCommentId: string | null = null;
   charCount: number = 0;
 
@@ -23,11 +24,8 @@ export class CommentBoxComponent implements OnInit {
   ngOnInit() {
   }
 
-  getRandomPastelColor(): string {
-    const r = Math.floor(Math.random() * 56) + 190;
-    const g = Math.floor(Math.random() * 56) + 190;
-    const b = Math.floor(Math.random() * 56) + 190;
-    return '#' + ((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1);
+  isCurrentUser(comment: CommentRetrieve): boolean {
+    return comment.user.id === this.currentUserId;
   }
 
   toggleReply(commentId: string) {

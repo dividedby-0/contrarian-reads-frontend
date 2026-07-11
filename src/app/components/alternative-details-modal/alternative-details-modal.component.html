@@ -1,52 +1,78 @@
 <div class="modal-container">
   <div class="modal-content">
-    <span class="modal-close-button" (click)="onClose()">&times;</span>
+    <span class="modal-close-button" (click)="onClose()" title="Close">&times;</span>
     <h2>Suggested Book Details</h2>
 
     <div *ngIf="this.data.suggestion" class="book-info-container">
 
-      <div class="left-column-container">
-        <div class="left-column-content">
-          <div class="upvotescount-container">
-            <p>Total upvotes: {{ this.data.suggestion.upvotesCount }}</p>
-          </div>
-          <img [src]="this.data.suggestion.suggestedBook.coverImageUrl" alt="Book Cover" class="book-cover">
-          <div class="suggestion-info-container">
-            <h3 class="book-title">{{ this.data.suggestion.suggestedBook.title }}</h3>
-            <p class="book-author">{{ this.data.suggestion.suggestedBook.author }}</p>
-          </div>
-          <button class="upvote-button" (click)="toggleUpvote(this.data.suggestion.id)">
-            {{ upvoteAlreadyExists ? 'Remove upvote' : 'Upvote book' }}
-          </button>
-        </div>
+      <div class="left-column">
+        <img [src]="this.data.suggestion.suggestedBook.coverImageUrl" alt="Book Cover" class="book-cover">
+        <h3 class="book-title">{{ this.data.suggestion.suggestedBook.title }}</h3>
+        <p class="book-author">{{ this.data.suggestion.suggestedBook.author }}</p>
+        <p class="suggested-by-line">
+          Suggested by <strong>{{ this.data.suggestion.suggestedByUser.username }}</strong>
+          on {{ this.data.suggestion.createdAt | date:"MMM dd, yyyy" }}
+        </p>
+        <button class="upvote-button" (click)="toggleUpvote(this.data.suggestion.id)"
+                [class.upvoted]="upvoteAlreadyExists"
+                [title]="upvoteAlreadyExists ? 'Remove your upvote' : 'Upvote this suggestion'">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+               [attr.fill]="upvoteAlreadyExists ? 'currentColor' : 'none'">
+            <polyline points="18 15 12 9 6 15"/>
+          </svg>
+          <span>{{ upvoteAlreadyExists ? 'Remove upvote' : 'Upvote' }}</span>
+          <span class="upvote-count">{{ this.data.suggestion.upvotesCount || 0 }}</span>
+        </button>
       </div>
 
-      <div class="right-column-container">
-        <p>Suggested by <span class="suggested-by"> {{ this.data.suggestion.suggestedByUser.username }} </span>
-          on {{ this.data.suggestion.createdAt | date:"MMM dd, yyyy" }}</p>
-        <p>Reason for suggestion: "<span class="reason-text">{{ this.data.suggestion.reason }}</span>"</p>
+      <div class="right-column">
+        <div class="reason-section">
+          <p class="reason-label">Reason for suggesting this counterpoint</p>
+          <p class="reason-text">&ldquo;{{ this.data.suggestion.reason }}&rdquo; <span class="reason-signature">&mdash; {{ this.data.suggestion.suggestedByUser.username }}</span></p>
+        </div>
 
         <div class="add-comment-section">
           <mat-form-field appearance="outline" class="comment-input">
             <mat-label>Add a comment</mat-label>
             <textarea class="comment-input"
                       matInput
-                      placeholder="Enter your comment here..."
+                      placeholder="Write your thoughts..."
                       [(ngModel)]="newCommentText"
                       maxlength="150">
             </textarea>
             <small class="character-count">{{ 150 - newCommentText.length }}</small>
           </mat-form-field>
-          <button class="add-comment-button" (click)="addComment(newCommentText)">Add Comment</button>
-        </div>
-        <div *ngIf="this.comments.length > 0; else noCommentsSection">
-          <h4>Comments (Total: {{ this.comments.length }})</h4>
-          <app-comment-box [comments]="comments"></app-comment-box>
+          <button class="add-comment-button" (click)="addComment(newCommentText)"
+                  [disabled]="!newCommentText.trim()"
+                  title="Submit your comment">
+            Add Comment
+          </button>
         </div>
 
-        <ng-template #noCommentsSection>
-          <p>No comments yet...</p>
-        </ng-template>
+        <div class="comments-section" [class.expanded]="commentsExpanded">
+          <hr class="comments-divider">
+
+          <div class="comments-header" (click)="commentsExpanded = !commentsExpanded">
+            <h4>Comments <span class="comment-count">({{ this.comments.length }})</span></h4>
+            <svg class="chevron" [class.rotated]="commentsExpanded" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polyline points="6 9 12 15 18 9"/>
+            </svg>
+          </div>
+
+          <div class="comments-body" *ngIf="commentsExpanded">
+            <div *ngIf="this.comments.length > 0; else noCommentsSection">
+              <app-comment-box [comments]="comments" [currentUserId]="currentUserId"></app-comment-box>
+            </div>
+            <ng-template #noCommentsSection>
+              <div class="empty-comments">
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                  <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+                </svg>
+                <p>No comments yet. Be the first to share your thoughts!</p>
+              </div>
+            </ng-template>
+          </div>
+        </div>
       </div>
 
     </div>

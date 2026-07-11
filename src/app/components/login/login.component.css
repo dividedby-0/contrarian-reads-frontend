@@ -1,17 +1,12 @@
 .login-container {
   display: flex;
-  justify-content: center;
-  align-items: center;
+  flex-direction: column;
   min-height: 100vh;
-  background: linear-gradient(135deg, #EEF2FF 0%, #E0E7FF 50%, #F5F3FF 100%);
   padding: 20px;
 }
 
-[data-theme="dark"] .login-container {
-  background: linear-gradient(135deg, #0F172A 0%, #1E1B4B 50%, #0F172A 100%);
-}
-
 .login-form {
+  margin: auto;
   background: var(--surface);
   padding: 40px;
   border-radius: var(--radius);
@@ -20,6 +15,7 @@
   max-width: 100%;
   text-align: center;
   border: 1px solid var(--border);
+  animation: slideUp 0.5s ease;
 }
 
 .logo {
@@ -28,21 +24,24 @@
   justify-content: center;
   margin-bottom: 28px;
   gap: 10px;
+  color: var(--primary);
 }
 
 .logo-icon {
-  width: 32px;
-  height: auto;
+  width: 24px;
+  height: 24px;
+  flex-shrink: 0;
 }
 
 .logo-text {
   font-size: 1.5rem;
   font-weight: 700;
   letter-spacing: -0.03em;
-  background: linear-gradient(135deg, var(--primary), var(--secondary));
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+  color: var(--text);
+}
+
+.logo-accent {
+  color: var(--primary);
 }
 
 form {
@@ -65,4 +64,54 @@ form {
 mat-error {
   font-size: 0.75rem;
   font-weight: 500;
+}
+
+.submit-button {
+  width: 100%;
+  padding: 12px 24px;
+  background: linear-gradient(135deg, var(--primary), var(--secondary));
+  color: white;
+  border: none;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: 600;
+  font-family: inherit;
+  transition: all var(--transition);
+  margin-top: 4px;
+}
+
+.submit-button:hover:not(:disabled) {
+  opacity: 0.9;
+  box-shadow: 0 4px 15px rgba(99, 102, 241, 0.4);
+}
+
+.submit-button:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.tagline {
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  margin: -16px 0 24px;
+  font-style: italic;
+}
+
+.auth-footer {
+  text-align: center;
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+  margin-top: auto;
+  padding-bottom: 16px;
+  flex-shrink: 0;
+}
+
+.auth-footer p {
+  margin: 0;
+}
+
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(24px); }
+  to { opacity: 1; transform: translateY(0); }
 }

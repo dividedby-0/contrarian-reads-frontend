@@ -13,6 +13,7 @@ import {MatInputModule} from '@angular/material/input';
 import {MatButtonModule} from '@angular/material/button';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
 import {NgIf} from '@angular/common';
+import {BackgroundCanvasComponent} from "../../background-canvas/background-canvas.component";
 
 @Component({
   selector: 'app-login',
@@ -24,7 +25,8 @@ import {NgIf} from '@angular/common';
     MatButtonModule,
     MatSnackBarModule,
     RouterLink,
-    NgIf
+    NgIf,
+    BackgroundCanvasComponent
   ],
   templateUrl: './login.component.html',
   styleUrl: './login.component.css'

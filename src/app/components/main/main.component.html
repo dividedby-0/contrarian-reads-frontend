@@ -2,7 +2,7 @@
 <app-top-navbar></app-top-navbar>
 <div class="main-container">
   <div class="header-area" [style.opacity]="headerOpacity">
-    <div class="header-text">Gain a different perspective</div>
+    <div class="header-text">{{ currentText }}<span class="cursor"></span></div>
     <div class="header-suggestion-text"><span class="suggestion-count">{{ suggestionCount }}</span> opposing views and counting</div>
   </div>
   <div class="search-bar-sticky">
@@ -19,12 +19,16 @@
   </div>
 
   <div *ngIf="hasMoreResults && !isLoading" class="load-more-container">
-    <button (click)="loadMore()" class="load-more-button">
+    <button (click)="loadMore()" class="load-more-button" title="Load more books">
       Load More ({{ remainingBooksCount }} remaining)
     </button>
   </div>
+
+  <div class="footer">
+    <p>&copy; 2026 dividedby-0. All rights reserved.</p>
+  </div>
 </div>
 
-<button *ngIf="showScrollButton" class="scroll-to-top" (click)="scrollToTop()">
+<button *ngIf="showScrollButton" class="scroll-to-top" (click)="scrollToTop()" title="Scroll to top">
   <i class="fas fa-arrow-up"></i>
 </button>

@@ -1,23 +1,29 @@
 <div class="modal-container">
   <app-spinner *ngIf="isLoading"></app-spinner>
   <div class="modal-content">
-    <span class="modal-close-button" (click)="onClose()">&times;</span>
+    <span class="modal-close-button" (click)="onClose()" title="Close">&times;</span>
     <h2>Add New Alternative Book</h2>
     <div class="form-and-covers-container">
 
       <div class="form-container">
 
-        <div class="form-group">
-          <label for="mainBook">Main Book:</label>
-          <input
-            type="text"
-            id="mainBook"
-            name="mainBook"
-            placeholder="Search for a title or author..."
-            [(ngModel)]="mainBook"
-            (input)="onMainBookInput()"
-            [disabled]="!isMainBookEditable"
-          />
+        <div class="form-group search-group">
+          <label for="mainBook">Main Book</label>
+          <div class="input-wrapper">
+            <input
+              type="text"
+              id="mainBook"
+              name="mainBook"
+              placeholder="Search for a title or author..."
+              [(ngModel)]="mainBook"
+              (input)="onMainBookInput()"
+              [disabled]="!isMainBookEditable"
+              [class.selected]="selectedMainBook && !isMainBookEditable"
+            />
+            <svg *ngIf="selectedMainBook && !isMainBookEditable" class="input-check" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="3">
+              <polyline points="20 6 9 17 4 12"/>
+            </svg>
+          </div>
           <ul *ngIf="mainBookSuggestions.length > 0" class="suggestions">
             <li *ngFor="let suggestion of mainBookSuggestions" (click)="selectMainBook(suggestion)">
               {{ suggestion.volumeInfo.authors?.join(', ') || 'Unknown Author' }} -
@@ -26,16 +32,22 @@
           </ul>
         </div>
 
-        <div class="form-group">
-          <label for="suggestedAlternative">Suggested Alternative:</label>
-          <input
-            type="text"
-            id="suggestedAlternative"
-            name="suggestedAlternative"
-            placeholder="Search for a title or author..."
-            [(ngModel)]="suggestedAlternative"
-            (input)="onSuggestedAlternativeInput()"
-          />
+        <div class="form-group search-group">
+          <label for="suggestedAlternative">Suggested Alternative</label>
+          <div class="input-wrapper">
+            <input
+              type="text"
+              id="suggestedAlternative"
+              name="suggestedAlternative"
+              placeholder="Search for a title or author..."
+              [(ngModel)]="suggestedAlternative"
+              (input)="onSuggestedAlternativeInput()"
+              [class.selected]="selectedSuggestedAlternative && !suggestedAlternativeSuggestions.length"
+            />
+            <svg *ngIf="selectedSuggestedAlternative" class="input-check" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="3">
+              <polyline points="20 6 9 17 4 12"/>
+            </svg>
+          </div>
           <ul *ngIf="suggestedAlternativeSuggestions.length > 0" class="suggestions">
             <li *ngFor="let suggestion of suggestedAlternativeSuggestions"
                 (click)="selectSuggestedAlternative(suggestion)">
@@ -46,60 +58,73 @@
         </div>
 
         <div class="form-group">
-          <label for="reason">Reason:</label>
+          <label for="reason">Reason</label>
           <div class="textarea-container">
-        <textarea
-          id="reason"
-          name="reason"
-          placeholder="Why do you think this book is a good alternative?"
-          [(ngModel)]="reason"
-          (input)="updateRemainingCharacters()"
-          maxlength="150"
-        ></textarea>
-            <small class="character-count">{{ remainingCharacters }}</small>
+            <textarea
+              id="reason"
+              name="reason"
+              placeholder="Why do you think this book is a good alternative?"
+              [(ngModel)]="reason"
+              (input)="updateRemainingCharacters()"
+              maxlength="150"
+            ></textarea>
           </div>
+          <small class="character-count">{{ remainingCharacters }} characters remaining</small>
         </div>
       </div>
       <div class="covers-container">
         <div class="cover-container">
-          <div class="cover-text-top">Main Book</div>
+          <div class="cover-label">Main Book</div>
           <div class="cover">
             <img *ngIf="selectedMainBook?.volumeInfo?.imageLinks?.thumbnail; else noMainCover"
                  [src]="selectedMainBook.volumeInfo.imageLinks.thumbnail"
                  [alt]="selectedMainBook.volumeInfo.title">
             <ng-template #noMainCover>
-              <div class="cover-placeholder">?</div>
+              <div class="cover-placeholder">
+                <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                  <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/>
+                  <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/>
+                </svg>
+                <span>No cover</span>
+              </div>
             </ng-template>
           </div>
-          <div class="cover-text-bottom-container">
-            <div class="cover-text-bottom-title">{{ selectedMainBook?.volumeInfo.title || '(Title)' }}</div>
-            <div
-              class="cover-text-bottom-author">{{ selectedMainBook?.volumeInfo.authors?.join(', ') || '(Author)' }}
-            </div>
+          <div class="cover-info">
+            <div class="cover-title">{{ selectedMainBook?.volumeInfo.title || 'No book selected' }}</div>
+            <div class="cover-author">{{ selectedMainBook?.volumeInfo.authors?.join(', ') || '' }}</div>
           </div>
         </div>
         <div class="arrow-between-covers">
-          <img src="assets/images/arrow-right-svgrepo-com.svg" alt="Right Arrow">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2">
+            <line x1="5" y1="12" x2="19" y2="12"/>
+            <polyline points="12 5 19 12 12 19"/>
+          </svg>
         </div>
         <div class="cover-container">
-          <div class="cover-text-top">Alternative</div>
+          <div class="cover-label">Alternative</div>
           <div class="cover">
             <img *ngIf="selectedSuggestedAlternative?.volumeInfo?.imageLinks?.thumbnail; else noAlternativeCover"
                  [src]="selectedSuggestedAlternative.volumeInfo.imageLinks.thumbnail"
                  [alt]="selectedSuggestedAlternative.volumeInfo.title">
             <ng-template #noAlternativeCover>
-              <div class="cover-placeholder">?</div>
+              <div class="cover-placeholder">
+                <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                  <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/>
+                  <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/>
+                </svg>
+                <span>No cover</span>
+              </div>
             </ng-template>
           </div>
-          <div class="cover-text-bottom-container">
-            <div class="cover-text-bottom-title">{{ selectedSuggestedAlternative?.volumeInfo.title || '(Title)' }}</div>
-            <div
-              class="cover-text-bottom-author">{{ selectedSuggestedAlternative?.volumeInfo.authors?.join(', ') || '(Author)' }}
-            </div>
+          <div class="cover-info">
+            <div class="cover-title">{{ selectedSuggestedAlternative?.volumeInfo.title || 'No book selected' }}</div>
+            <div class="cover-author">{{ selectedSuggestedAlternative?.volumeInfo.authors?.join(', ') || '' }}</div>
           </div>
         </div>
       </div>
     </div>
-    <button type="button" class="confirm-button" (click)="onConfirm()">Add</button>
+    <button type="button" class="confirm-button" (click)="onConfirm()"
+            [disabled]="!selectedMainBook || !selectedSuggestedAlternative || !reason.trim()"
+            title="Submit the new alternative suggestion">Add Suggestion</button>
   </div>
 </div>

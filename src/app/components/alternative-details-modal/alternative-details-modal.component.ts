@@ -30,6 +30,8 @@ export class AlternativeDetailsModalComponent implements OnInit {
   newCommentText: string = '';
   comments: CommentRetrieve[] = [];
   upvoteAlreadyExists = false;
+  commentsExpanded = true;
+  currentUserId: string | null = localStorage.getItem("userId");
 
   constructor(
     public dialogRef: MatDialogRef<AlternativeDetailsModalComponent>,

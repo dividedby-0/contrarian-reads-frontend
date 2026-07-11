@@ -7,32 +7,33 @@
   margin: 0 auto;
 }
 
-@media (min-width: 768px) {
+@media (min-width: 880px) {
   .book-grid {
     grid-template-columns: repeat(2, 1fr);
-  }
-}
-
-@media (min-width: 1400px) {
-  .book-grid {
-    grid-template-columns: repeat(3, 1fr);
   }
 }
 
 .book {
   display: flex;
   align-items: flex-start;
-  justify-content: space-between;
+  justify-content: space-evenly;
+  gap: 2rem;
   min-width: 0;
   margin-left: auto;
   margin-right: auto;
   background: var(--surface);
   border: 1px solid var(--border);
   border-radius: var(--radius);
-  padding: 24px;
+  padding: 28px;
   box-shadow: var(--shadow-sm);
   transition: box-shadow var(--transition), transform var(--transition);
   width: 100%;
+  animation: fadeSlideUp 0.4s ease-out both;
+}
+
+@keyframes fadeSlideUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
 .book:hover {
@@ -40,12 +41,22 @@
 }
 
 .book-main {
-  flex: 2;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  align-self: center;
   max-width: 150px;
+}
+
+.main-book-label {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--primary);
+  margin-bottom: 8px;
+  text-align: center;
 }
 
 .total-suggestions {
@@ -62,6 +73,51 @@
   color: var(--primary-hover);
 }
 
+.book-cover-wrapper {
+  position: relative;
+  display: inline-flex;
+  padding: 10px;
+  cursor: pointer;
+}
+
+.book-cover-wrapper:hover .book-cover {
+  box-shadow: var(--shadow-md);
+  transform: scale(1.04);
+}
+
+.book-cover-overlay {
+  position: absolute;
+  inset: 10px;
+  border-radius: var(--radius-sm);
+  background: var(--primary);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  opacity: 0;
+  transition: opacity 0.25s ease;
+  color: white;
+  pointer-events: none;
+}
+
+.book-cover-wrapper:hover .book-cover-overlay {
+  opacity: 0.88;
+}
+
+.overlay-icon {
+  font-size: 28px;
+  font-weight: 300;
+  line-height: 1;
+}
+
+.overlay-text {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
 .book-cover {
   width: 150px;
   max-width: 150px;
@@ -70,14 +126,7 @@
   object-fit: cover;
   border-radius: var(--radius-sm);
   box-shadow: var(--shadow);
-  margin: 10px;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
-  cursor: pointer;
-}
-
-.book-cover:hover {
-  box-shadow: var(--shadow-md);
-  transform: scale(1.04);
 }
 
 .book-info-container {
@@ -102,12 +151,22 @@
 }
 
 .suggested-books {
-  flex: 1;
   display: flex;
   flex-direction: column;
   justify-content: space-around;
-  margin-left: 2rem;
   min-width: 0;
+}
+
+.suggestions-header {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--primary);
+  padding-bottom: 8px;
+  margin-bottom: 4px;
+  border-bottom: 1px solid var(--border);
+  text-align: center;
 }
 
 .suggested-book {
@@ -172,7 +231,7 @@
   flex-direction: column;
   margin-left: 12px;
   align-items: flex-start;
-  justify-content: center;
+  justify-content: flex-start;
   max-height: 200px;
   overflow: hidden;
   min-width: 0;
@@ -212,13 +271,30 @@
   color: var(--text-muted);
 }
 
-.upvotes {
+.stats-row {
+  display: flex;
+  gap: 12px;
+  margin-top: 4px;
+}
+
+.stat-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
   font-size: 12px;
+  font-weight: 500;
   color: var(--text-muted);
 }
 
-.comments {
-  font-size: 12px;
+.stat-badge svg {
+  flex-shrink: 0;
+}
+
+.upvote-badge {
+  color: var(--primary);
+}
+
+.comment-badge {
   color: var(--text-muted);
 }
 
