@@ -47,18 +47,6 @@
         <mat-error *ngIf="f['confirmPassword'].hasError('passwordMismatch')">Passwords do not match</mat-error>
       </mat-form-field>
 
-      <mat-form-field appearance="outline" class="full-width">
-        <mat-label>Profile Picture URL</mat-label>
-        <input matInput type="text" formControlName="profilePictureUrl" placeholder="Enter your profile picture URL"/>
-        <mat-error *ngIf="f['profilePictureUrl'].hasError('pattern')">Please enter a valid URL</mat-error>
-      </mat-form-field>
-
-      <mat-form-field appearance="outline" class="full-width">
-        <mat-label>Bio</mat-label>
-        <textarea matInput formControlName="bio" placeholder="Enter your bio" maxlength="150"></textarea>
-        <mat-error *ngIf="f['bio'].hasError('maxlength')">Bio should not exceed 150 characters</mat-error>
-      </mat-form-field>
-
       <button class="submit-button" type="submit" [disabled]="registerForm.invalid">
         Register
       </button>

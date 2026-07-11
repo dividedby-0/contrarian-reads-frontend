@@ -61,14 +61,6 @@ export class RegisterComponent {
       ]],
       confirmPassword: ['', [
         Validators.required
-      ]],
-      profilePictureUrl: ['', [
-        Validators.pattern('(https?://.*\\.(?:png|jpg|jpeg|gif|webp))')
-      ]],
-      bio: ['', [
-        Validators.maxLength(150),
-        // prevent script injection
-        Validators.pattern('^[^<>]*$')
       ]]
     }, {
       validators: this.passwordMatchValidator

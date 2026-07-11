@@ -24,12 +24,33 @@
             <span class="detail-label">Joined</span>
             <span class="detail-value">{{ userData.user.createdAt | date }}</span>
           </div>
-          <div class="detail-row bio-row">
+
+          <div *ngIf="!isEditing" class="detail-row bio-row">
             <span class="detail-label">Bio</span>
             <span class="detail-value bio-value">{{ userData.user.bio || 'This user has not added a bio yet.' }}</span>
           </div>
+
+          <div *ngIf="isEditing" class="edit-fields">
+            <mat-form-field appearance="outline" class="full-width">
+              <mat-label>Profile Picture URL</mat-label>
+              <input matInput formControlName="profilePictureUrl" placeholder="https://example.com/photo.jpg"/>
+              <mat-error *ngIf="editForm.get('profilePictureUrl')?.hasError('pattern')">Please enter a valid image URL</mat-error>
+            </mat-form-field>
+            <mat-form-field appearance="outline" class="full-width">
+              <mat-label>Bio</mat-label>
+              <textarea matInput formControlName="bio" placeholder="Tell us about yourself" maxlength="150"></textarea>
+              <mat-error *ngIf="editForm.get('bio')?.hasError('maxlength')">Bio should not exceed 150 characters</mat-error>
+            </mat-form-field>
+          </div>
         </div>
       </div>
+
+      <div class="edit-actions" *ngIf="isEditing">
+        <button mat-button class="cancel-button" (click)="toggleEdit()">Cancel</button>
+        <button mat-button class="save-button" (click)="saveProfile()" [disabled]="editForm.invalid">Save</button>
+      </div>
+
+      <button *ngIf="!isEditing" class="edit-profile-button" (click)="toggleEdit()">Edit Profile</button>
 
       <div class="user-stats">
         <div class="stat">

@@ -182,3 +182,54 @@ td {
 [data-theme="dark"] .mat-mdc-row:nth-child(even) {
   background: rgba(255, 255, 255, 0.02);
 }
+
+.edit-profile-button {
+  display: block;
+  margin: 0 auto 16px;
+  padding: 8px 20px;
+  background: linear-gradient(135deg, var(--primary), var(--secondary));
+  color: white;
+  border: none;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  font-size: 0.85rem;
+  font-weight: 600;
+  font-family: inherit;
+  transition: all var(--transition);
+}
+
+.edit-profile-button:hover {
+  opacity: 0.9;
+  box-shadow: 0 4px 15px rgba(99, 102, 241, 0.4);
+}
+
+.edit-fields {
+  margin-top: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.edit-fields .full-width {
+  width: 100%;
+}
+
+.edit-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.cancel-button {
+  color: var(--text-secondary) !important;
+}
+
+.save-button {
+  background: linear-gradient(135deg, var(--primary), var(--secondary)) !important;
+  color: white !important;
+}
+
+.save-button:disabled {
+  opacity: 0.4;
+}

@@ -3,6 +3,7 @@ import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {UserRetrieve} from '../models/user-retrieve';
 import {UserProfileRetrieve} from "../models/user-profile-retrieve";
+import {UserUpdate} from "../models/user-update";
 
 @Injectable({
   providedIn: 'root'
@@ -30,6 +31,15 @@ export class UserService {
     });
 
     return this.http.get<UserProfileRetrieve>(`${this.apiUrl}/profile/${userId}`, {headers});
+  }
+
+  updateUserProfile(userId: string, data: UserUpdate): Observable<UserRetrieve> {
+    const token = localStorage.getItem('token');
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`
+    });
+
+    return this.http.put<UserRetrieve>(`${this.apiUrl}/${userId}/profile`, data, {headers});
   }
 
 }
