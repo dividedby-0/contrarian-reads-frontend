@@ -12,8 +12,9 @@ import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input';
 import {MatButtonModule} from '@angular/material/button';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
-import {NgIf} from '@angular/common';
+import {AsyncPipe, NgIf, NgClass} from '@angular/common';
 import {BackgroundCanvasComponent} from "../../background-canvas/background-canvas.component";
+import {ThemeService} from "../../services/theme.service";
 
 @Component({
   selector: 'app-login',
@@ -26,6 +27,8 @@ import {BackgroundCanvasComponent} from "../../background-canvas/background-canv
     MatSnackBarModule,
     RouterLink,
     NgIf,
+    NgClass,
+    AsyncPipe,
     BackgroundCanvasComponent
   ],
   templateUrl: './login.component.html',
@@ -34,17 +37,24 @@ import {BackgroundCanvasComponent} from "../../background-canvas/background-canv
 export class LoginComponent {
   loginForm: FormGroup;
   errorMessage = '';
+  isDarkMode$;
 
   constructor(
     private fb: FormBuilder,
     private authService: AuthService,
     private router: Router,
-    private snackbarService: SnackbarService
+    private snackbarService: SnackbarService,
+    private themeService: ThemeService
   ) {
+    this.isDarkMode$ = this.themeService.isDarkMode$;
     this.loginForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required]]
     });
+  }
+
+  toggleTheme(): void {
+    this.themeService.toggleTheme();
   }
 
   get email() {

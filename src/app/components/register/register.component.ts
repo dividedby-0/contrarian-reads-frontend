@@ -15,6 +15,8 @@ import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatButton} from "@angular/material/button";
 import {MatInput} from "@angular/material/input";
 import {BackgroundCanvasComponent} from "../../background-canvas/background-canvas.component";
+import {ThemeService} from "../../services/theme.service";
+import {AsyncPipe, NgClass} from "@angular/common";
 
 @Component({
   selector: 'app-register',
@@ -22,6 +24,8 @@ import {BackgroundCanvasComponent} from "../../background-canvas/background-canv
   imports: [
     ReactiveFormsModule,
     NgIf,
+    NgClass,
+    AsyncPipe,
     RouterLink,
     MatFormFieldModule,
     MatButton,
@@ -33,13 +37,16 @@ import {BackgroundCanvasComponent} from "../../background-canvas/background-canv
 })
 export class RegisterComponent {
   registerForm: FormGroup;
+  isDarkMode$;
 
   constructor(
     private fb: FormBuilder,
     private authService: AuthService,
     private router: Router,
-    private snackbarService: SnackbarService
+    private snackbarService: SnackbarService,
+    private themeService: ThemeService
   ) {
+    this.isDarkMode$ = this.themeService.isDarkMode$;
     this.registerForm = this.fb.group({
       username: ['', [
         Validators.required,
@@ -65,6 +72,10 @@ export class RegisterComponent {
     }, {
       validators: this.passwordMatchValidator
     });
+  }
+
+  toggleTheme(): void {
+    this.themeService.toggleTheme();
   }
 
   get f() {

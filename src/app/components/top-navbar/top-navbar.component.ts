@@ -1,5 +1,5 @@
 import {Component, HostListener, ElementRef} from '@angular/core';
-import {CommonModule} from "@angular/common";
+import {CommonModule, AsyncPipe} from "@angular/common";
 import {AuthService} from '../../auth/auth.service';
 import {Router} from '@angular/router';
 import {MatDialog} from "@angular/material/dialog";
@@ -8,21 +8,22 @@ import {SnackbarService} from "../../services/snackbar.service";
 import {AddAlternativeModalComponent} from "../add-alternative-modal/add-alternative-modal.component";
 import {UserProfileModalComponent} from "../user-profile-modal/user-profile-modal.component";
 import {EventService} from "../../services/event.service";
+import {ThemeService} from "../../services/theme.service";
 
 @Component({
   selector: 'app-top-navbar',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, AsyncPipe],
   templateUrl: './top-navbar.component.html',
   styleUrl: './top-navbar.component.css'
 })
 export class TopNavbarComponent {
 
   menuOpen = false;
-  isDarkMode = false;
+  isDarkMode$;
 
-  constructor(private authService: AuthService, private router: Router, private dialog: MatDialog, private snackbarService: SnackbarService, private eventService: EventService, private elementRef: ElementRef) {
-    this.isDarkMode = document.documentElement.getAttribute('data-theme') === 'dark';
+  constructor(private authService: AuthService, private router: Router, private dialog: MatDialog, private snackbarService: SnackbarService, private eventService: EventService, private elementRef: ElementRef, private themeService: ThemeService) {
+    this.isDarkMode$ = this.themeService.isDarkMode$;
   }
 
   @HostListener('document:mousedown', ['$event'])
@@ -37,10 +38,7 @@ export class TopNavbarComponent {
   }
 
   toggleDarkMode() {
-    this.isDarkMode = !this.isDarkMode;
-    const theme = this.isDarkMode ? 'dark' : 'light';
-    document.documentElement.setAttribute('data-theme', theme);
-    localStorage.setItem('theme', theme);
+    this.themeService.toggleTheme();
   }
 
   onLogout() {
